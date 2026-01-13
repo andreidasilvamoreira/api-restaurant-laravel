@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('funcionarios', function (Blueprint $table) {
+        Schema::create('categorias', function (Blueprint $table) {
             $table->id();
             $table->string('nome', 100);
-            $table->string('cargo', 45);
-            $table->string('telefone', 45);
-            $table->string('email', 200);
-            $table->date('data_contratacao');
-            $table->decimal('salario');
+            $table->text('descricao');
+            $table->foreignId('restaurante_id')->constrained('restaurantes')->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('funcionarios');
+        Schema::dropIfExists('categorias');
     }
 };

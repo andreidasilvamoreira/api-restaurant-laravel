@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mesas', function (Blueprint $table) {
+        Schema::create('restaurantes', function (Blueprint $table) {
             $table->id();
-            $table->integer('numero');
-            $table->integer('capacidade');
-            $table->enum('status',['disponivel', 'ocupada', 'reservada'] );
+
+            $table->string('nome');
+            $table->text('descricao')->nullable();
+            $table->boolean('ativo')->default(true);
+            $table->timestamps();
         });
+
     }
 
     /**
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mesas');
+        Schema::dropIfExists('restaurantes');
     }
 };

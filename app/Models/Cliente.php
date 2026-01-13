@@ -13,7 +13,8 @@ class Cliente extends Model
         'nome',
         'telefone',
         'email',
-        'endereco'
+        'endereco'.
+        'user_id'
     ];
 
     public $timestamps = false;

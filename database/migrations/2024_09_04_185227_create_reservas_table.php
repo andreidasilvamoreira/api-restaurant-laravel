@@ -13,18 +13,15 @@ return new class extends Migration
     {
         Schema::create('reservas', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('data_hora');
+            $table->timestamp('data_reserva')->useCurrent();
             $table->integer('numero_pessoas');
-            $table->enum('status', ['cancelado', 'confirmada']);
-            $table->unsignedBigInteger('cliente_id');
-            $table->unsignedBigInteger('mesa_id');
-
-
-            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
-            $table->foreign('mesa_id')->references('id')->on('mesas')->onDelete('cascade');
+            $table->enum('status', ['cancelado', 'confirmada', 'finalizada', 'pendente']);
+            $table->foreignId('mesa_id')->nullable()->constrained('mesas')->nullOnDelete();
+            $table->foreignId('restaurante_id')->constrained('restaurantes')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

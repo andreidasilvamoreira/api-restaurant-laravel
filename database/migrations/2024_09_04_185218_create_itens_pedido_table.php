@@ -15,15 +15,12 @@ return new class extends Migration
             $table->id();
             $table->integer('quantidade');
             $table->decimal('preco_unitario', 10,2);
-            $table->text('observacoes');
-            $table->unsignedBigInteger('pedido_id');
-            $table->unsignedBigInteger('item_menu');
-            $table->unsignedBigInteger('inventario_id');
-
-            $table->foreign('pedido_id')->references('id')->on('pedidos')->onDelete('cascade');
-            $table->foreign('item_menu')->references('id')->on('itens_menu')->onDelete('cascade');
-            $table->foreign('inventario_id')->references('id')->on('inventarios')->onDelete('cascade');
+            $table->text('observacoes')->nullable();
+            $table->foreignId('pedido_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('item_menu_id')->constrained('itens_menu');
+            $table->timestamps();
         });
+
     }
 
     /**

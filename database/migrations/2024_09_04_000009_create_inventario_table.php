@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('inventarios', function (Blueprint $table) {
             $table->id();
-            $table->string('nome', 100);
-            $table->text('descricao');
-            $table->integer('unidade');
-            $table->decimal('preco_custado', 10, 2);
-            $table->unsignedBigInteger('fornecedor_id');
-
-            $table->foreign('fornecedor_id')->references('id')->on('fornecedores')->onDelete('cascade');
+            $table->string('nome');
+            $table->string('unidade');
+            $table->decimal('quantidade_atual', 10, 2)->default(0);
+            $table->decimal('preco_custo', 10, 2);
+            $table->foreignId('restaurante_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('fornecedor_id')->constrained('fornecedores')->cascadeOnDelete();
+            $table->timestamps();
         });
+
     }
 
     /**

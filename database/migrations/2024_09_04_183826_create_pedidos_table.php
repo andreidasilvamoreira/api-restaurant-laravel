@@ -13,17 +13,16 @@ return new class extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('data_hora', );
-            $table->enum('status_pedido', ['aberto', 'fechado', 'pago']);
-            $table->unsignedBigInteger('cliente_id');
-            $table->unsignedBigInteger('mesa_id');
-            $table->unsignedBigInteger('funcionario_id');
-
-            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
-            $table->foreign('mesa_id')->references('id')->on('mesas')->onDelete('cascade');
-            $table->foreign('funcionario_id')->references('id')->on('funcionarios')->onDelete('cascade');
+            $table->enum('status', ['aberto', 'preparando', 'finalizado', 'pago'])->default('aberto');
+            $table->timestamp('data_hora')->useCurrent();
+            $table->foreignId('restaurante_id')->constrained('restaurantes')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('atendente_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('mesa_id')->nullable()->constrained('mesas')->nullOnDelete();
+            $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
