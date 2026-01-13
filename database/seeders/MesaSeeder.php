@@ -11,9 +11,9 @@ class MesaSeeder extends Seeder
     public function run(): void
     {
         DB::table('mesas')->insert([
-            ['numero'=>1,'capacidade'=>4,'status'=>'disponivel'],
-            ['numero'=>2,'capacidade'=>2,'status'=>'ocupada'],
-            ['numero'=>3,'capacidade'=>6,'status'=>'reservada'],
+            ['numero' => 1, 'capacidade' => 4, 'status' => 'disponivel', 'restaurante_id' => 1],
+            ['numero' => 2, 'capacidade' => 2, 'status' => 'disponivel', 'restaurante_id' => 1],
+            ['numero' => 3, 'capacidade' => 6, 'status' => 'reservada', 'restaurante_id' => 1],
         ]);
     }
 }

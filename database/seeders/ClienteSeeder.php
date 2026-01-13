@@ -11,9 +11,22 @@ class ClienteSeeder extends Seeder
     public function run(): void
     {
         DB::table('clientes')->insert([
-            ['nome'=>'João Silva','telefone'=>'11999999999','endereco'=>'Rua A, 123','email'=>'joao@email.com'],
-            ['nome'=>'Maria Souza','telefone'=>'11888888888','endereco'=>'Rua B, 456','email'=>'maria@email.com'],
-            ['nome'=>'Carlos Lima','telefone'=>'11777777777','endereco'=>'Rua C, 789','email'=>'carlos@email.com'],
+            [
+                'user_id' => 1,
+                'telefone' => '11999999999',
+                'endereco' => 'Rua A, 123',
+            ],
+            [
+                'user_id' => 2,
+                'telefone' => '11888888888',
+                'endereco' => 'Rua B, 456',
+            ],
+            [
+                'user_id' => 3,
+                'telefone' => '11777777777',
+                'endereco' => 'Rua C, 789',
+            ],
         ]);
+
     }
 }

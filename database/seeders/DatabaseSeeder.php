@@ -14,19 +14,20 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            UserSeeder::class,
+            RestauranteSeeder::class,
+            RestauranteUserSeeder::class,
             ClienteSeeder::class,
-            MesaSeeder::class,
-            FuncionarioSeeder::class,
-            CategoriaSeeder::class,
             FornecedorSeeder::class,
+            CategoriaSeeder::class,
+            MesaSeeder::class,
             ItemMenuSeeder::class,
             InventarioSeeder::class,
+            ItemMenuInventarioSeeder::class,
             PedidoSeeder::class,
             ItemPedidoSeeder::class,
             PagamentoSeeder::class,
             ReservaSeeder::class,
-            AbreFechaSeeder::class,
         ]);
     }
-
 }

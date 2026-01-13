@@ -11,9 +11,10 @@ class InventarioSeeder extends Seeder
     public function run(): void
     {
         DB::table('inventarios')->insert([
-            ['nome'=>'Carne','descricao'=>'Carne bovina','unidade'=>50,'preco_custado'=>20,'fornecedor_id'=>1],
-            ['nome'=>'Refrigerante','descricao'=>'Lata','unidade'=>100,'preco_custado'=>3,'fornecedor_id'=>2],
-            ['nome'=>'Açúcar','descricao'=>'Refinado','unidade'=>30,'preco_custado'=>4,'fornecedor_id'=>3],
+            ['nome'=>'Carne','unidade'=>'kg','quantidade_atual'=>50,'preco_custo'=>30,'restaurante_id'=>1,'fornecedor_id'=>1],
+            ['nome'=>'Refrigerante','unidade'=>'lata','quantidade_atual'=>100,'preco_custo'=>3,'restaurante_id'=>1,'fornecedor_id'=>2],
+            ['nome'=>'Leite','unidade'=>'litro','quantidade_atual'=>20,'preco_custo'=>4,'restaurante_id'=>1,'fornecedor_id'=>3],
         ]);
+
     }
 }
