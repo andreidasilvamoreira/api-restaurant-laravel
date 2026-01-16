@@ -9,28 +9,31 @@ class Pedido extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'data_hora',
         'status',
         'cliente_id',
         'mesa_id',
-        'funcionario_id'
     ];
 
-    public $timestamps = false;
+    protected $casts = [
+        'data_hora' => 'datetime',
+    ];
 
     public function cliente()
     {
-        return $this->belongsTo(Cliente::class,'cliente_id');
+        return $this->belongsTo(Cliente::class, 'cliente_id');
     }
 
     public function mesa()
     {
-        return $this->belongsTo(Mesa::class,'mesa_id');
+        return $this->belongsTo(Mesa::class, 'mesa_id');
     }
 
-    public function funcionario()
+    public function itensPedido()
     {
-        return $this->belongsTo(Funcionario::class,'funcionario_id');
+        return $this->hasMany(ItemPedido::class);
     }
 }

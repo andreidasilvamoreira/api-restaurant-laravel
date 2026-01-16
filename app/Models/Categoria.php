@@ -11,13 +11,17 @@ class Categoria extends Model
 
     protected $fillable = [
         'nome',
-        'descricao'
+        'descricao',
+        'restaurante_id'
     ];
 
-    public $timestamps= false;
+    public function restaurante()
+    {
+        return $this->belongsTo(Restaurante::class, 'restaurante_id');
+    }
 
     public function itensMenu()
     {
-        return $this->hasMany(Item_menu::class, 'categoria_id');
+        return $this->hasMany(ItemMenu::class, 'categoria_id');
     }
 }

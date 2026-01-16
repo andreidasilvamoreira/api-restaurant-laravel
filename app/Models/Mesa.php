@@ -12,7 +12,8 @@ class Mesa extends Model
     protected $fillable = [
         'numero',
         'capacidade',
-        'status'
+        'status',
+        'restaurante_id',
     ];
 
     public $timestamps = false;
@@ -25,10 +26,5 @@ class Mesa extends Model
     public function pedido()
     {
         return $this->hasMany(Pedido::class,'mesa_id');
-    }
-
-    public function abre_fecha()
-    {
-        return $this->hasMany(Abre_fecha::class, 'mesa_id');
     }
 }

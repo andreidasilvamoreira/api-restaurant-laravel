@@ -11,21 +11,26 @@ class Inventario extends Model
 
     protected $fillable = [
         'nome',
-        'descricao',
         'unidade',
         'preco_custo',
-        'fornecedor_id'
+        'quantidade_atual',
+        'fornecedor_id',
+        'restaurante_id'
     ];
-
-    public $timestamps = false;
-
-    public function item_Pedido()
-    {
-        return $this->belongsTo(Item_pedido::class, 'item_pedido_id');
-    }
 
     public function fornecedor()
     {
-        return $this->hasMany(Fornecedor::class, 'inventario_id');
+        return $this->belongsTo(Fornecedor::class, 'fornecedor_id');
     }
+
+    public function restaurante()
+    {
+        return $this->belongsTo(Restaurante::class, 'restaurante_id');
+    }
+
+    public function itensMenu()
+    {
+        return $this->belongsToMany(ItemMenu::class, 'item_menu_inventario')->withPivot('quantidade_necessaria');
+    }
+
 }

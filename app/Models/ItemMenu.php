@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Item_menu extends Model
+class ItemMenu extends Model
 {
     use HasFactory;
 
@@ -17,15 +17,20 @@ class Item_menu extends Model
         'categoria_id'
     ];
 
-    public $timestamps = false;
 
     public function categoria()
     {
         return $this->belongsTo(Categoria::class, 'categoria_id');
     }
 
-    public function item_pedido()
+    public function itensPedido()
     {
-        return $this->hasMany(Item_pedido::class, 'item_menu_id');
+        return $this->hasMany(ItemPedido::class, 'item_menu_id');
     }
+
+    public function inventarios()
+    {
+        return $this->belongsToMany(Inventario::class, 'item_menu_inventario')->withPivot('quantidade_necessaria');
+    }
+
 }

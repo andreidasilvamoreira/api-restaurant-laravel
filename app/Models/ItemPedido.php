@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Item_pedido extends Model
+class ItemPedido extends Model
 {
     use HasFactory;
 
@@ -20,17 +20,17 @@ class Item_pedido extends Model
 
     public $timestamps = false;
 
-    public function pedido()
+    public function pedidos()
     {
         return $this->belongsTo(Pedido::class,'pedido_id');
     }
 
-    public function item_menu()
+    public function itensMenu()
     {
-        return $this->belongsTo(Item_menu::class,'item_menu_id');
+        return $this->belongsTo(ItemMenu::class,'item_menu_id');
     }
 
-    public function inventario()
+    public function inventarios()
     {
         return $this->belongsTo(Inventario::class,'inventario_id');
     }

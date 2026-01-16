@@ -13,13 +13,18 @@ class Fornecedor extends Model
         'nome',
         'telefone',
         'email',
-        'endereco'
+        'endereco',
+        'restaurante_id'
     ];
 
-    public $timestamps = false;
-
-    public function inventario()
+    public function inventarios()
     {
         return $this->hasMany(Inventario::class,'fornecedor_id');
     }
+
+    public function restaurante()
+    {
+        return $this->belongsTo(Restaurante::class, 'restaurante_id');
+    }
+
 }

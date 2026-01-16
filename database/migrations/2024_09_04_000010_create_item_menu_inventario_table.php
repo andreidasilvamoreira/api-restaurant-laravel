@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('item_menu_inventario', function (Blueprint $table) {
@@ -17,11 +14,9 @@ return new class extends Migration
             $table->foreignId('inventario_id')->constrained('inventarios')->cascadeOnDelete();
             $table->decimal('quantidade_necessaria', 10, 2);
             $table->unique(['item_menu_id', 'inventario_id']);
+            $table->timestamps();
         });
     }
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('item_menu_inventario');

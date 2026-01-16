@@ -10,22 +10,23 @@ class Cliente extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nome',
         'telefone',
-        'email',
-        'endereco'.
+        'endereco',
         'user_id'
     ];
 
-    public $timestamps = false;
-
-    public function reserva()
+    public function reservas()
     {
         return $this->hasMany(Reserva::class, 'cliente_id');
     }
 
-    public function pedido()
+    public function pedidos()
     {
         return $this->hasMany(Pedido::class, 'cliente_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

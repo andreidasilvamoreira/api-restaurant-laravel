@@ -6,26 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('itens_menu', function (Blueprint $table) {
             $table->id();
-            $table->string('nome', '100');
+            $table->string('nome', 100);
             $table->text('descricao');
-            $table->decimal('preco', 10,2);
+            $table->decimal('preco', 10, 2);
             $table->enum('disponibilidade', ['disponivel', 'indisponivel']);
-            $table->unsignedBigInteger('categoria_id');
-
-            $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('cascade');
+            $table->foreignId('categoria_id')->constrained('categorias')->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('itens_menu');
