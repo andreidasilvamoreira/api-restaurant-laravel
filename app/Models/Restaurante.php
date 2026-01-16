@@ -9,6 +9,8 @@ class Restaurante extends Model
 {
     use HasFactory;
 
+    protected $table = 'restaurantes';
+
     protected $fillable = [
         'nome',
         'endereco',
@@ -19,7 +21,6 @@ class Restaurante extends Model
     {
         return $this->belongsToMany(User::class, 'restaurante_users')->using(RestauranteUser::class)->withPivot('role')->withTimestamps();
     }
-
 
     public function categorias()
     {

@@ -9,6 +9,8 @@ class Pagamento extends Model
 {
     use HasFactory;
 
+    protected $table = 'pagamentos';
+
     protected $fillable = [
         'data_hora',
         'valor',

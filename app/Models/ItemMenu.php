@@ -9,6 +9,8 @@ class ItemMenu extends Model
 {
     use HasFactory;
 
+    protected $table = 'items_menu';
+
     protected $fillable = [
         'nome',
         'descricao',
@@ -16,7 +18,6 @@ class ItemMenu extends Model
         'disponibilidade',
         'categoria_id'
     ];
-
 
     public function categoria()
     {

@@ -9,6 +9,8 @@ class Pedido extends Model
 {
     use HasFactory;
 
+    protected $table = 'pedidos';
+
     protected $fillable = [
         'data_hora',
         'status',
