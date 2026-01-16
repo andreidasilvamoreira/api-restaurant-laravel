@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::create('pedidos', function (Blueprint $table) {
@@ -16,17 +14,13 @@ return new class extends Migration
             $table->enum('status', ['aberto', 'preparando', 'finalizado', 'pago'])->default('aberto');
             $table->timestamp('data_hora')->useCurrent();
             $table->foreignId('restaurante_id')->constrained('restaurantes')->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('atendente_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('cliente_id')->constrained('clientes')->cascadeOnDelete();
             $table->foreignId('mesa_id')->nullable()->constrained('mesas')->nullOnDelete();
+            $table->foreignId('atendente_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
+
     }
-
-
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('pedidos');

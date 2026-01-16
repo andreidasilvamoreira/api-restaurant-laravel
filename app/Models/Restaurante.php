@@ -9,22 +9,21 @@ class Restaurante extends Model
 {
     use HasFactory;
 
-    protected $table = 'restaurantes';
-
     protected $fillable = [
         'nome',
         'endereco',
         'ativo'
     ];
 
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsToMany(User::class, 'restaurante_users')->using(RestauranteUser::class)->withPivot('role')->withTimestamps();
     }
+
 
     public function categorias()
     {
-        return $this->hasMany(Categoria::class, 'restaurante_id');
+        return $this->hasMany(Categoria::class);
     }
 
     public function mesas()
@@ -35,5 +34,20 @@ class Restaurante extends Model
     public function pedidos()
     {
         return $this->hasMany(Pedido::class);
+    }
+
+    public function reservas()
+    {
+        return $this->hasMany(Reserva::class);
+    }
+
+    public function fornecedores()
+    {
+        return $this->hasMany(Fornecedor::class);
+    }
+
+    public function inventarios()
+    {
+        return $this->hasMany(Inventario::class);
     }
 }

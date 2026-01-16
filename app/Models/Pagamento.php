@@ -17,7 +17,10 @@ class Pagamento extends Model
         'pedido_id'
     ];
 
-    public $timestamps = false;
+    protected $casts = [
+        'data_hora' => 'datetime',
+        'valor' => 'decimal:2'
+    ];
 
     public function pedido()
     {

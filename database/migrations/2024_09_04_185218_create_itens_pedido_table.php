@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::create('itens_pedido', function (Blueprint $table) {
@@ -20,12 +18,8 @@ return new class extends Migration
             $table->foreignId('item_menu_id')->constrained('itens_menu');
             $table->timestamps();
         });
-
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('itens_pedido');

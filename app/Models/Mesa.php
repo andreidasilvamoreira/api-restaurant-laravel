@@ -16,15 +16,18 @@ class Mesa extends Model
         'restaurante_id',
     ];
 
-    public $timestamps = false;
-
-    public function reserva()
+    public function reservas()
     {
         return $this->hasMany(Reserva::class, 'mesa_id');
     }
 
-    public function pedido()
+    public function pedidos()
     {
         return $this->hasMany(Pedido::class,'mesa_id');
+    }
+
+    public function restaurante()
+    {
+        return $this->belongsTo(Restaurante::class);
     }
 }

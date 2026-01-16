@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('restaurante_users', function (Blueprint $table) {
@@ -20,9 +17,6 @@ return new class extends Migration
             $table->unique(['user_id', 'restaurante_id']);
         });
     }
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('restaurante_users');

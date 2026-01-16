@@ -2,23 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Restaurante extends Model
+class RestauranteUser extends Pivot
 {
-    use HasFactory;
-
-    protected $table = 'restaurantes';
+    protected $table = 'restaurante_users';
 
     protected $fillable = [
-        'role',
         'user_id',
         'restaurante_id',
+        'role',
     ];
-
-    public function categorias()
-    {
-        return $this->hasMany(Categoria::class, 'restaurante_id');
-    }
 }
