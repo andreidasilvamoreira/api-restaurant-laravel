@@ -12,7 +12,7 @@ class CategoriaRepository
         return Categoria::all();
     }
 
-    public function find(int $id): Categoria
+    public function find(int $id) : ?Categoria
     {
         return Categoria::find($id);
     }

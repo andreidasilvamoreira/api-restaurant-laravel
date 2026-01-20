@@ -2,7 +2,10 @@
 
 namespace App\Http\Services;
 
+use App\Exceptions\Categoria\CategoriaNotFoundException;
 use App\Http\Repositories\CategoriaRepository;
+use App\Models\Categoria;
+use Illuminate\Support\Collection;
 
 class CategoriaService
 {
@@ -12,38 +15,41 @@ class CategoriaService
         $this->categoriaRepository = $categoriaRepository;
     }
 
-    public function findAll()
+    public function findAll(): Collection
     {
         return $this->categoriaRepository->findAll();
     }
 
-    public function find(int $id)
+    public function find(int $id): ?Categoria
     {
         $categoria = $this->findOrFail($id);
         return $categoria;
     }
 
-    public function create(array $data)
+    public function create(array $data): Categoria
     {
         return $this->categoriaRepository->create($data);
     }
 
-    public function update(array $data, int $id)
+    public function update(array $data, int $id): Categoria
     {
         $categoria = $this->findOrFail($id);
-        $categoria = $this->categoriaRepository->update( $categoria, $data);
-
-        return $categoria;
+        return $this->categoriaRepository->update($categoria, $data);
     }
 
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         $categoria = $this->findOrFail($id);
         $this->categoriaRepository->delete($categoria);
     }
 
-    public function findOrFail($id)
+    public function findOrFail(int $id): Categoria
     {
-        return $this->categoriaRepository->find($id) ?? abort(404, 'Categoria não encontrada');
+        $categoria = $this->categoriaRepository->find($id);
+        if (!$categoria) {
+            throw new CategoriaNotFoundException();
+        }
+        return $categoria;
     }
+
 }

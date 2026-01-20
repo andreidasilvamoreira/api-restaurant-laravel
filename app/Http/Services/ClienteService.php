@@ -30,9 +30,7 @@ class ClienteService
     public function update(array $data, int $id): Cliente
     {
         $cliente = $this->findOrFail($id);
-        $cliente = $this->clienteRepository->update($cliente, $data);
-
-        return $cliente;
+        return $this->clienteRepository->update($cliente, $data);
     }
 
     public function delete(int $id){
