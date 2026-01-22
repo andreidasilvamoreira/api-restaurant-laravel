@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Cliente\StoreClienteRequest;
+use App\Http\Requests\Cliente\UpdateClienteRequest;
+use App\Http\Resources\ClienteResource;
 use App\Http\Services\ClienteService;
 use Illuminate\Http\Request;
 
@@ -14,33 +17,25 @@ class ClienteController extends Controller
     }
     public function findAll()
     {
-        return $this->clienteService->findAll();
+        return ClienteResource::collection($this->clienteService->findAll());
     }
     public function find(int $id)
     {
-        return $this->clienteService->find($id);
+        $cliente = $this->clienteService->find($id);
+        return new ClienteResource($cliente);
     }
 
-    public function create(Request $request)
+    public function create(StoreClienteRequest $request)
     {
-        $validated = $request->validate([
-            'telefone' => 'integer',
-            'endereco' => 'string',
-            'user_id' => 'required|exists:users,id',
-        ]);
-        $this->clienteService->create($validated);
-        return response()->json(["message" => "Cliente criado com sucesso!"], 201);
+        $cliente = $this->clienteService->create($request->validated());
+        return new ClienteResource($cliente);
     }
 
-    public function update(Request $request, int $id)
+    public function update(UpdateClienteRequest $request, int $id)
     {
-        $validated = $request->validate([
-            'telefone' => 'integer',
-            'endereco' => 'string',
-            'user_id' => 'integer|exists:users,id',
-        ]);
-        $this->clienteService->update($validated, $id);
-        return response()->json(["message" => "Cliente atualizado com sucesso!"], 200);
+        $cliente = $this->clienteService->update($request->validated(), $id);
+        response()->json(["message" => "Cliente atualizado com sucesso!"], 200);
+        return new ClienteResource($cliente);
     }
 
     public function delete(int $id)
