@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Domains\Catalogo\Controllers;
 
-use App\Http\Requests\Categoria\StoreCategoriaRequest;
-use App\Http\Requests\Categoria\UpdateCategoriaRequest;
-use App\Http\Resources\CategoriaResource;
-use App\Http\Services\CategoriaService;
-use Illuminate\Http\Request;
+use App\Domains\Catalogo\Requests\Categoria\StoreCategoriaRequest;
+use App\Domains\Catalogo\Requests\Categoria\UpdateCategoriaRequest;
+use App\Domains\Catalogo\Resources\CategoriaResource;
+use App\Domains\Catalogo\Services\CategoriaService;
+use App\Http\Controllers\Controller;
 
 class CategoriaController extends Controller
 {
@@ -43,6 +43,6 @@ class CategoriaController extends Controller
     public function delete(int $id)
     {
         $this->categoriaService->delete($id);
-        return response()->json(["message" => "Categoria removida com sucesso"]);
+        return response()->json(["message" => "Financeiro removida com sucesso"]);
     }
 }

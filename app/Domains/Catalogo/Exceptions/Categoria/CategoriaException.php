@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions\Categoria;
+namespace App\Domains\Catalogo\Exceptions\Categoria;
 
 use Exception;
 

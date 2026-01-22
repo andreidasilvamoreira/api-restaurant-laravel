@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Repositories;
+namespace App\Domains\Catalogo\Repositories;
 
 use App\Models\Categoria;
 use Illuminate\Support\Collection;

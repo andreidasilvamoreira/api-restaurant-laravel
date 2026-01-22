@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Categoria;
+namespace App\Domains\Catalogo\Requests\Categoria;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,8 +23,8 @@ class UpdateCategoriaRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nome.string' => 'O nome da Categoria precisa ser texto.',
-            'nome.max' => 'O nome da Categoria tem que ter no máximo 100 caracteres.',
+            'nome.string' => 'O nome da Financeiro precisa ser texto.',
+            'nome.max' => 'O nome da Financeiro tem que ter no máximo 100 caracteres.',
             'descricao.string' => 'A descricao da categoria precisa ser texto.',
             'restaurante_id.exists' => 'O restaurante informado não existe.',
         ];

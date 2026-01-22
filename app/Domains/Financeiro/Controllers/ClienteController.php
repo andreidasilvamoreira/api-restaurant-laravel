@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Domains\Financeiro\Controllers;
 
-use App\Http\Requests\Cliente\StoreClienteRequest;
-use App\Http\Requests\Cliente\UpdateClienteRequest;
-use App\Http\Resources\ClienteResource;
-use App\Http\Services\ClienteService;
-use Illuminate\Http\Request;
+use App\Domains\Financeiro\Requests\Cliente\StoreClienteRequest;
+use App\Domains\Financeiro\Requests\Cliente\UpdateClienteRequest;
+use App\Domains\Financeiro\Resources\ClienteResource;
+use App\Domains\Financeiro\Services\ClienteService;
+use App\Http\Controllers\Controller;
 
 class ClienteController extends Controller
 {
@@ -34,13 +34,13 @@ class ClienteController extends Controller
     public function update(UpdateClienteRequest $request, int $id)
     {
         $cliente = $this->clienteService->update($request->validated(), $id);
-        response()->json(["message" => "Cliente atualizado com sucesso!"], 200);
+        response()->json(["message" => "Catalogo atualizado com sucesso!"], 200);
         return new ClienteResource($cliente);
     }
 
     public function delete(int $id)
     {
         $this->clienteService->delete($id);
-        return response()->json(["message" => "Cliente deletado com sucesso!"], 200);
+        return response()->json(["message" => "Catalogo deletado com sucesso!"], 200);
     }
 }

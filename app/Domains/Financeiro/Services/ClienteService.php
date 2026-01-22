@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Domains\Financeiro\Services;
 
-use App\Http\Repositories\ClienteRepository;
+use App\Domains\Financeiro\Repositories\ClienteRepository;
 use App\Models\Cliente;
 
 class ClienteService
@@ -40,6 +40,6 @@ class ClienteService
 
     public function findOrFail(int $id)
     {
-        return $this->clienteRepository->find($id) ?? abort(404, 'Cliente não encontrado');
+        return $this->clienteRepository->find($id) ?? abort(404, 'Catalogo não encontrado');
     }
 }

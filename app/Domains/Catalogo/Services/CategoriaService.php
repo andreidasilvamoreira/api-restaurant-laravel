@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Domains\Catalogo\Services;
 
-use App\Exceptions\Categoria\CategoriaNotFoundException;
-use App\Http\Repositories\CategoriaRepository;
+use App\Domains\Catalogo\Exceptions\Categoria\CategoriaNotFoundException;
+use App\Domains\Catalogo\Repositories\CategoriaRepository;
 use App\Models\Categoria;
 use Illuminate\Support\Collection;
 
