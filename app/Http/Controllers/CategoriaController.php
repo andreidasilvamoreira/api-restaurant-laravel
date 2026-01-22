@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Categoria\StoreCategoriaRequest;
+use App\Http\Requests\Categoria\UpdateCategoriaRequest;
+use App\Http\Resources\CategoriaResource;
 use App\Http\Services\CategoriaService;
 use Illuminate\Http\Request;
 
@@ -15,36 +18,26 @@ class CategoriaController extends Controller
     }
     public function findAll()
     {
-        return $this->categoriaService->findAll();
+        $categoria = $this->categoriaService->findAll();
+        return CategoriaResource::collection($categoria);
     }
 
     public function find(int $id)
     {
         $categoria = $this->categoriaService->find($id);
-        return response()->json($categoria);
+        return new CategoriaResource($categoria);
     }
 
-    public function create(Request $request)
+    public function create(StoreCategoriaRequest $request)
     {
-        $validated = $request->validate([
-            'nome' => 'required|string|max:100',
-            'descricao' => 'nullable|string',
-            'restaurante_id' => 'required|exists:restaurantes,id',
-        ]);
-        $this->categoriaService->create($validated);
-        return response()->json(['message' => 'Categoria cadastrada com sucesso'], 201);
+        $categoria = $this->categoriaService->create($request->validated());
+        return new CategoriaResource($categoria);
     }
 
-    public function update(Request $request, int $id)
+    public function update(UpdateCategoriaRequest $request, int $id)
     {
-        $validated = $request->validate([
-            'nome' => 'required|string|max:100',
-            'descricao' => 'nullable|string',
-            'restaurante_id' => 'required|exists:restaurantes,id',
-        ]);
-
-        $this->categoriaService->update($validated, $id);
-        return response()->json(['message' => 'Categoria atualizada com sucesso']);
+        $categoria = $this->categoriaService->update($request->validated(), $id);
+        return new CategoriaResource($categoria);
     }
 
     public function delete(int $id)
