@@ -34,13 +34,13 @@ class ClienteController extends Controller
     public function update(UpdateClienteRequest $request, int $id)
     {
         $cliente = $this->clienteService->update($request->validated(), $id);
-        response()->json(["message" => "Catalogo atualizado com sucesso!"], 200);
+        response()->json(["message" => "Cliente atualizado com sucesso!"], 200);
         return new ClienteResource($cliente);
     }
 
     public function delete(int $id)
     {
         $this->clienteService->delete($id);
-        return response()->json(["message" => "Catalogo deletado com sucesso!"], 200);
+        return response()->json(["message" => "Cliente deletado com sucesso!"], 200);
     }
 }

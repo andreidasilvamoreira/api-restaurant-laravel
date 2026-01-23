@@ -1,6 +1,7 @@
 <?php
 
 use App\Domains\Catalogo\Controllers\CategoriaController;
+use App\Domains\Catalogo\Controllers\ItemMenuController;
 use App\Domains\Financeiro\Controllers\ClienteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,4 +21,11 @@ Route::get('/clientes/{id}', [ClienteController::class, 'find']);
 Route::post('/clientes', [ClienteController::class, 'create']);
 Route::put('/clientes/{id}', [ClienteController::class, 'update']);
 Route::delete('/clientes/{id}', [ClienteController::class, 'delete']);
+
+Route::get('/itensMenu', [ItemMenuController::class, 'findAll']);
+Route::get('/itensMenu/{id}', [ItemMenuController::class, 'find']);
+Route::post('/itensMenu', [ItemMenuController::class, 'create']);
+Route::put('/itensMenu/{id}', [ItemMenuController::class, 'update']);
+Route::delete('/itensMenu/{id}', [ItemMenuController::class, 'delete']);
+
 

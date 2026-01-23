@@ -14,7 +14,7 @@ class ItemMenuRepository
 
     public function find($id): ItemMenu
     {
-        return ItemMenu::find();
+        return ItemMenu::find($id);
     }
 
     public function create(array $data): ItemMenu

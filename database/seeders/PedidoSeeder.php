@@ -13,22 +13,22 @@ class PedidoSeeder extends Seeder
             [
                 'status' => 'aberto',
                 'restaurante_id' => 1,
-                'user_id' => 1,
                 'atendente_id' => 2,
+                'cliente_id' => 1,
                 'mesa_id' => 1,
             ],
             [
                 'status' => 'preparando',
                 'restaurante_id' => 1,
-                'user_id' => 1,
                 'atendente_id' => 2,
+                'cliente_id' => 2,
                 'mesa_id' => 2,
             ],
             [
                 'status' => 'finalizado',
                 'restaurante_id' => 2,
-                'user_id' => 2,
                 'atendente_id' => 2,
+                'cliente_id' => 3,
                 'mesa_id' => 3,
             ],
         ]);

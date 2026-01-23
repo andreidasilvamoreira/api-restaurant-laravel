@@ -36,13 +36,13 @@ class CategoriaController extends Controller
 
     public function update(UpdateCategoriaRequest $request, int $id)
     {
-        $categoria = $this->categoriaService->update($request->validated(), $id);
-        return new CategoriaResource($categoria);
+        response()->json(["message" => "Categoria atualizada com sucesso!"], 200);
+        return new CategoriaResource($this->categoriaService->update($request->validated(), $id));
     }
 
     public function delete(int $id)
     {
         $this->categoriaService->delete($id);
-        return response()->json(["message" => "Financeiro removida com sucesso"]);
+        return response()->json(["message" => "Categoria removida com sucesso"]);
     }
 }

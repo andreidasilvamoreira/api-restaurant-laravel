@@ -16,7 +16,7 @@ class ReservaSeeder extends Seeder
                 'status' => 'confirmada',
                 'mesa_id' => 1,
                 'restaurante_id' => 1,
-                'user_id' => 1,
+                'cliente_id' => 1,
             ],
             [
                 'data_reserva' => now()->addDay(),
@@ -24,7 +24,7 @@ class ReservaSeeder extends Seeder
                 'status' => 'pendente',
                 'mesa_id' => 2,
                 'restaurante_id' => 1,
-                'user_id' => 2,
+                'cliente_id' => 2,
             ],
             [
                 'data_reserva' => now()->addDays(2),
@@ -32,7 +32,7 @@ class ReservaSeeder extends Seeder
                 'status' => 'finalizada',
                 'mesa_id' => 3,
                 'restaurante_id' => 2,
-                'user_id' => 3,
+                'cliente_id' => 3,
             ],
         ]);
 
