@@ -4,6 +4,8 @@ namespace App\Domains\Financeiro\Services;
 
 use App\Domains\Financeiro\Repositories\ClienteRepository;
 use App\Models\Cliente;
+use App\Models\ItemMenu;
+use Illuminate\Support\Collection;
 
 class ClienteService
 {
@@ -12,12 +14,12 @@ class ClienteService
     {
         $this->clienteRepository = $clienteRepository;
     }
-    public function findAll()
+    public function findAll(): Collection
     {
         return $this->clienteRepository->findAll();
     }
 
-    public function find($id)
+    public function find($id): ?Cliente
     {
         return $this->clienteRepository->find($id);
     }
@@ -33,12 +35,13 @@ class ClienteService
         return $this->clienteRepository->update($cliente, $data);
     }
 
-    public function delete(int $id){
+    public function delete(int $id): void
+    {
         $cliente = $this->findOrFail($id);
         $this->clienteRepository->delete($cliente);
     }
 
-    public function findOrFail(int $id)
+    public function findOrFail(int $id): Cliente
     {
         return $this->clienteRepository->find($id) ?? abort(404, 'Catalogo não encontrado');
     }
