@@ -4,7 +4,7 @@ namespace App\Domains\Catalogo\Exceptions\Categoria;
 
 class CategoriaNotFoundException extends CategoriaException
 {
-    protected $message = "Financeiro não encontrada";
+    protected $message = "Categoria não encontrada";
 
     public function getStatus(): int
     {

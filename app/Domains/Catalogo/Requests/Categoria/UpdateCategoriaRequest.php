@@ -23,9 +23,9 @@ class UpdateCategoriaRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nome.string' => 'O nome da Financeiro precisa ser texto.',
-            'nome.max' => 'O nome da Financeiro tem que ter no máximo 100 caracteres.',
-            'descricao.string' => 'A descricao da categoria precisa ser texto.',
+            'nome.string' => 'O nome da Categoria precisa ser do tipo texto.',
+            'nome.max' => 'O nome da Categoria tem que ter no máximo 100 caracteres.',
+            'descricao.string' => 'A descricao da categoria precisa ser do tipo texto.',
             'restaurante_id.exists' => 'O restaurante informado não existe.',
         ];
     }

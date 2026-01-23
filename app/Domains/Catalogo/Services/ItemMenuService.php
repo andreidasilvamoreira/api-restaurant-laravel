@@ -2,6 +2,7 @@
 
 namespace App\Domains\Catalogo\Services;
 
+use App\Domains\Catalogo\Exceptions\ItemMenu\ItemMenuNotFoundException;
 use App\Domains\Catalogo\Repositories\ItemMenuRepository;
 use App\Models\ItemMenu;
 use Illuminate\Support\Collection;

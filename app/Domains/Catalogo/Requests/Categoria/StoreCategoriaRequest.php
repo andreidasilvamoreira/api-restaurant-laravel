@@ -23,10 +23,10 @@ class StoreCategoriaRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nome.required' => 'O nome da Financeiro precisa ser preenchido.',
+            'nome.required' => 'O nome da Categoria precisa ser preenchido.',
             'nome.max' => 'O tamanho máximo é de 100 caracteres.',
-            'nome.string' => 'O nome da Financeiro precisa ser texto.',
-            'descricao.string' => 'A descricao da categoria precisa ser texto.',
+            'nome.string' => 'O nome da Categoria precisa ser do tipo texto.',
+            'descricao.string' => 'A descricao da categoria precisa ser do tipo texto.',
             'restaurante_id.exists' => 'o restaurante precisa existir.',
             'restaurante_id.required' => 'O restaurante precisa ser selecionado.',
         ];
