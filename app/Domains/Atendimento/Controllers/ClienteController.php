@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Domains\Financeiro\Controllers;
+namespace App\Domains\Atendimento\Controllers;
 
-use App\Domains\Financeiro\Requests\Cliente\StoreClienteRequest;
-use App\Domains\Financeiro\Requests\Cliente\UpdateClienteRequest;
-use App\Domains\Financeiro\Resources\ClienteResource;
-use App\Domains\Financeiro\Services\ClienteService;
+use App\Domains\Atendimento\Requests\Cliente\StoreClienteRequest;
+use App\Domains\Atendimento\Requests\Cliente\UpdateClienteRequest;
+use App\Domains\Atendimento\Resources\ClienteResource;
+use App\Domains\Atendimento\Services\ClienteService;
 use App\Http\Controllers\Controller;
 
 class ClienteController extends Controller

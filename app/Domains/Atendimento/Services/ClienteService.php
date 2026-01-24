@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Domains\Financeiro\Services;
+namespace App\Domains\Atendimento\Services;
 
-use App\Domains\Financeiro\Repositories\ClienteRepository;
+use App\Domains\Atendimento\Repositories\ClienteRepository;
 use App\Models\Cliente;
-use App\Models\ItemMenu;
 use Illuminate\Support\Collection;
 
 class ClienteService

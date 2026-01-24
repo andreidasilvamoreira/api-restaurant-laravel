@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Financeiro\Repositories;
+namespace App\Domains\Atendimento\Repositories;
 
 use App\Models\Cliente;
 use Illuminate\Support\Collection;

@@ -1,8 +1,8 @@
 <?php
 
+use App\Domains\Atendimento\Controllers\ClienteController;
 use App\Domains\Catalogo\Controllers\CategoriaController;
 use App\Domains\Catalogo\Controllers\ItemMenuController;
-use App\Domains\Financeiro\Controllers\ClienteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
