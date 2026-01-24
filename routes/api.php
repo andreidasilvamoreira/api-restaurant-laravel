@@ -3,6 +3,7 @@
 use App\Domains\Atendimento\Controllers\ClienteController;
 use App\Domains\Catalogo\Controllers\CategoriaController;
 use App\Domains\Catalogo\Controllers\ItemMenuController;
+use App\Domains\Financeiro\Controllers\PagamentoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,4 +29,9 @@ Route::post('/itensMenu', [ItemMenuController::class, 'create']);
 Route::put('/itensMenu/{id}', [ItemMenuController::class, 'update']);
 Route::delete('/itensMenu/{id}', [ItemMenuController::class, 'delete']);
 
+Route::get('/pagamentos', [PagamentoController::class, 'findAll']);
+Route::get('/pagamentos/{id}', [PagamentoController::class, 'find']);
+Route::post('/pagamentos', [PagamentoController::class, 'create']);
+Route::put('/pagamentos/{id}', [PagamentoController::class, 'update']);
+Route::delete('/pagamentos/{id}', [PagamentoController::class, 'delete']);
 

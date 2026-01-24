@@ -18,7 +18,7 @@ class UpdatePagamentoRequest extends FormRequest
             'data_hora' => 'date',
             'valor' => 'numeric|min:0.01',
             'forma_pagamento' => 'in:pix,cartao_credito,cartao_debito,dinheiro',
-            'status_pagamento' => 'in:pendente,pago,cancelado',
+            'status_pagamento' => 'in:pendente,confirmado,cancelado',
             'pedido_id' => 'exists:pedidos,id',
         ];
     }

@@ -22,14 +22,14 @@ class PagamentoSeeder extends Seeder
                 'data_hora' => now(),
                 'valor' => 19.50,
                 'forma_pagamento' => 'dinheiro',
-                'status_pagamento' => 'confirmado',
+                'status_pagamento' => 'cancelado',
             ],
             [
                 'pedido_id' => 3,
                 'data_hora' => now(),
                 'valor' => 10,
                 'forma_pagamento' => 'pix',
-                'status_pagamento' => 'confirmado',
+                'status_pagamento' => 'pendente',
             ],
         ]);
 
