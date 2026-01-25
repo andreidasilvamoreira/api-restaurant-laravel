@@ -16,19 +16,19 @@ class CategoriaController extends Controller
     {
         $this->categoriaService= $categoriaService;
     }
-    public function findAll()
+    public function index()
     {
         $categoria = $this->categoriaService->findAll();
         return CategoriaResource::collection($categoria);
     }
 
-    public function find(int $id)
+    public function show(int $id)
     {
         $categoria = $this->categoriaService->find($id);
         return new CategoriaResource($categoria);
     }
 
-    public function create(StoreCategoriaRequest $request)
+    public function store(StoreCategoriaRequest $request)
     {
         $categoria = $this->categoriaService->create($request->validated());
         return new CategoriaResource($categoria);
@@ -40,7 +40,7 @@ class CategoriaController extends Controller
         return new CategoriaResource($this->categoriaService->update($request->validated(), $id));
     }
 
-    public function delete(int $id)
+    public function destroy(int $id)
     {
         $this->categoriaService->delete($id);
         return response()->json(["message" => "Categoria removida com sucesso"]);

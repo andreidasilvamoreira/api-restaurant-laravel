@@ -13,7 +13,7 @@ class RestauranteResource extends JsonResource
         return [
             'id' => $this->id,
             'nome' => $this->nome,
-            'endereco' =>$this->endereco,
+            'descricao' =>$this->descricao,
             'ativo' => $this->ativo
         ];
     }

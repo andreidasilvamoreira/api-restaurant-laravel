@@ -18,18 +18,18 @@ class PagamentoController extends Controller
         $this->pagamentoService = $pagamentoService;
     }
 
-    public function findAll(): AnonymousResourceCollection
+    public function index(): AnonymousResourceCollection
     {
         return PagamentoResource::collection($this->pagamentoService->findAll());
     }
 
-    public function find($id): PagamentoResource
+    public function show($id): PagamentoResource
     {
         $pagamento = $this->pagamentoService->find($id);
         return new PagamentoResource($pagamento);
     }
 
-    public function create(StorePagamentoRequest $request) : PagamentoResource
+    public function store(StorePagamentoRequest $request) : PagamentoResource
     {
         $pagamento = $this->pagamentoService->create($request->validated());
         return new PagamentoResource($pagamento);
@@ -41,7 +41,7 @@ class PagamentoController extends Controller
         return new PagamentoResource($pagamento);
     }
 
-    public function delete(int $id): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
         $this->pagamentoService->delete($id);
         return response()->json(['message' => "Pagamento deletado com sucesso!"], 200);

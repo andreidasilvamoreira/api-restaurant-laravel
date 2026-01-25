@@ -17,17 +17,17 @@ class ItemMenuController extends Controller
         $this->itemMenuService = $itemMenuService;
     }
 
-    public function findAll(): JsonResource
+    public function index(): JsonResource
     {
         return ItemMenuResource::collection($this->itemMenuService->findAll());
     }
 
-    public function find(int $id): JsonResource
+    public function show(int $id): JsonResource
     {
         return new ItemMenuResource($this->itemMenuService->find($id));
     }
 
-    public function create(StoreItemMenuRequest $request): JsonResource
+    public function store(StoreItemMenuRequest $request): JsonResource
     {
         return new ItemMenuResource($this->itemMenuService->create($request->validated()));
     }
@@ -38,7 +38,7 @@ class ItemMenuController extends Controller
         return new ItemMenuResource($this->itemMenuService->update($request->validated(), $id));
     }
 
-    public function delete(int $id)
+    public function destroy(int $id)
     {
          $this->itemMenuService->delete($id);
         return response()->json(["message" => "Item removida com sucesso"]);

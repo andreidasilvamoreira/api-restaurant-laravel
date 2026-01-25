@@ -15,17 +15,17 @@ class ClienteController extends Controller
     {
         $this->clienteService = $clienteService;
     }
-    public function findAll()
+    public function index()
     {
         return ClienteResource::collection($this->clienteService->findAll());
     }
-    public function find(int $id)
+    public function show(int $id)
     {
         $cliente = $this->clienteService->find($id);
         return new ClienteResource($cliente);
     }
 
-    public function create(StoreClienteRequest $request)
+    public function store(StoreClienteRequest $request)
     {
         $cliente = $this->clienteService->create($request->validated());
         return new ClienteResource($cliente);
@@ -38,7 +38,7 @@ class ClienteController extends Controller
         return new ClienteResource($cliente);
     }
 
-    public function delete(int $id)
+    public function destroy(int $id)
     {
         $this->clienteService->delete($id);
         return response()->json(["message" => "Cliente deletado com sucesso!"], 200);
