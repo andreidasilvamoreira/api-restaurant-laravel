@@ -22,7 +22,8 @@ class ItemMenuService
 
     public function find($id): ?ItemMenu
     {
-        return $this->itemMenu->find($id);
+        $itemMenu = $this->findOrFail($id);
+        return $itemMenu;
     }
     public function create(array $data): ItemMenu
     {

@@ -2,6 +2,7 @@
 
 namespace App\Domains\Atendimento\Services;
 
+use App\Domains\Atendimento\Exceptions\Cliente\ClienteNotFoundException;
 use App\Domains\Atendimento\Repositories\ClienteRepository;
 use App\Models\Cliente;
 use Illuminate\Support\Collection;
@@ -20,7 +21,8 @@ class ClienteService
 
     public function find($id): ?Cliente
     {
-        return $this->clienteRepository->find($id);
+        $cliente = $this->findOrFail($id);
+        return $cliente;
     }
 
     public function create(array $data): Cliente
@@ -42,6 +44,11 @@ class ClienteService
 
     public function findOrFail(int $id): Cliente
     {
-        return $this->clienteRepository->find($id) ?? abort(404, 'Catalogo não encontrado');
+        $cliente = $this->clienteRepository->find($id);
+        if (!$cliente) {
+            throw new ClienteNotFoundException();
+        }
+
+        return $cliente;
     }
 }

@@ -20,7 +20,7 @@ class RestauranteService
         return $this->restauranteRepository->findAll();
     }
 
-    public function find(int $id): Restaurante
+    public function find(int $id): ?Restaurante
     {
         $restaurante = $this->findOrFail($id);
         return $restaurante;
