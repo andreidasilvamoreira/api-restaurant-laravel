@@ -29,7 +29,7 @@ class ReservaController extends Controller
         return new ReservaResource($reserva);
     }
 
-    public function create(StoreReservaRequest $request): ReservaResource
+    public function store(StoreReservaRequest $request): ReservaResource
     {
         $reserva = $this->reservaService->create($request->validated());
         return new ReservaResource($reserva);
@@ -41,9 +41,9 @@ class ReservaController extends Controller
         return new ReservaResource($reserva);
     }
 
-    public function delete(int $id): void
+    public function destroy(int $id): JsonResponse
     {
         $this->reservaService->delete($id);
-        response()->json(["message" => "Reserva removida com sucesso!"], 200);
+        return response()->json(["message" => "Reserva removida com sucesso!"], 200);
     }
 }

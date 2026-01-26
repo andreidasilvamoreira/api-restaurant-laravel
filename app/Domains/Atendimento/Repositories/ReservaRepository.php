@@ -10,7 +10,7 @@ class ReservaRepository
 {
     public function findAll(): Collection
     {
-        return Mesa::all();
+        return Reserva::all();
     }
 
     public function find(int $id): ?Reserva
