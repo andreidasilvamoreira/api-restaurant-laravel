@@ -1,6 +1,9 @@
 <?php
 
 use App\Domains\Atendimento\Controllers\ClienteController;
+use App\Domains\Atendimento\Controllers\MesaController;
+use App\Domains\Atendimento\Controllers\PedidoController;
+use App\Domains\Atendimento\Controllers\ReservaController;
 use App\Domains\Catalogo\Controllers\CategoriaController;
 use App\Domains\Catalogo\Controllers\ItemMenuController;
 use App\Domains\Financeiro\Controllers\PagamentoController;
@@ -15,6 +18,9 @@ Route::get('/user', function (Request $request) {
 /* Dominio de Atendimento */
 
 Route::apiResource('clientes', ClienteController::class);
+Route::apiResource('mesas', MesaController::class);
+Route::apiResource('pedidos', PedidoController::class);
+Route::apiResource('reservas', ReservaController::class);
 
 /* Dominio de Catálogo */
 
