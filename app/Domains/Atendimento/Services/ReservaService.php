@@ -4,7 +4,6 @@ namespace App\Domains\Atendimento\Services;
 
 use App\Domains\Atendimento\Exceptions\Reserva\ReservaNotFoundException;
 use App\Domains\Atendimento\Repositories\ReservaRepository;
-use App\Models\Mesa;
 use App\Models\Reserva;
 use Illuminate\Support\Collection;
 
