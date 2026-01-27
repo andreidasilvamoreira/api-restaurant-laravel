@@ -22,8 +22,7 @@ class ReservaService
 
     public function find(int $id): Reserva
     {
-        $reserva = $this->findOrFail($id);
-        return $reserva;
+        return $this->findOrFail($id);
     }
 
     public function create(array $data): Reserva

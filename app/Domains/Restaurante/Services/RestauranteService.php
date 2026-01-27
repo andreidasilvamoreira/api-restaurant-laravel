@@ -22,8 +22,7 @@ class RestauranteService
 
     public function find(int $id): ?Restaurante
     {
-        $restaurante = $this->findOrFail($id);
-        return $restaurante;
+        return $this->findOrFail($id);
     }
 
     public function create(array $data): Restaurante

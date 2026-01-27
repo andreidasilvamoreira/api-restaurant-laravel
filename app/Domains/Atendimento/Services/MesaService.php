@@ -22,8 +22,7 @@ class MesaService
 
     public function find(int $id): ?Mesa
     {
-        $mesa = $this->findOrFail($id);
-        return $mesa;
+        return $this->findOrFail($id);
     }
 
     public function create(array $data): Mesa

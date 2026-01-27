@@ -22,8 +22,7 @@ class PedidoService
 
     public function find(int $id): Pedido
     {
-        $pedido = $this->findOrFail($id);
-        return $pedido;
+        return $this->findOrFail($id);
     }
 
     public function create(array $data): Pedido

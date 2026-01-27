@@ -22,8 +22,7 @@ class PagamentoService
 
     public function find(int $id): Pagamento
     {
-        $pagamento = $this->findOrFail($id);
-        return $pagamento;
+        return $this->findOrFail($id);
     }
 
     public function create(array $data): Pagamento

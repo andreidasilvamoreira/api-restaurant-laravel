@@ -21,8 +21,7 @@ class ClienteService
 
     public function find($id): ?Cliente
     {
-        $cliente = $this->findOrFail($id);
-        return $cliente;
+        return $this->findOrFail($id);
     }
 
     public function create(array $data): Cliente

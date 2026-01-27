@@ -22,8 +22,7 @@ class CategoriaService
 
     public function find(int $id): ?Categoria
     {
-        $categoria = $this->findOrFail($id);
-        return $categoria;
+        return $this->findOrFail($id);
     }
 
     public function create(array $data): Categoria
