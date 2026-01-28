@@ -7,6 +7,8 @@ use App\Domains\Catalogo\Requests\ItemMenu\UpdateItemMenuRequest;
 use App\Domains\Catalogo\Resources\ItemMenuResource;
 use App\Domains\Catalogo\Services\ItemMenuService;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ItemMenuController extends Controller
@@ -17,30 +19,32 @@ class ItemMenuController extends Controller
         $this->itemMenuService = $itemMenuService;
     }
 
-    public function index(): JsonResource
+    public function index(): AnonymousResourceCollection
     {
         return ItemMenuResource::collection($this->itemMenuService->findAll());
     }
 
     public function show(int $id): JsonResource
     {
-        return new ItemMenuResource($this->itemMenuService->find($id));
+        $itemMenu = $this->itemMenuService->find($id);
+        return new ItemMenuResource($itemMenu);
     }
 
     public function store(StoreItemMenuRequest $request): JsonResource
     {
-        return new ItemMenuResource($this->itemMenuService->create($request->validated()));
+        $ItemMenu = $this->itemMenuService->create($request->validated());
+        return new ItemMenuResource($ItemMenu);
     }
 
     public function update(UpdateItemMenuRequest $request, int $id): JsonResource
     {
-        response()->json(["message" => "Item atualizado com sucesso!"], 200);
-        return new ItemMenuResource($this->itemMenuService->update($request->validated(), $id));
+        $itemMenu = $this->itemMenuService->update($request->validated(), $id);
+        return new ItemMenuResource($itemMenu);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id): JsonResponse
     {
          $this->itemMenuService->delete($id);
-        return response()->json(["message" => "Item removida com sucesso"]);
+         return response()->json(["message" => "Item removida com sucesso"]);
     }
 }

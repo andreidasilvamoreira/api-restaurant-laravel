@@ -7,6 +7,8 @@ use App\Domains\Atendimento\Requests\Cliente\UpdateClienteRequest;
 use App\Domains\Atendimento\Resources\ClienteResource;
 use App\Domains\Atendimento\Services\ClienteService;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ClienteController extends Controller
 {
@@ -15,30 +17,29 @@ class ClienteController extends Controller
     {
         $this->clienteService = $clienteService;
     }
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         return ClienteResource::collection($this->clienteService->findAll());
     }
-    public function show(int $id)
+    public function show(int $id): ClienteResource
     {
         $cliente = $this->clienteService->find($id);
         return new ClienteResource($cliente);
     }
 
-    public function store(StoreClienteRequest $request)
+    public function store(StoreClienteRequest $request): ClienteResource
     {
         $cliente = $this->clienteService->create($request->validated());
         return new ClienteResource($cliente);
     }
 
-    public function update(UpdateClienteRequest $request, int $id)
+    public function update(UpdateClienteRequest $request, int $id): ClienteResource
     {
         $cliente = $this->clienteService->update($request->validated(), $id);
-        response()->json(["message" => "Cliente atualizado com sucesso!"], 200);
         return new ClienteResource($cliente);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id): JsonResponse
     {
         $this->clienteService->delete($id);
         return response()->json(["message" => "Cliente deletado com sucesso!"], 200);

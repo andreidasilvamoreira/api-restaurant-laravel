@@ -7,6 +7,8 @@ use App\Domains\Atendimento\Controllers\ReservaController;
 use App\Domains\Catalogo\Controllers\CategoriaController;
 use App\Domains\Catalogo\Controllers\ItemMenuController;
 use App\Domains\Financeiro\Controllers\PagamentoController;
+use App\Domains\Inventario\Controllers\FornecedorController;
+use App\Domains\Inventario\Controllers\InventarioController;
 use App\Domains\Restaurante\Controllers\RestauranteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,3 +37,7 @@ Route::apiResource('pagamentos', PagamentoController::class);
 
 Route::apiResource('restaurantes', RestauranteController::class);
 
+/* Dominio de Inventário */
+
+Route::apiResource('inventarios', InventarioController::class);
+Route::apiResource('fornecedores', FornecedorController::class);
