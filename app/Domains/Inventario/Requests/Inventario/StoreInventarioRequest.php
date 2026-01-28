@@ -33,6 +33,7 @@ class StoreInventarioRequest extends FormRequest
             'preco_custo.required' => 'O preço de custo é obrigatório.',
             'quantidade_atual.required' => 'A quantidade atual é obrigatória.',
             'fornecedor_id.required' => 'O fornecedor é obrigatório.',
+            'nome.string' => 'O campo nome deve ser texto.',
             'fornecedor_id.exists' => 'Fornecedor inválido.',
             'restaurante_id.required' => 'O restaurante é obrigatório.',
             'restaurante_id.exists' => 'Restaurante inválido.',

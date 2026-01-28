@@ -29,7 +29,7 @@ class InventarioController extends Controller
         return new InventarioResource($inventario);
     }
 
-    public function create(StoreInventarioRequest $request): InventarioResource
+    public function store(StoreInventarioRequest $request): InventarioResource
     {
         $inventario = $this->inventarioService->create($request->validated());
         return new InventarioResource($inventario);

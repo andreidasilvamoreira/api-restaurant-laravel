@@ -28,6 +28,7 @@ class UpdateInventarioRequest extends FormRequest
     {
         return [
             'nome.required' => 'O nome é obrigatório.',
+            'nome.string' => 'O campo nome deve ser texto.',
             'unidade.required' => 'A unidade é obrigatória.',
             'preco_custo.required' => 'O preço de custo é obrigatório.',
             'preco_custo.numeric' => 'O preço de custo deve ser um número.',

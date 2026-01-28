@@ -31,6 +31,7 @@ class UpdateFornecedorRequest extends FormRequest
             'email.required' => 'O e-mail é obrigatório.',
             'email.email' => 'Informe um e-mail válido.',
             'endereco.required' => 'O endereço é obrigatório.',
+            'endereco.string' => 'O campo precisa ser do tipo texto',
             'restaurante_id.required' => 'O restaurante é obrigatório.',
             'restaurante_id.exists' => 'Restaurante inválido.',
         ];
