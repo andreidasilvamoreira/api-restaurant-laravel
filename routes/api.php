@@ -7,6 +7,7 @@ use App\Domains\Atendimento\Controllers\ReservaController;
 use App\Domains\Catalogo\Controllers\CategoriaController;
 use App\Domains\Catalogo\Controllers\ItemMenuController;
 use App\Domains\Financeiro\Controllers\PagamentoController;
+use App\Domains\Identity\Controllers\RestauranteUsuarioController;
 use App\Domains\Inventario\Controllers\FornecedorController;
 use App\Domains\Inventario\Controllers\InventarioController;
 use App\Domains\Restaurante\Controllers\RestauranteController;
@@ -41,3 +42,8 @@ Route::apiResource('restaurantes', RestauranteController::class);
 
 Route::apiResource('inventarios', InventarioController::class);
 Route::apiResource('fornecedores', FornecedorController::class);
+
+/* Dominio de Identity */
+
+Route::apiResource('restaurantes.usuarios', RestauranteUsuarioController::class)->only(['index', 'store', 'destroy']);
+Route::patch('restaurantes/{restaurante}/usuarios/{usuario}/role', [RestauranteUsuarioController::class, 'updateRole']);

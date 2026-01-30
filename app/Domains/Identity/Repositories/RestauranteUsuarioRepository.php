@@ -9,9 +9,9 @@ class RestauranteUsuarioRepository
 {
     /* essa função cria um relacionamento entre duas tabelas existentes (só pra lembrar) */
 
-    public function attach(Restaurante $restaurante, User $user, string $role): void
+    public function attach(Restaurante $restaurante, int $id, string $role): void
     {
-        $restaurante->users()->syncWithoutDetaching([$user->id => ['role' => $role]]);
+        $restaurante->users()->syncWithoutDetaching([$id => ['role' => $role]]);
     }
     /* essa função apaga APENAS o relacionamento */
     public function detach(Restaurante $restaurante, int $id): void
