@@ -29,8 +29,18 @@ class User extends Authenticatable
         ];
     }
 
+    public function hasRole(string $role, int $restauranteId): bool
+    {
+        return $this->restaurantes()->where('restaurante_id', $restauranteId)->wherePivot('role', $role)->exists();
+    }
+
+    public function isActiveInRestaurant(int $restauranteId): bool
+    {
+        return $this->restaurantes()->where('restaurante_id', $restauranteId)->wherePivot('ativo', true)->exists();
+    }
+
     public function restaurantes()
     {
-        return $this->belongsToMany(Restaurante::class, 'restaurante_users')->using(RestauranteUser::class)->withPivot('role')->withTimestamps();
+        return $this->belongsToMany(Restaurante::class, 'restaurante_users')->using(RestauranteUser::class)->withPivot(['role', 'ativo'])->withTimestamps();
     }
 }

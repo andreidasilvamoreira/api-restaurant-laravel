@@ -17,6 +17,7 @@ class StoreRestauranteUsuarioRequest extends FormRequest
         return [
             'user_id' => 'required|integer|exists:users,id',
             'role' => 'required|string|max:50',
+            'ativo' => 'required|boolean'
         ];
     }
 
@@ -28,7 +29,9 @@ class StoreRestauranteUsuarioRequest extends FormRequest
             'user_id.exists' => 'Usuário não encontrado.',
             'role.required' => 'A role é obrigatória.',
             'role.string' => 'A role deve ser um texto válido.',
-            'role.max' => 'A role deve ter no máximo 50 caracteres.'
+            'role.max' => 'A role deve ter no máximo 50 caracteres.',
+            'ativo.boolean' => 'O usuário deve ser um booleano.',
+            'ativo.required.' => 'O valor de ativo deve ser preenchido.'
         ];
     }
 }

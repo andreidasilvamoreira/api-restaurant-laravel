@@ -19,7 +19,7 @@ class Restaurante extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'restaurante_users')->using(RestauranteUser::class)->withPivot('role')->withTimestamps();
+        return $this->belongsToMany(User::class, 'restaurante_users')->using(RestauranteUser::class)->withPivot(['role', 'ativo'])->withTimestamps();
     }
 
     public function categorias()

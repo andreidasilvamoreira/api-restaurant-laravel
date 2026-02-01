@@ -47,4 +47,4 @@ Route::apiResource('fornecedores', FornecedorController::class);
 /* Dominio de Identity */
 Route::apiResource('users', UserController::class);
 Route::apiResource('restaurantes.usuarios', RestauranteUsuarioController::class)->only(['index', 'store', 'destroy']);
-Route::patch('restaurantes/{restaurante}/usuarios/{usuario}/role', [RestauranteUsuarioController::class, 'updateRole']);
+Route::patch('restaurantes/{restaurante}/usuarios/{usuario}/role', [RestauranteUsuarioController::class, 'updateRole'])->middleware(['auth:sanctum', 'ativo', 'role:ADMIN']);

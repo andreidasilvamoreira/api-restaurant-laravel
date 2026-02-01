@@ -16,6 +16,7 @@ class UpdateRestauranteUsuarioRequest extends FormRequest
     {
         return [
             'role' => 'required|string|max:50',
+            'ativo' => 'sometimes|boolean'
         ];
     }
 
@@ -25,6 +26,7 @@ class UpdateRestauranteUsuarioRequest extends FormRequest
             'role.required' => 'A role é obrigatória.',
             'role.string' => 'A role deve ser um texto válido.',
             'role.max' => 'A role deve ter no máximo 50 caracteres.',
+            'ativo.boolean' => 'O usuário deve ser um booleano.',
         ];
     }
 }

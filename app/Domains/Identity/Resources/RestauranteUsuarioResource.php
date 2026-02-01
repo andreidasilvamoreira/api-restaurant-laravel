@@ -13,6 +13,7 @@ class RestauranteUsuarioResource extends JsonResource
         return [
             'usuario' => $this->name,
             'role' => $this->pivot->role,
+            'ativo' => $this->pivot->ativo
         ];
     }
 }

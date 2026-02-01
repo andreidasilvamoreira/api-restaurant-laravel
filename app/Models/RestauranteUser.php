@@ -12,5 +12,6 @@ class RestauranteUser extends Pivot
         'user_id',
         'restaurante_id',
         'role',
+        'ativo'
     ];
 }
