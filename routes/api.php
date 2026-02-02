@@ -12,39 +12,48 @@ use App\Domains\Identity\Controllers\UserController;
 use App\Domains\Inventario\Controllers\FornecedorController;
 use App\Domains\Inventario\Controllers\InventarioController;
 use App\Domains\Restaurante\Controllers\RestauranteController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+Route::prefix('auth')->group(function () {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/logout-security', [AuthController::class, 'logoutSecurity']);
+        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::get('/me', [AuthController::class, 'me']);
+    });
+});
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+Route::middleware(['auth:sanctum'])->group(function () {
 
-/* Dominio de Atendimento */
+    /* Dominio de Atendimento */
+    Route::apiResource('clientes', ClienteController::class);
+    Route::apiResource('mesas', MesaController::class);
+    Route::apiResource('pedidos', PedidoController::class);
+    Route::apiResource('reservas', ReservaController::class);
 
-Route::apiResource('clientes', ClienteController::class);
-Route::apiResource('mesas', MesaController::class);
-Route::apiResource('pedidos', PedidoController::class);
-Route::apiResource('reservas', ReservaController::class);
+    /* Dominio de Catálogo */
+    Route::apiResource('itens_menu', ItemMenuController::class);
+    Route::apiResource('categorias', CategoriaController::class);
 
-/* Dominio de Catálogo */
+    /* Dominio de Financeiro */
+    Route::apiResource('pagamentos', PagamentoController::class);
 
-Route::apiResource('itens_menu', ItemMenuController::class);
-Route::apiResource('categorias', CategoriaController::class);
+    /* Dominio de Restaurante */
+    Route::apiResource('restaurantes', RestauranteController::class);
 
-/* Dominio de Financeiro */
+    /* Dominio de Inventário */
+    Route::apiResource('inventarios', InventarioController::class);
+    Route::apiResource('fornecedores', FornecedorController::class);
 
-Route::apiResource('pagamentos', PagamentoController::class);
+    /* Dominio de Identity */
+    Route::apiResource('users', UserController::class);
+    Route::middleware('ativo')->group(function () {
+        Route::apiResource('restaurantes.usuarios', RestauranteUsuarioController::class)->only(['index', 'store', 'destroy']);
+        Route::patch('restaurantes/{restaurante}/usuarios/{usuario}/role', [RestauranteUsuarioController::class, 'updateRole'])->middleware('role:ADMIN');
+    });
+});
 
-/* Dominio de autenticação */
 
-Route::apiResource('restaurantes', RestauranteController::class);
 
-/* Dominio de Inventário */
 
-Route::apiResource('inventarios', InventarioController::class);
-Route::apiResource('fornecedores', FornecedorController::class);
-
-/* Dominio de Identity */
-Route::apiResource('users', UserController::class);
-Route::apiResource('restaurantes.usuarios', RestauranteUsuarioController::class)->only(['index', 'store', 'destroy']);
-Route::patch('restaurantes/{restaurante}/usuarios/{usuario}/role', [RestauranteUsuarioController::class, 'updateRole'])->middleware(['auth:sanctum', 'ativo', 'role:ADMIN']);

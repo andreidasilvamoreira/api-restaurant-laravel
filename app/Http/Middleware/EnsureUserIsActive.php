@@ -15,7 +15,7 @@ class EnsureUserIsActive
 
         if (!$user || !$restauranteId || !$user->isActiveInRestaurant($restauranteId)) {
             return response()->json([
-                'message' => 'Usuário inativo ou bloqueado.'
+                'message' => 'Usuário inativo ou bloqueado neste restaurante.'
             ], 403);
         }
 
