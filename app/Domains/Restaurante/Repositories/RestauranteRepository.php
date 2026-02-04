@@ -3,14 +3,23 @@
 namespace App\Domains\Restaurante\Repositories;
 
 use App\Models\Restaurante;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 class RestauranteRepository
 {
-    public function findAll(): Collection
+    public function findAll(User $user): Collection
     {
-        return Restaurante::all();
+        $query = Restaurante::query();
+
+        if ($user->role !== 'SUPER_ADMIN') {
+            $query->whereHas('users', function ($q) use ($user){
+                $q->where('users.id', $user->id)->whereIn('restaurante_users.role', ['DONO', 'FUNCIONARIO', 'ADMIN']);
+            });
+        };
+
+        return $query->get();
     }
 
     public function find($id): Restaurante

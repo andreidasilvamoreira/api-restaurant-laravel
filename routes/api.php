@@ -23,7 +23,6 @@ Route::prefix('auth')->group(function () {
         Route::get('/me', [AuthController::class, 'me']);
     });
 });
-
 Route::middleware(['auth:sanctum'])->group(function () {
 
     /* Dominio de Atendimento */

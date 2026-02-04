@@ -4,6 +4,7 @@ namespace App\Domains\Restaurante\Services;
 
 use App\Domains\Restaurante\Repositories\RestauranteRepository;
 use App\Models\Restaurante;
+use App\Models\User;
 use Illuminate\Support\Collection;
 use RestauranteNotFoundException;
 
@@ -15,9 +16,9 @@ class RestauranteService
         $this->restauranteRepository = $restauranteRepository;
     }
 
-    public function findAll(): Collection
+    public function findAll(User $user): Collection
     {
-        return $this->restauranteRepository->findAll();
+        return $this->restauranteRepository->findAll($user);
     }
 
     public function find(int $id): ?Restaurante

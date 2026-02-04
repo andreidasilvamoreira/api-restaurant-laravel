@@ -11,9 +11,15 @@ class CheckRole
     public function handle(Request $request, Closure $next, string $role): Response
     {
         $user = auth()->user();
+        if ($user->role === 'SUPER_ADMIN') {
+            return $next($request);
+        }
+
         $restauranteId = $request->route('restaurante');
+
         /* usuario precisa ter a role necessária pra passar */
-        if (!$user || !$user->hasRole($restauranteId, $role)) {
+
+        if (!$user || !$user->hasRole($role, $restauranteId)) {
             return response([
                 'message' => 'Acesso negado'
             ], 403);
