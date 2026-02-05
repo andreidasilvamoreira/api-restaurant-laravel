@@ -3,13 +3,24 @@
 namespace App\Domains\Inventario\Repositories;
 
 use App\Models\Inventario;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 class InventarioRepository
 {
-    public function findAll(): Collection
+    public function findAll(User $user): Collection
     {
-        return Inventario::all();
+        $query = Inventario::query()->with('restaurante');
+
+        if ($user->role !== 'SUPER_ADMIN') {
+            if ($user->role !== 'OWNER') {
+                $query->whereHas('restaurante', function ($q) use ($user) {
+                   $q->where('users.id', $user->id)->whererIn('restaurante_users.role', ['DONO', 'ADMIN', 'FUNCIONARIO']);
+                });
+            }
+        }
+
+        return $query->get();
     }
 
     public function find(int $id): ?Inventario
