@@ -3,13 +3,20 @@
 namespace App\Domains\Inventario\Repositories;
 
 use App\Models\Fornecedor;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 class FornecedorRepository
 {
-    public function findAll(): Collection
+    public function findAll(User $user): Collection
     {
-        return Fornecedor::all();
+        $query = Fornecedor::query()->with('restaurante');
+
+        if ($user->role === 'SUPER_ADMIN') {
+            if ($user->role === 'OWNER') {
+
+            }
+        }
     }
 
     public function find(int $id): ?Fornecedor

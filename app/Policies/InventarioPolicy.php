@@ -15,31 +15,32 @@ class InventarioPolicy
 
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->role === 'OWNER' || true;
     }
 
     public function view(User $user, Inventario $inventario): bool
     {
-        return $this->checkRole($user, $inventario, ['ADMIN', 'FUNCIONARIO', 'DONO']);
+        if ($user->role === 'OWNER') return true;
+        return $this->checkRole($user, $inventario->restaurante, ['ADMIN', 'FUNCIONARIO', 'DONO']);
     }
 
-    public function create(User $user, Restaurante $restaurante): bool
+    public function createForRestaurante(User $user, Restaurante $restaurante): bool
     {
-        return $restaurante->users()->where('users.id', $user->id)->wherePivotIn('role', ['ADMIN', 'FUNCIONARIO', 'DONO'])->exists() || $user->role === 'OWNER';
+        return $this->checkRole($user, $restaurante, ['ADMIN', 'DONO', 'FUNCIONARIO']);
     }
 
     public function update(User $user, Inventario $inventario): bool
     {
-        return $this->checkRole($user, $inventario, ['ADMIN', 'FUNCIONARIO', 'DONO']);
+        return $this->checkRole($user, $inventario->restaurante, ['ADMIN', 'FUNCIONARIO', 'DONO']);
     }
 
     public function delete(User $user, Inventario $inventario): bool
     {
-        return $this->checkRole($user, $inventario, ['ADMIN', 'FUNCIONARIO', 'DONO']);
+        return $this->checkRole($user, $inventario->restaurante, ['ADMIN', 'FUNCIONARIO', 'DONO']);
     }
 
-    private function checkRole(User $user, Inventario $inventario, array $roles): bool
+    private function checkRole(User $user, ?Restaurante $restaurante, array $roles): bool
     {
-        return $inventario->restaurante->users()->where('users.id', $user->id)->wherePivotIn('role', $roles)->exists() || $user->role === 'OWNER';
+        return $restaurante->users()->where('users.id', $user->id)->wherePivotIn('role', $roles)->exists();
     }
 }

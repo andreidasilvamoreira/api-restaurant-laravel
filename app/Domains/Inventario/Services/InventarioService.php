@@ -5,6 +5,7 @@ namespace App\Domains\Inventario\Services;
 use App\Domains\Inventario\Exceptions\Inventario\InventarioNotFoundException;
 use App\Domains\Inventario\Repositories\InventarioRepository;
 use App\Models\Inventario;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 class InventarioService
@@ -15,9 +16,9 @@ class InventarioService
         $this->inventarioRepository = $inventarioRepository;
     }
 
-    public function findAll(): Collection
+    public function findAll(User $user): Collection
     {
-        return $this->inventarioRepository->findAll();
+        return $this->inventarioRepository->findAll($user);
     }
 
     public function find(int $id): ?Inventario

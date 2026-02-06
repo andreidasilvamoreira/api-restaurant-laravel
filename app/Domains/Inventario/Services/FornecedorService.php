@@ -5,6 +5,7 @@ namespace App\Domains\Inventario\Services;
 use App\Domains\Inventario\Exceptions\Fornecedor\FornecedorNotFoundException;
 use App\Domains\Inventario\Repositories\FornecedorRepository;
 use App\Models\Fornecedor;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 class FornecedorService
@@ -15,9 +16,9 @@ class FornecedorService
         $this->fornecedorRepository = $fornecedorRepository;
     }
 
-    public function findAll(): Collection
+    public function findAll(User $user): Collection
     {
-        return $this->fornecedorRepository->findAll();
+        return $this->fornecedorRepository->findAll($user);
     }
 
     public function find(int $id): ?Fornecedor

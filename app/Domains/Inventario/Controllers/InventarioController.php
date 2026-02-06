@@ -22,7 +22,7 @@ class InventarioController extends Controller
     public function index():AnonymousResourceCollection
     {
         $this->authorize('viewAny', Inventario::class);
-        return InventarioResource::collection($this->inventarioService->findAll());
+        return InventarioResource::collection($this->inventarioService->findAll(auth()->user()));
     }
 
     public function show(int $id): InventarioResource
@@ -34,7 +34,7 @@ class InventarioController extends Controller
 
     public function store(StoreInventarioRequest $request): InventarioResource
     {
-        $this->authorize('create', Inventario::class);
+        $this->authorize('createForRestaurante', Inventario::class);
         $inventario = $this->inventarioService->create($request->validated());
         return new InventarioResource($inventario);
     }

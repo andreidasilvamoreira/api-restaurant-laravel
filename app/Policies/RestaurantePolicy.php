@@ -13,11 +13,12 @@ class RestaurantePolicy
     }
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->role === 'OWNER' || true;
     }
 
     public function view(User $user, Restaurante $restaurante): bool
     {
+        if ($user->role === 'OWNER') return true;
         return $this->checkMethod($user, $restaurante, ['DONO', 'ADMIN', 'FUNCIONARIO']);
     }
 
@@ -38,6 +39,6 @@ class RestaurantePolicy
 
     private function checkMethod(User $user, Restaurante $restaurante, array $rolesPivot): bool
     {
-        return $restaurante->users()->where('users.id', $user->id)->wherePivotIn('role', $rolesPivot)->exists() || $user->role === 'OWNER';
+        return $restaurante->users()->where('users.id', $user->id)->wherePivotIn('role', $rolesPivot)->exists();
     }
 }
