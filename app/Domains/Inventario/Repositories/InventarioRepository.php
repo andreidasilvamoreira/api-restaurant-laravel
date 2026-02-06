@@ -12,12 +12,12 @@ class InventarioRepository
     {
         $query = Inventario::query()->with('restaurante');
 
-        if ($user->role !== 'SUPER_ADMIN') {
-            if ($user->role !== 'OWNER') {
-                $query->whereHas('restaurante', function ($q) use ($user) {
-                   $q->where('users.id', $user->id)->whererIn('restaurante_users.role', ['DONO', 'ADMIN', 'FUNCIONARIO']);
+        if ($user->role !== 'SUPER_ADMIN' && $user->role !== 'OWNER') {
+            $query->whereHas('restaurante', function ($q) use ($user) {
+                $q->whereHas('users', function ($q2) use ($user) {
+                    $q2->whereKey($user->id)->whereIn('restaurante_users.role', ['DONO', 'FUNCIONARIO', 'ADMIN']);
                 });
-            }
+            });
         }
 
         return $query->get();

@@ -34,16 +34,18 @@ class RestauranteController extends Controller
 
     public function store(StoreRestauranteRequest $request): RestauranteResource
     {
-        $restaurante = $this->restauranteService->create($request->validated());
         $this->authorize('create', Restaurante::class);
+        $restaurante = $this->restauranteService->create($request->validated());
         return new RestauranteResource($restaurante);
     }
 
     public function update(UpdateRestauranteRequest $request, $id) : RestauranteResource
     {
-        $restaurante = $this->restauranteService->update($id, $request->validated());
+        $restaurante = $this->restauranteService->find($id);
         $this->authorize('update', $restaurante);
-        return new RestauranteResource($restaurante);
+
+        $restauranteAtualizado = $this->restauranteService->update($id, $request->validated());
+        return new RestauranteResource($restauranteAtualizado);
     }
 
     public function destroy(int $id) : JsonResponse

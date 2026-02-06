@@ -42,7 +42,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('restaurantes', RestauranteController::class);
 
     /* Dominio de Inventário */
-    Route::apiResource('inventarios', InventarioController::class);
+    Route::apiResource('inventarios', InventarioController::class)->except('store');
+    Route::post('restaurantes/{restaurante}/inventarios', [InventarioController::class, 'store']);
     Route::apiResource('fornecedores', FornecedorController::class);
 
     /* Dominio de Identity */

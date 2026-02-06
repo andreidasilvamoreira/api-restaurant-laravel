@@ -13,9 +13,10 @@ class RestauranteRepository
     {
         $query = Restaurante::query();
 
-        if ($user->role !== 'SUPER_ADMIN') {
-            $query->whereHas('users', function ($q) use ($user){
-                $q->where('users.id', $user->id)->whereIn('restaurante_users.role', ['DONO', 'FUNCIONARIO', 'ADMIN']);
+        if ($user->role !== 'SUPER_ADMIN' && $user->role !== 'OWNER') {
+            $query->whereHas('users', function ($q) use ($user) {
+                $q->whereKey($user->id)
+                    ->whereIn('restaurante_users.role', ['DONO', 'FUNCIONARIO', 'ADMIN']);
             });
         };
 

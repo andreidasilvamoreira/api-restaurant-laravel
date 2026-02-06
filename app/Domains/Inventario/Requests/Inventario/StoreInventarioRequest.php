@@ -21,7 +21,6 @@ class StoreInventarioRequest extends FormRequest
             'preco_custo' => 'required|numeric|min:0',
             'quantidade_atual' => 'required|numeric|min:0',
             'fornecedor_id' => 'required|exists:fornecedores,id',
-            'restaurante_id' => 'required|exists:restaurantes,id',
         ];
     }
 
@@ -35,8 +34,6 @@ class StoreInventarioRequest extends FormRequest
             'fornecedor_id.required' => 'O fornecedor é obrigatório.',
             'nome.string' => 'O campo nome deve ser texto.',
             'fornecedor_id.exists' => 'Fornecedor inválido.',
-            'restaurante_id.required' => 'O restaurante é obrigatório.',
-            'restaurante_id.exists' => 'Restaurante inválido.',
         ];
     }
 }
