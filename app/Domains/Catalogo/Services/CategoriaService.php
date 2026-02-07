@@ -5,6 +5,7 @@ namespace App\Domains\Catalogo\Services;
 use App\Domains\Catalogo\Exceptions\Categoria\CategoriaNotFoundException;
 use App\Domains\Catalogo\Repositories\CategoriaRepository;
 use App\Models\Categoria;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 class CategoriaService
@@ -15,9 +16,9 @@ class CategoriaService
         $this->categoriaRepository = $categoriaRepository;
     }
 
-    public function findAll(): Collection
+    public function findAll(User $user): Collection
     {
-        return $this->categoriaRepository->findAll();
+        return $this->categoriaRepository->findAll($user);
     }
 
     public function find(int $id): ?Categoria

@@ -33,7 +33,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     /* Dominio de Catálogo */
     Route::apiResource('itens_menu', ItemMenuController::class);
-    Route::apiResource('categorias', CategoriaController::class);
+
+    Route::apiResource('categorias', CategoriaController::class)->except('store');
+    Route::post('restaurantes/{restaurante}/categorias', [CategoriaController::class, 'store']);
 
     /* Dominio de Financeiro */
     Route::apiResource('pagamentos', PagamentoController::class);

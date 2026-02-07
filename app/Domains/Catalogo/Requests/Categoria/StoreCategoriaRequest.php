@@ -16,7 +16,6 @@ class StoreCategoriaRequest extends FormRequest
         return [
             'nome' => 'required|string|max:100',
             'descricao' => 'nullable|string',
-            'restaurante_id' => 'required|exists:restaurantes,id',
         ];
     }
 
@@ -27,8 +26,6 @@ class StoreCategoriaRequest extends FormRequest
             'nome.max' => 'O tamanho máximo é de 100 caracteres.',
             'nome.string' => 'O nome da Categoria precisa ser do tipo texto.',
             'descricao.string' => 'A descricao da categoria precisa ser do tipo texto.',
-            'restaurante_id.exists' => 'o restaurante precisa existir.',
-            'restaurante_id.required' => 'O restaurante precisa ser selecionado.',
         ];
     }
 }
