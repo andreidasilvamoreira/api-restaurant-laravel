@@ -15,7 +15,7 @@ class FornecedorRepository
         if ($user->role !== 'SUPER_ADMIN' && $user->role !== 'OWNER') {
             $query->whereHas('restaurante', function ($q) use ($user) {
                 $q->whereHas('users', function ($q2) use ($user) {
-                    $q2->whereKey($user->id)->wherePivotIn('role', ['DONO', 'ADMIN']);
+                    $q2->whereKey($user->id)->whereIn('restaurante_users.role', ['DONO', 'ADMIN']);
                 });
             });
         }

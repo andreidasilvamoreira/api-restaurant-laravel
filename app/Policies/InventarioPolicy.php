@@ -41,6 +41,8 @@ class InventarioPolicy
 
     private function checkRole(User $user, ?Restaurante $restaurante, array $roles): bool
     {
+        if (!$restaurante) return false;
+
         return $restaurante->users()->whereKey($user->id)->wherePivotIn('role', $roles)->exists();
     }
 }

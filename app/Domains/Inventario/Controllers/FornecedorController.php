@@ -9,6 +9,7 @@ use App\Domains\Inventario\Resources\FornecedorResource;
 use App\Domains\Inventario\Services\FornecedorService;
 use App\Http\Controllers\Controller;
 use App\Models\Fornecedor;
+use App\Models\Restaurante;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -28,28 +29,28 @@ class FornecedorController extends Controller
 
     public function show(int $id): FornecedorResource
     {
-        $this->authorize('view', Fornecedor::class);
         $fornecedor = $this->fornecedorService->find($id);
+        $this->authorize('view', $fornecedor);
         return new FornecedorResource($fornecedor);
     }
 
-    public function store(StoreFornecedorRequest $request): FornecedorResource
+    public function store(StoreFornecedorRequest $request, Restaurante $restaurante): FornecedorResource
     {
-        $this->authorize('createForRestaurante', Fornecedor::class);
+        $this->authorize('createForRestaurante', [Fornecedor::class, $restaurante]);
         $fornecedor = $this->fornecedorService->create($request->validated());
         return new FornecedorResource($fornecedor);
     }
 
-    public function update(UpdateFornecedorRequest $request, int $id): FornecedorResource
+    public function update(UpdateFornecedorRequest $request, Fornecedor $fornecedor): FornecedorResource
     {
-        $this->authorize('update', Fornecedor::class);
-        $fornecedor = $this->fornecedorService->update($id, $request->validated());
+        $this->authorize('update', $fornecedor);
+        $fornecedor = $this->fornecedorService->update($fornecedor->id, $request->validated());
         return new FornecedorResource($fornecedor);
     }
-    public function destroy(int $id): JsonResponse
+    public function destroy(Fornecedor $fornecedor): JsonResponse
     {
-        $this->authorize('delete', Fornecedor::class);
-        $this->fornecedorService->delete($id);
+        $this->authorize('delete', $fornecedor);
+        $this->fornecedorService->delete($fornecedor->id);
         return response()->json(["message" => "Fornecedor deletado com sucesso!"], 200);
     }
 }

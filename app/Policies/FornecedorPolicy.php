@@ -21,7 +21,7 @@ class FornecedorPolicy
     public function view(User $user, Fornecedor $fornecedor): bool
     {
         if ($user->role === 'OWNER') return true;
-        return $this->checkRole($user, $fornecedor->restaurante, ['DONO', 'FUNCIONARIO', 'ADMIN']);
+        return $this->checkRole($user, $fornecedor->restaurante, ['DONO', 'ADMIN']);
     }
 
     public function createForRestaurante(User $user, Restaurante $restaurante): bool
@@ -36,11 +36,13 @@ class FornecedorPolicy
 
     public function delete(User $user, Fornecedor $fornecedor): bool
     {
-        return $this->checkRole($user, $fornecedor->restaurante, ['DONO', 'ADMIN']);
+        return $this->checkRole($user, $fornecedor->restaurante, ['DONO']);
     }
 
     private function checkRole(User $user, ?Restaurante $restaurante, array $role): bool
     {
+        if (!$restaurante) return false;
+
         return $restaurante->users()->where('users.id', $user->id)->wherePivotIn('role', $role)->exists();
     }
 }
