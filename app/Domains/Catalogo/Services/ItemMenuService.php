@@ -5,6 +5,7 @@ namespace App\Domains\Catalogo\Services;
 use App\Domains\Catalogo\Exceptions\ItemMenu\ItemMenuNotFoundException;
 use App\Domains\Catalogo\Repositories\ItemMenuRepository;
 use App\Models\ItemMenu;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 class ItemMenuService
@@ -15,9 +16,9 @@ class ItemMenuService
         return $this->itemMenu = $itemMenu;
     }
 
-    public function findAll(): Collection
+    public function findAll(User $user): Collection
     {
-        return $this->itemMenu->findAll();
+        return $this->itemMenu->findAll($user);
     }
 
     public function find($id): ?ItemMenu

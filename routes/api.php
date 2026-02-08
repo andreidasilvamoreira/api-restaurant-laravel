@@ -32,7 +32,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('reservas', ReservaController::class);
 
     /* Dominio de Catálogo */
-    Route::apiResource('itens_menu', ItemMenuController::class);
+    Route::apiResource('itens_menu', ItemMenuController::class)->except('store')->parameters(['itens_menu' => 'itemMenu']);
+    Route::post('restaurante/{restaurante}/itens_menu', [ItemMenuController::class, 'store']);
 
     Route::apiResource('categorias', CategoriaController::class)->except('store');
     Route::post('restaurantes/{restaurante}/categorias', [CategoriaController::class, 'store']);
@@ -47,7 +48,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('inventarios', InventarioController::class)->except('store');
     Route::post('restaurantes/{restaurante}/inventarios', [InventarioController::class, 'store']);
 
-    Route::apiResource('fornecedores', FornecedorController::class)->except('store')->parameters(['fornecedores' => 'fornecedor']);;;
+    Route::apiResource('fornecedores', FornecedorController::class)->except('store')->parameters(['fornecedores' => 'fornecedor']);
     Route::post('restaurantes/{restaurante}/fornecedores', [FornecedorController::class, 'store']);
 
     /* Dominio de Identity */

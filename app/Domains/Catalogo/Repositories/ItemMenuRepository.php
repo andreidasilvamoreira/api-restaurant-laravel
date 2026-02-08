@@ -3,13 +3,22 @@
 namespace App\Domains\Catalogo\Repositories;
 
 use App\Models\ItemMenu;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 class ItemMenuRepository
 {
-    public function findAll(): Collection
+    public function findAll(User $user): Collection
     {
-        return ItemMenu::all();
+        $query = ItemMenu::query();
+
+        if ($user->role !== 'SUPER_ADMIN' && $user->role !== 'OWNER') {
+            $query->whereHas('categoria.restaurante.users', function ($q) use ($user) {
+                $q->whereKey($user->id)
+                    ->whereIn('restaurante_users.role', ['ADMIN', 'DONO', 'FUNCIONARIO']);
+            });
+        }
+        return $query->get();
     }
 
     public function find($id): ItemMenu

@@ -7,6 +7,8 @@ use App\Domains\Catalogo\Requests\ItemMenu\UpdateItemMenuRequest;
 use App\Domains\Catalogo\Resources\ItemMenuResource;
 use App\Domains\Catalogo\Services\ItemMenuService;
 use App\Http\Controllers\Controller;
+use App\Models\ItemMenu;
+use App\Models\Restaurante;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -21,30 +23,37 @@ class ItemMenuController extends Controller
 
     public function index(): AnonymousResourceCollection
     {
-        return ItemMenuResource::collection($this->itemMenuService->findAll());
+        $this->authorize('viewAny', ItemMenu::class);
+        return ItemMenuResource::collection($this->itemMenuService->findAll(auth()->user()));
     }
 
-    public function show(int $id): JsonResource
+    public function show(ItemMenu $itemMenu): JsonResource
     {
-        $itemMenu = $this->itemMenuService->find($id);
+        $this->authorize('view', $itemMenu);
+        $itemMenu = $this->itemMenuService->find($itemMenu->id);
         return new ItemMenuResource($itemMenu);
     }
 
-    public function store(StoreItemMenuRequest $request): JsonResource
+    public function store(StoreItemMenuRequest $request, Restaurante $restaurante): JsonResource
     {
-        $ItemMenu = $this->itemMenuService->create($request->validated());
+        $this->authorize('createForRestaurante', [ItemMenu::class, $restaurante]);
+        $data = $request->validated();
+        $data['restaurante_id'] = $restaurante->id;
+        $ItemMenu = $this->itemMenuService->create($data);
         return new ItemMenuResource($ItemMenu);
     }
 
-    public function update(UpdateItemMenuRequest $request, int $id): JsonResource
+    public function update(UpdateItemMenuRequest $request, ItemMenu $itemMenu): JsonResource
     {
-        $itemMenu = $this->itemMenuService->update($request->validated(), $id);
+        $this->authorize('update', $itemMenu);
+        $itemMenu = $this->itemMenuService->update($request->validated(), $itemMenu->id);
         return new ItemMenuResource($itemMenu);
     }
 
-    public function destroy(int $id): JsonResponse
+    public function destroy(ItemMenu $itemMenu): JsonResponse
     {
-         $this->itemMenuService->delete($id);
+        $this->authorize('delete', $itemMenu);
+        $this->itemMenuService->delete($itemMenu->id);
          return response()->json(["message" => "Item removida com sucesso"]);
     }
 }
