@@ -26,7 +26,12 @@ Route::prefix('auth')->group(function () {
 Route::middleware(['auth:sanctum'])->group(function () {
 
     /* Dominio de Atendimento */
-    Route::apiResource('clientes', ClienteController::class);
+    Route::get('clientes', [ClienteController::class, 'index']);
+    Route::get('me/clientes', [ClienteController::class, 'me']);
+    Route::post('clientes', [ClienteController::class, 'store']);
+    Route::put('me/clientes', [ClienteController::class, 'update']);
+    Route::delete('clientes/{cliente}', [ClienteController::class, 'destroy']);
+
     Route::apiResource('mesas', MesaController::class);
     Route::apiResource('pedidos', PedidoController::class);
     Route::apiResource('reservas', ReservaController::class);

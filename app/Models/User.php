@@ -41,6 +41,11 @@ class User extends Authenticatable
         return $this->restaurantes()->where('restaurante_id', $restauranteId)->wherePivot('ativo', true)->exists();
     }
 
+    public function cliente()
+    {
+        return $this->hasOne(Cliente::class);
+    }
+
     public function restaurantes()
     {
         return $this->belongsToMany(Restaurante::class, 'restaurante_users')->using(RestauranteUser::class)->withPivot(['role', 'ativo'])->withTimestamps();

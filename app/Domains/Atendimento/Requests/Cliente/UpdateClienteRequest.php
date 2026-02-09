@@ -17,7 +17,6 @@ class UpdateClienteRequest extends FormRequest
         return [
             'telefone' => 'string',
             'endereco' => 'string',
-            'user_id' => 'integer|exists:users,id',
         ];
     }
 
@@ -26,8 +25,6 @@ class UpdateClienteRequest extends FormRequest
         return [
             'telefone.string' => 'O campo telefone deve ser do tipo texto',
             'endereco.string' => 'O endereço tem que ser do tipo texto',
-            'user_id.exists' => 'O usuário precisa existir',
-            'user_id.integer' => 'O id precisa ser do tipo inteiro'
         ];
     }
 }

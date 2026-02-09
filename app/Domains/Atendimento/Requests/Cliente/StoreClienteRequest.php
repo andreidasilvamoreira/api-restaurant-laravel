@@ -9,7 +9,7 @@ class StoreClienteRequest extends FormRequest
 
     public function authorize(): bool
     {
-        return true;
+        return !$this->user()->cliente()->exists();
     }
 
     public function rules(): array
@@ -17,7 +17,6 @@ class StoreClienteRequest extends FormRequest
         return [
             'telefone' => 'integer',
             'endereco' => 'string',
-            'user_id' => 'required|exists:users,id',
         ];
     }
 
@@ -26,8 +25,6 @@ class StoreClienteRequest extends FormRequest
         return [
             'telefone.integer' => 'É necessário que o numero seja inteiro',
             'endereco.string' => 'O endereço tem que ser do tipo texto',
-            'user_id.exists' => 'O usuário precisa existir',
-            'user_id.required' => 'È necessário ter um usuário'
         ];
     }
 }
