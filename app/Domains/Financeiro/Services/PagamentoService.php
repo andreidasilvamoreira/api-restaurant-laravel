@@ -5,6 +5,7 @@ namespace App\Domains\Financeiro\Services;
 use App\Domains\Financeiro\Exceptions\Pagamento\PagamentoNotFoundException;
 use App\Domains\Financeiro\Repositories\PagamentoRepository;
 use App\Models\Pagamento;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 class PagamentoService
@@ -15,9 +16,9 @@ class PagamentoService
         $this->pagamentoRepository = $pagamentoRepository;
     }
 
-    public function findAll(): Collection
+    public function findAll(User $user): Collection
     {
-        return $this->pagamentoRepository->findAll();
+        return $this->pagamentoRepository->findAll($user);
     }
 
     public function find(int $id): Pagamento

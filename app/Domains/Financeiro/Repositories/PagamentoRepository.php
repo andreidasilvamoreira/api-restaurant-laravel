@@ -3,13 +3,22 @@
 namespace App\Domains\Financeiro\Repositories;
 
 use App\Models\Pagamento;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 class PagamentoRepository
 {
-    public function findAll(): Collection
+    public function findAll(User $user): Collection
     {
-        return Pagamento::all();
+        $query = Pagamento::query();
+
+        if (!in_array($user->role, ['SUPER_ADMIN', 'OWNER'], true)) {
+            $query->whereHas('pedido.restaurante.users', function ($q) use ($user) {
+                $q->whereKey($user->id)
+                    ->whereIn('restaurante_users.role', ['ADMIN', 'DONO']);
+            });
+        }
+        return $query->with(['pedido.restaurante'])->get();
     }
 
     public function find($id) : Pagamento
