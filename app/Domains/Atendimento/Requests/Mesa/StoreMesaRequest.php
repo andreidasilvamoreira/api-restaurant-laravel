@@ -18,7 +18,6 @@ class StoreMesaRequest extends FormRequest
             'numero' => 'required|integer|min:1',
             'capacidade' => 'required|integer|min:1',
             'status' => 'required|in:disponivel,ocupada,reservada',
-            'restaurante_id' => 'required|exists:restaurantes,id',
         ];
     }
 
@@ -33,8 +32,6 @@ class StoreMesaRequest extends FormRequest
             'capacidade.min' => 'A capacidade deve ser maior que zero.',
             'status.required' => 'O status da mesa é obrigatório.',
             'status.in' => 'O status deve ser: disponivel, ocupada ou reservada.',
-            'restaurante_id.required' => 'O restaurante é obrigatório.',
-            'restaurante_id.exists' => 'O restaurante informado não existe.',
         ];
     }
 }

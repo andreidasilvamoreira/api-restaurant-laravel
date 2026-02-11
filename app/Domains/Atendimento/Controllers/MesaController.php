@@ -7,6 +7,8 @@ use App\Domains\Atendimento\Requests\Mesa\UpdateMesaRequest;
 use App\Domains\Atendimento\Resources\MesaResource;
 use App\Domains\Atendimento\Services\MesaService;
 use App\Http\Controllers\Controller;
+use App\Models\Mesa;
+use App\Models\Restaurante;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -20,30 +22,38 @@ class MesaController extends Controller
 
     public function index(): AnonymousResourceCollection
     {
-        return MesaResource::collection($this->mesaService->findAll());
+        $this->authorize('viewAny', Mesa::class);
+        return MesaResource::collection($this->mesaService->findAll(auth()->user()));
     }
 
-    public function show(int $id): MesaResource
+    public function show(Mesa $mesa): MesaResource
     {
-        $mesa = $this->mesaService->find($id);
+        $this->authorize('view', $mesa);
+        $mesa = $this->mesaService->find($mesa->id);
         return new MesaResource($mesa);
     }
 
-    public function store(StoreMesaRequest $request): MesaResource
+    public function store(StoreMesaRequest $request, Restaurante $restaurante): MesaResource
     {
-        $mesa = $this->mesaService->create($request->validated());
+        $this->authorize('createForRestaurant', [Mesa::class, $restaurante]);
+        $data = $request->validated();
+        $data['restaurante_id'] = $restaurante->id;
+
+        $mesa = $this->mesaService->create($data);
         return new MesaResource($mesa);
     }
 
-    public function update(UpdateMesaRequest $request, int $id): MesaResource
+    public function update(UpdateMesaRequest $request, Mesa $mesa): MesaResource
     {
-        $mesa = $this->mesaService->update($request->validated(), $id);
+        $this->authorize('update', $mesa);
+        $mesa = $this->mesaService->update($request->validated(), $mesa->id);
         return new MesaResource($mesa);
     }
 
-    public function destroy(int $id): JsonResponse
+    public function destroy(Mesa $mesa): JsonResponse
     {
-        $this->mesaService->delete($id);
+        $this->authorize('delete', $mesa);
+        $this->mesaService->delete($mesa->id);
         return response()->json(["message" => "Mesa deletada com sucesso!"]);
     }
 }

@@ -32,8 +32,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('me/clientes', [ClienteController::class, 'update']);
     Route::delete('clientes/{cliente}', [ClienteController::class, 'destroy']);
 
-    Route::apiResource('mesas', MesaController::class);
-    Route::apiResource('pedidos', PedidoController::class);
+    Route::apiResource('mesas', MesaController::class)->except(['create']);
+    Route::post('restaurantes/{restaurante}/mesas', [MesaController::class, 'store']);
+
+    Route::apiResource('pedidos', PedidoController::class)->except(['create']);
+    Route::post('restaurantes/{restaurante}/pedidos', [PedidoController::class, 'store']);
+
     Route::apiResource('reservas', ReservaController::class);
 
     /* Dominio de Catálogo */
@@ -44,7 +48,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('restaurantes/{restaurante}/categorias', [CategoriaController::class, 'store']);
 
     /* Dominio de Financeiro */
-    Route::apiResource('pagamentos', PagamentoController::class);
+    Route::apiResource('pagamentos', PagamentoController::class)->except('store');
+    Route::post('restaurantes/{restaurante}/pagamentos', [PagamentoController::class, 'store']);
 
     /* Dominio de Restaurante */
     Route::apiResource('restaurantes', RestauranteController::class);
