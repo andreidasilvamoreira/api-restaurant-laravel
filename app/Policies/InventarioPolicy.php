@@ -26,16 +26,22 @@ class InventarioPolicy
 
     public function createForRestaurante(User $user, Restaurante $restaurante): bool
     {
+        if ($user->role === 'OWNER') return false;
+
         return $this->checkRole($user, $restaurante, ['ADMIN', 'DONO', 'FUNCIONARIO']);
     }
 
     public function update(User $user, Inventario $inventario): bool
     {
+        if ($user->role === 'OWNER') return false;
+
         return $this->checkRole($user, $inventario->restaurante, ['ADMIN', 'FUNCIONARIO', 'DONO']);
     }
 
     public function delete(User $user, Inventario $inventario): bool
     {
+        if ($user->role === 'OWNER') return false;
+
         return $this->checkRole($user, $inventario->restaurante, ['ADMIN', 'FUNCIONARIO', 'DONO']);
     }
 

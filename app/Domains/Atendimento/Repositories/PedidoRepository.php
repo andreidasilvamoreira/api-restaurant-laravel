@@ -3,13 +3,24 @@
 namespace App\Domains\Atendimento\Repositories;
 
 use App\Models\Pedido;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 class PedidoRepository
 {
-    public function findAll(): Collection
+    public function findAll(User $user): Collection
     {
-        return Pedido::all();
+        $query = Pedido::query();
+
+        if ($user->role !== 'SUPER_ADMIN' && $user->role !== 'OWNER')
+        {
+            $query->whereHas('restaurante', function ($q) use ($user) {
+                $q->whereHas('users', function ($q2) use ($user) {
+                    $q2->whereKey($user->id)->whereIn('restaurante_users.role', ['ADMIN', 'DONO']);
+                });
+            });
+        }
+        return $query->get();
     }
 
     public function find(int $id): ?Pedido

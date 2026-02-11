@@ -5,6 +5,7 @@ namespace App\Domains\Atendimento\Services;
 use App\Domains\Atendimento\Exceptions\Pedido\PedidoNotFoundException;
 use App\Domains\Atendimento\Repositories\PedidoRepository;
 use App\Models\Pedido;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 class PedidoService
@@ -15,9 +16,9 @@ class PedidoService
         $this->pedidoRepository = $pedidoRepository;
     }
 
-    public function findAll(): Collection
+    public function findAll(User $user): Collection
     {
-        return $this->pedidoRepository->findAll();
+        return $this->pedidoRepository->findAll($user);
     }
 
     public function find(int $id): Pedido

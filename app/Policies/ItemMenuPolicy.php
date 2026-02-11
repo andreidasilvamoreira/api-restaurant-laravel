@@ -14,7 +14,7 @@ class ItemMenuPolicy
     }
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->role === 'OWNER' || true;
     }
 
     public function view(User $user, ItemMenu $itemMenu): bool
@@ -28,17 +28,23 @@ class ItemMenuPolicy
 
     public function createForRestaurante(User $user, Restaurante $restaurante): bool
     {
+        if ($user->role === 'OWNER') return false;
+
         return $this->checkRole($user, $restaurante, ['ADMIN', 'FUNCIONARIO', 'DONO']);
     }
 
     public function update(User $user, ItemMenu $itemMenu): bool
     {
+        if ($user->role === 'OWNER') return false;
+
         $restaurante = $itemMenu->categoria?->restaurante;
         return $this->checkRole($user, $restaurante, ['ADMIN', 'DONO']);
     }
 
     public function delete(User $user, ItemMenu $itemMenu): bool
     {
+        if ($user->role === 'OWNER') return false;
+
         $restaurante = $itemMenu->categoria?->restaurante;
 
         return $this->checkRole($user, $restaurante, ['ADMIN', 'DONO']);

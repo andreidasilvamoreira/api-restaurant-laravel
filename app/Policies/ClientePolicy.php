@@ -16,6 +16,7 @@ class ClientePolicy
     public function viewAny(User $user): bool
     {
         if ($user->role === 'OWNER') return true;
+
         return false;
     }
 
@@ -28,16 +29,22 @@ class ClientePolicy
 
     public function create(User $user): bool
     {
+        if ($user->role === 'OWNER') return false;
+
         return true;
     }
 
     public function update(User $user, Cliente $cliente): bool
     {
+        if ($user->role === 'OWNER') return false;
+
         return $user->id === $cliente->user_id;
     }
 
     public function delete(User $user, Cliente $cliente)
     {
+        if ($user->role === 'OWNER') return false;
+
         return $user->role === 'SUPER_ADMIN';
     }
 

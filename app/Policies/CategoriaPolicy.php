@@ -15,7 +15,7 @@ class CategoriaPolicy
     }
     public function viewAny(User $user): bool
     {
-        return $user->role === 'OWNER' || true;
+        return $user->role === 'OWNER' || $user->role !== 'CLIENTE';
     }
 
     public function view(User $user, Categoria $categoria): bool
@@ -26,17 +26,22 @@ class CategoriaPolicy
 
     public function createForRestaurante(User $user, Restaurante $restaurante): bool
     {
+        if ($user->role === 'OWNER') return false;
 
         return $this->checkRole($user, $restaurante, ['DONO', 'ADMIN']);
     }
 
     public function update(User $user, Categoria $categoria): bool
     {
+        if ($user->role === 'OWNER') return false;
+
         return $this->checkRole($user, $categoria->restaurante, ['DONO', 'ADMIN']);
     }
 
     public function delete(User $user, Categoria $categoria): bool
     {
+        if ($user->role === 'OWNER') return false;
+
         return $this->checkRole($user, $categoria->restaurante, ['DONO']);
     }
 

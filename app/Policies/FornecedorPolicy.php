@@ -26,16 +26,22 @@ class FornecedorPolicy
 
     public function createForRestaurante(User $user, Restaurante $restaurante): bool
     {
+        if ($user->role === 'OWNER') return false;
+
         return $this->checkRole($user, $restaurante, ['ADMIN', 'DONO']);
     }
 
     public function update(User $user, Fornecedor $fornecedor): bool
     {
+        if ($user->role === 'OWNER') return false;
+
         return $this->checkRole($user, $fornecedor->restaurante, ['DONO', 'ADMIN']);
     }
 
     public function delete(User $user, Fornecedor $fornecedor): bool
     {
+        if ($user->role === 'OWNER') return false;
+
         return $this->checkRole($user, $fornecedor->restaurante, ['DONO']);
     }
 

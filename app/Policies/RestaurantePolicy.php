@@ -29,16 +29,22 @@ class RestaurantePolicy
 
     public function update(User $user, Restaurante $restaurante): bool
     {
+        if ($user->role === 'OWNER') return false;
+
         return $this->checkMethod($user, $restaurante, ['DONO', 'ADMIN']);
     }
 
     public function delete(User $user, Restaurante $restaurante): bool
     {
+        if ($user->role === 'OWNER') return false;
+
         return $this->checkMethod($user, $restaurante, ['DONO']);
     }
 
-    private function checkMethod(User $user, Restaurante $restaurante, array $rolesPivot): bool
+    private function checkMethod(User $user, ?Restaurante $restaurante, array $rolesPivot): bool
     {
+        if (!$restaurante) return false;
+
         return $restaurante->users()->where('users.id', $user->id)->wherePivotIn('role', $rolesPivot)->exists();
     }
 }
