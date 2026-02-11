@@ -5,6 +5,7 @@ namespace App\Domains\Atendimento\Services;
 use App\Domains\Atendimento\Exceptions\Reserva\ReservaNotFoundException;
 use App\Domains\Atendimento\Repositories\ReservaRepository;
 use App\Models\Reserva;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 class ReservaService
@@ -15,9 +16,9 @@ class ReservaService
         $this->reservaRepository = $reservaRepository;
     }
 
-    public function findAll(): Collection
+    public function findAll(User $user): Collection
     {
-        return $this->reservaRepository->findAll();
+        return $this->reservaRepository->findAll($user);
     }
 
     public function find(int $id): Reserva

@@ -4,13 +4,21 @@ namespace App\Domains\Atendimento\Repositories;
 
 use App\Models\Mesa;
 use App\Models\Reserva;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 class ReservaRepository
 {
-    public function findAll(): Collection
+    public function findAll(User $user): Collection
     {
-        return Reserva::all();
+        $query = Reserva::query();
+
+        if ($user->role !== 'SUPER_ADMIN' && $user->role !== 'OWNER'){
+            $query->whereHas('restaurante.users', function ($q) use ($user) {
+               $q->whereKey($user->id)->whereIn('restaurante_users.role', ['ADMIN', 'DONO']);
+            });
+        }
+        return $query->get();
     }
 
     public function find(int $id): ?Reserva

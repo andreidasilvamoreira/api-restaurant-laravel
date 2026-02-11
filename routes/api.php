@@ -38,7 +38,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('pedidos', PedidoController::class)->except(['create']);
     Route::post('restaurantes/{restaurante}/pedidos', [PedidoController::class, 'store']);
 
-    Route::apiResource('reservas', ReservaController::class);
+    Route::apiResource('reservas', ReservaController::class)->except(['create']);
+    Route::post('restaurantes/{restaurante}/reservas', [ReservaController::class, 'store']);
 
     /* Dominio de Catálogo */
     Route::apiResource('itens_menu', ItemMenuController::class)->except('store')->parameters(['itens_menu' => 'itemMenu']);
