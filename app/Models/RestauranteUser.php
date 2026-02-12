@@ -14,4 +14,14 @@ class RestauranteUser extends Pivot
         'role',
         'ativo'
     ];
+
+    public function restaurante()
+    {
+        return $this->belongsTo(Restaurante::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

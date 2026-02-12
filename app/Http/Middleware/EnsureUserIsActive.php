@@ -11,9 +11,13 @@ class EnsureUserIsActive
     public function handle(Request $request, Closure $next): Response
     {
         $user = auth()->user();
-        $restauranteId = $request->route('restaurante');
+        $restaurante = $request->route('restaurante');
 
-        if (!$user || !$restauranteId || !$user->isActiveInRestaurant($restauranteId)) {
+        if ($user->role === 'SUPER_ADMIN') {
+            return $next($request);
+        }
+
+        if (!$user || !$restaurante || !$user->isActiveInRestaurant($restaurante->id)) {
             return response()->json([
                 'message' => 'Usuário inativo ou bloqueado neste restaurante.'
             ], 403);

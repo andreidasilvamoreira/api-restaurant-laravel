@@ -20,6 +20,7 @@ class RestauranteUsuarioController extends Controller
 
     public function index(Restaurante $restaurante)
     {
+        $this->authorize('manageUsers', $restaurante);
         $usuarios = $this->restauranteUsuarioService->listarPorRestaurante($restaurante);
 
         return response()->json([
@@ -30,19 +31,22 @@ class RestauranteUsuarioController extends Controller
 
     public function store(StoreRestauranteUsuarioRequest $request, Restaurante $restaurante)
     {
+        $this->authorize('manageUsers', $restaurante);
         $this->restauranteUsuarioService->attach($restaurante, $request->user_id,  $request->role);
         return response()->json(['message' => 'Usuário vinculado ao restaurante com sucesso'], 201);
     }
 
     public function updateRole(Restaurante $restaurante, User $usuario, UpdateRestauranteUsuarioRequest $request)
     {
+        $this->authorize('manageUsers', $restaurante);
         $this->restauranteUsuarioService->updateRole($restaurante, $usuario->id,  $request->role);
         return response()->json(['message' => 'Role atualizado com sucesso'], 201);
     }
 
     public function destroy(Restaurante $restaurante, User $usuario)
     {
-         $this->restauranteUsuarioService->detach($restaurante, $usuario->id);
+        $this->authorize('manageUsers', $restaurante);
+        $this->restauranteUsuarioService->detach($restaurante, $usuario->id);
          return response()->json(['message' => 'relacionamento excluído com sucesso']);
     }
 }

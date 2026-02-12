@@ -11,6 +11,12 @@ class RestaurantePolicy
     {
         return $user->role === 'SUPER_ADMIN' ? true : null;
     }
+
+    public function manageUsers(User $user, Restaurante $restaurante)
+    {
+        return $restaurante->users()->where('users.id', $user->id)->wherePivotIn('role', ['DONO', 'ADMIN'])->exists();
+    }
+
     public function viewAny(User $user): bool
     {
         return $user->role === 'OWNER' || true;
