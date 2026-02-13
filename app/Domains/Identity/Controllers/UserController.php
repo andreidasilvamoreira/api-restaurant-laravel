@@ -29,7 +29,6 @@ class UserController extends Controller
     public function show(User $user): UserResource
     {
         $this->authorize('view', $user);
-        $this->authorize('view', User::class);
         $user = $this->userService->find($user->id);
         return new UserResource($user);
     }
@@ -48,10 +47,10 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    public function destroy(int $id): JsonResponse
+    public function destroy(User $user): JsonResponse
     {
-        $this->authorize('delete', User::class);
-        $this->userService->delete($id);
+        $this->authorize('delete', $user);
+        $this->userService->delete($user->id);
         return response()->json(['message' => 'Usuário deletado com sucesso!']);
     }
 }
