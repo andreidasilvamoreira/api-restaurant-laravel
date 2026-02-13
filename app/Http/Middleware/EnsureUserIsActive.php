@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +14,7 @@ class EnsureUserIsActive
         $user = auth()->user();
         $restaurante = $request->route('restaurante');
 
-        if ($user->role === 'SUPER_ADMIN') {
+        if ($user->role === User::ROLE_SUPER_ADMIN) {
             return $next($request);
         }
 
