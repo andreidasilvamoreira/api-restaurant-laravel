@@ -18,6 +18,11 @@ class User extends Authenticatable
         'password',
         'role'
     ];
+
+    public const ROLE_SUPER_ADMIN = 'SUPER_ADMIN';
+    public const ROLE_OWNER = 'OWNER';
+    public const ROLE_CLIENTE = 'CLIENTE';
+
     protected $hidden = [
         'password',
         'remember_token',

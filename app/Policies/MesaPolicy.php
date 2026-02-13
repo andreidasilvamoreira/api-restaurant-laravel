@@ -11,36 +11,36 @@ class MesaPolicy
 {
     public function before(User $user, $ability)
     {
-        return $user->role === 'SUPER_ADMIN' ? true : null;
+        return $user->role === User::ROLE_SUPER_ADMIN ? true : null;
     }
     public function viewAny(User $user): bool
     {
-        return $user->role === 'OWNER' || true;
+        return $user->role === User::ROLE_OWNER || true;
     }
 
     public function view(User $user, Mesa $mesa): bool
     {
-        return $this->hasRole($user, $mesa->restaurante, ['ADMIN', 'DONO']) || $user->role === 'OWNER';
+        return $this->hasRole($user, $mesa->restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]) || $user->role === User::ROLE_OWNER;
     }
 
     public function createForRestaurant(User $user, Restaurante $restaurante): bool
     {
-        if ($user->role === 'OWNER') return false;
-        return $this->hasRole($user, $restaurante, ['ADMIN', 'DONO']);
+        if ($user->role === User::ROLE_OWNER) return false;
+        return $this->hasRole($user, $restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);
     }
 
     public function update(User $user, Mesa $mesa): bool
     {
-        if ($user->role === 'OWNER') return false;
+        if ($user->role === User::ROLE_OWNER) return false;
 
-        return $this->hasRole($user, $mesa->restaurante, ['ADMIN', 'DONO']);
+        return $this->hasRole($user, $mesa->restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);
     }
 
     public function delete(User $user, Mesa $mesa): bool
     {
-        if ($user->role === 'OWNER') return false;
+        if ($user->role === User::ROLE_OWNER) return false;
 
-        return $this->hasRole($user, $mesa->restaurante, ['ADMIN', 'DONO']);
+        return $this->hasRole($user, $mesa->restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);
     }
 
     private function hasRole(User $user, ?Restaurante $restaurante, array $roles): bool

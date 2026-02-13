@@ -8,7 +8,7 @@ class UserPolicy
 {
     public function before(User $user, $ability)
     {
-        return $user->role === 'SUPER_ADMIN' ? true : null;
+        return $user->role === User::ROLE_SUPER_ADMIN ? true : null;
     }
     public function viewAny(User $user): bool
     {

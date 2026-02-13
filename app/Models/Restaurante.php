@@ -17,6 +17,10 @@ class Restaurante extends Model
         'ativo'
     ];
 
+    public const ROLE_DONO = 'DONO';
+    public const ROLE_FUNCIONARIO = 'FUNCIONARIO';
+    public const ROLE_ADMIN = 'ADMIN';
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'restaurante_users')->using(RestauranteUser::class)->withPivot(['role', 'ativo'])->withTimestamps();

@@ -10,44 +10,44 @@ class ItemMenuPolicy
 {
     public function before(User $user, $ability)
     {
-        return $user->role === 'SUPER_ADMIN' ? true : null;
+        return $user->role === User::ROLE_SUPER_ADMIN ? true : null;
     }
     public function viewAny(User $user): bool
     {
-        return $user->role === 'OWNER' || true;
+        return $user->role === User::ROLE_OWNER || true;
     }
 
     public function view(User $user, ItemMenu $itemMenu): bool
     {
-        if ($user->role === 'OWNER') return true;
+        if ($user->role === User::ROLE_OWNER) return true;
 
         $restaurante = $itemMenu->categoria?->restaurante;
 
-        return $this->checkRole($user, $restaurante, ['ADMIN', 'FUNCIONARIO', 'DONO']);
+        return $this->checkRole($user, $restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);
     }
 
     public function createForRestaurante(User $user, Restaurante $restaurante): bool
     {
-        if ($user->role === 'OWNER') return false;
+        if ($user->role === User::ROLE_OWNER) return false;
 
-        return $this->checkRole($user, $restaurante, ['ADMIN', 'FUNCIONARIO', 'DONO']);
+        return $this->checkRole($user, $restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);
     }
 
     public function update(User $user, ItemMenu $itemMenu): bool
     {
-        if ($user->role === 'OWNER') return false;
+        if ($user->role === User::ROLE_OWNER) return false;
 
         $restaurante = $itemMenu->categoria?->restaurante;
-        return $this->checkRole($user, $restaurante, ['ADMIN', 'DONO']);
+        return $this->checkRole($user, $restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);
     }
 
     public function delete(User $user, ItemMenu $itemMenu): bool
     {
-        if ($user->role === 'OWNER') return false;
+        if ($user->role === User::ROLE_OWNER) return false;
 
         $restaurante = $itemMenu->categoria?->restaurante;
 
-        return $this->checkRole($user, $restaurante, ['ADMIN', 'DONO']);
+        return $this->checkRole($user, $restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);
     }
 
     private function checkRole(User $user, ?Restaurante $restaurante, array $role): bool
