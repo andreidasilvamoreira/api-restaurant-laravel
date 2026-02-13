@@ -19,7 +19,7 @@ class RestaurantePolicy
 
     public function viewAny(User $user): bool
     {
-        return $user->role === User::ROLE_OWNER|| true;
+        return true;
     }
 
     public function view(User $user, Restaurante $restaurante): bool

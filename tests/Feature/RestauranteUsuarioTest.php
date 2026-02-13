@@ -14,11 +14,10 @@ class RestauranteUsuarioTest extends TestCase
     public function test_super_admin_pode_listar_usuarios_do_restaurante(): void
     {
         $user = User::factory()->create([
-            'role' => 'SUPER_ADMIN',
+            'role' => User::ROLE_SUPER_ADMIN,
         ]);
 
         $restaurante = Restaurante::factory()->create();
-
         $response = $this->actingAs($user, 'sanctum')
             ->getJson("/api/restaurantes/{$restaurante->id}/usuarios");
 
