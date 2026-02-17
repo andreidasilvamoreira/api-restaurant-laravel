@@ -54,9 +54,10 @@ class ClienteController extends Controller
         return new ClienteResource($cliente);
     }
 
-    public function destroy(int $id): JsonResponse
+    public function destroy(Cliente $cliente): JsonResponse
     {
-        $this->clienteService->delete($id);
+        $this->authorize('delete', $cliente);
+        $this->clienteService->delete($cliente->id);
         return response()->json(["message" => "Cliente deletado com sucesso!"], 200);
     }
 }

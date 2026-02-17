@@ -20,7 +20,7 @@ class CategoriaPolicy
 
     public function view(User $user, Categoria $categoria): bool
     {
-        if ($user->role === User::ROLE_OWNER) return true;
+        if ($user->role === User::ROLE_OWNER || $user->role === User::ROLE_CLIENTE) return true;
         return $this->checkRole($user, $categoria->restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);
     }
 
