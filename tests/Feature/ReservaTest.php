@@ -2,7 +2,10 @@
 
 namespace Tests\Feature;
 
+ feature/automated-tests
 use App\Models\Mesa;
+
+ main
 use App\Models\Reserva;
 use App\Models\Restaurante;
 use App\Models\User;
@@ -19,17 +22,24 @@ class ReservaTest extends TestCase
         $user = User::factory()->create([
             'role' => User::ROLE_SUPER_ADMIN,
         ]);
+ feature/automated-tests
         $restaurante = Restaurante::factory()->create();
 
         $mesa = Mesa::factory()->create([
             'restaurante_id' => $restaurante->id,
         ]);
 
+ main
+
         $reserva = Reserva::factory()->create();
 
         $payload = [
+ feature/automated-tests
             'mesa_id' => $mesa->id,
             'restaurante_id' => $restaurante->id,
+            'mesa_id' => 1,
+            'restaurante_id' => 1,
+ main
             'cliente_id' => $reserva->cliente_id,
             'data_reserva' => now()->addDay()->toDateTimeString(),
             'numero_pessoas' => 1,
