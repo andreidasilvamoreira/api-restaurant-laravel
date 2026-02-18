@@ -3,6 +3,7 @@
 namespace App\Domains\Atendimento\Requests\Pedido;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StorePedidoRequest extends FormRequest
 {
@@ -14,12 +15,19 @@ class StorePedidoRequest extends FormRequest
 
     public function rules(): array
     {
+        $restauranteId = $this->route('restaurante');
         return [
-            'status' => 'required|in:aberto,preparando,finalizado,pago',
+            'status' => 'required', Rule::in(['aberto','preparando','finalizado','pago']),
             'data_hora' => 'required|date',
             'cliente_id' => 'required|exists:clientes,id',
             'mesa_id' => 'nullable|exists:mesas,id',
-            'atendente_id' => 'nullable|exists:users,id',
+            'atendente_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('restaurante_user', 'user_id')
+                    ->where('restaurante_id', $restauranteId)
+                    ->whereIn('role', ['FUNCIONARIO']),
+            ],
         ];
     }
 

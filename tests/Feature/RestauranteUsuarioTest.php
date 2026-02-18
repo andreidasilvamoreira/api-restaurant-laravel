@@ -18,10 +18,7 @@ class RestauranteUsuarioTest extends TestCase
         ]);
 
         $restaurante = Restaurante::factory()->create();
-        $response = $this->actingAs($user, 'sanctum')
-            ->getJson("/api/restaurantes/{$restaurante->id}/usuarios");
-
-        $response->assertOk();
+        $this->actingAs($user, 'sanctum')->getJson("/api/restaurantes/{$restaurante->id}/usuarios")->assertOk();
     }
 
     public function test_admin_pode_listar_usuarios_do_restaurante():void
@@ -37,9 +34,7 @@ class RestauranteUsuarioTest extends TestCase
             'ativo' => true
         ]);
 
-        $response = $this->actingAs($user, 'sanctum')->getJson("/api/restaurantes/{$restaurante->id}/usuarios");
-
-        $response->assertOk();
+        $this->actingAs($user, 'sanctum')->getJson("/api/restaurantes/{$restaurante->id}/usuarios")->assertOk();
     }
 
     public function test_funcionario_ativo_nao_pode_listar_usuarios_do_restaurante(): void
@@ -55,8 +50,7 @@ class RestauranteUsuarioTest extends TestCase
             'ativo' => true
         ]);
 
-        $response = $this->actingAs($user, 'sanctum')->getJson("/api/restaurantes/{$restaurante->id}/usuarios");
-        $response->assertStatus(403);
+        $this->actingAs($user, 'sanctum')->getJson("/api/restaurantes/{$restaurante->id}/usuarios")->assertStatus(403);
     }
 
     public function test_usuario_inativo_nao_pode_listar_usuarios_do_restaurante(): void
@@ -72,8 +66,6 @@ class RestauranteUsuarioTest extends TestCase
             'ativo' => false
         ]);
 
-        $response = $this->actingAs($user, 'sanctum')->getJson("/api/restaurantes/{$restaurante->id}/usuarios");
-
-        $response->assertStatus(403);
+        $this->actingAs($user, 'sanctum')->getJson("/api/restaurantes/{$restaurante->id}/usuarios")->assertStatus(403);
     }
 }

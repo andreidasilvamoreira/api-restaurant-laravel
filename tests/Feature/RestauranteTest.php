@@ -19,8 +19,7 @@ class RestauranteTest extends TestCase
 
         $restaurante = Restaurante::factory()->create();
 
-        $response = $this->actingAs($user, 'sanctum')->deleteJson("/api/restaurantes/{$restaurante->id}");
-        $response->assertStatus(200);
+        $this->actingAs($user, 'sanctum')->deleteJson("/api/restaurantes/{$restaurante->id}")->assertStatus(200);
     }
 
     public function test_owner_pode_criar_restaurante(): void
@@ -31,9 +30,7 @@ class RestauranteTest extends TestCase
 
         $payload = Restaurante::factory()->make()->toArray();
 
-        $response = $this->actingAs($user, 'sanctum')->postJson("/api/restaurantes", $payload);
-
-        $response->assertStatus(201);
+        $response = $this->actingAs($user, 'sanctum')->postJson("/api/restaurantes", $payload)->assertStatus(201);
 
         $response->assertJsonFragment(['nome' => $payload['nome']]);
         $this->assertDatabaseHas('restaurantes', ['nome' => $payload['nome']]);
@@ -47,8 +44,7 @@ class RestauranteTest extends TestCase
 
         $restaurante = Restaurante::factory()->create();
 
-        $response = $this->actingAs($user, 'sanctum')->getJson("/api/restaurantes/{$restaurante->id}");
-        $response->assertStatus(200);
+        $response = $this->actingAs($user, 'sanctum')->getJson("/api/restaurantes/{$restaurante->id}")->assertStatus(200);
         $response->assertJsonFragment(['id' => $restaurante->id]);
     }
 
@@ -62,9 +58,8 @@ class RestauranteTest extends TestCase
 
         $payload = Restaurante::factory()->make()->toArray();
 
-        $response = $this->actingAs($user, 'sanctum')->putJson("/api/restaurantes/{$restaurante->id}", $payload);
+        $this->actingAs($user, 'sanctum')->putJson("/api/restaurantes/{$restaurante->id}", $payload)->assertStatus(403);
 
-        $response->assertStatus(403);
         $this->assertDatabaseHas('restaurantes', ['id' => $restaurante->id, 'nome' => $restaurante->nome]);
     }
 
@@ -76,9 +71,7 @@ class RestauranteTest extends TestCase
 
         $restaurante = Restaurante::factory()->create();
 
-        $response = $this->actingAs($user, 'sanctum')->deleteJson("/api/restaurantes/{$restaurante->id}");
-
-        $response->assertStatus(403);
+        $this->actingAs($user, 'sanctum')->deleteJson("/api/restaurantes/{$restaurante->id}")->assertStatus(403);
         $this->assertDatabaseHas('restaurantes', ['id' => $restaurante->id, 'nome' => $restaurante->nome]);
     }
 
@@ -98,12 +91,9 @@ class RestauranteTest extends TestCase
         $payload = ['nome' => 'Nome atualizado'];
 
         $this->actingAs($user, 'sanctum');
-        $response = $this->getJson("/api/restaurantes/{$restaurante->id}");
-        $response->assertStatus(200);
-        $response = $this->putJson("/api/restaurantes/{$restaurante->id}", $payload);
-        $response->assertStatus(200);
-        $response = $this->deleteJson("/api/restaurantes/{$restaurante->id}");
-        $response->assertStatus(200);
+        $this->getJson("/api/restaurantes/{$restaurante->id}")->assertStatus(200);
+        $this->putJson("/api/restaurantes/{$restaurante->id}", $payload)->assertStatus(200);
+        $this->deleteJson("/api/restaurantes/{$restaurante->id}")->assertStatus(200);
         $this->assertDatabaseMissing('restaurantes', ['id' => $restaurante->id]);
     }
 
@@ -120,14 +110,12 @@ class RestauranteTest extends TestCase
             'role' => Restaurante::ROLE_ADMIN,
             'ativo' => true
         ]);
+
         $this->actingAs($user, 'sanctum');
 
-        $response = $this->getJson("/api/restaurantes/{$restaurante->id}");
-        $response->assertStatus(200);
-        $response = $this->putJson("/api/restaurantes/{$restaurante->id}", $payload);
-        $response->assertStatus(200);
-        $response = $this->deleteJson("/api/restaurantes/{$restaurante->id}");
-        $response->assertStatus(403);
+        $this->getJson("/api/restaurantes/{$restaurante->id}")->assertStatus(200);
+        $this->putJson("/api/restaurantes/{$restaurante->id}", $payload)->assertStatus(200);
+        $this->deleteJson("/api/restaurantes/{$restaurante->id}")->assertStatus(403);
         $this->assertDatabaseHas('restaurantes', [
             'id' => $restaurante->id,
             'nome' => 'Nome atualizado',
@@ -146,7 +134,6 @@ class RestauranteTest extends TestCase
             'ativo' => true
         ]);
 
-        $response = $this->actingAs($user, 'sanctum')->getJson("/api/restaurantes/{$restaurante->id}");
-        $response->assertStatus(403);
+        $this->actingAs($user, 'sanctum')->getJson("/api/restaurantes/{$restaurante->id}")->assertStatus(403);
     }
 }

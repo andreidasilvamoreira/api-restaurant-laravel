@@ -57,7 +57,3 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::patch('usuarios/{usuario}/role', [RestauranteUsuarioController::class, 'updateRole'])->middleware('role:ADMIN');
     });
 });
-
-
-
-

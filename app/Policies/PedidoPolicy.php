@@ -19,9 +19,9 @@ class PedidoPolicy
 
     public function view(User $user, Pedido $pedido): bool
     {
-        if ($pedido->user_id === $user->id) return true;
+        if ($pedido->cliente?->user_id === $user->id) return true;
 
-        return $this->hasRole($user, $pedido->restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]) || $user->role === User::ROLE_OWNER;
+        return $this->hasRole($user, $pedido->restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN, Restaurante::ROLE_FUNCIONARIO]) || $user->role === User::ROLE_OWNER;
     }
 
     public function createForRestaurant(User $user, Restaurante $restaurante): bool
@@ -34,7 +34,7 @@ class PedidoPolicy
     public function update(User $user, Pedido $pedido): bool
     {
         if ($user->role === User::ROLE_OWNER) return false;
-        if ($pedido->user_id === $user->id) {
+        if ($pedido->cliente?->user_id === $user->id) {
             return in_array($pedido->status, ['aberto']);
         }
 
@@ -44,7 +44,7 @@ class PedidoPolicy
     public function delete(User $user, Pedido $pedido): bool
     {
         if ($user->role === User::ROLE_OWNER) return false;
-        if ($pedido->user_id === $user->id) {
+        if ($pedido->cliente?->user_id === $user->id) {
             return in_array($pedido->status, ['aberto']);
         }
         return $this->hasRole($user, $pedido->restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);

@@ -25,22 +25,16 @@ class UserTest extends TestCase
 
         $this->actingAs($superAdmin, 'sanctum');
 
-        $response = $this->getJson("/api/users");
-        $response->assertStatus(200);
-
-        $response = $this->getJson("/api/users/{$outroUser->id}");
-        $response->assertStatus(200);
-
-        $response = $this->putJson("/api/users/{$outroUser->id}", $payload);
-        $response->assertStatus(200);
+        $this->getJson("/api/users")->assertStatus(200);
+        $this->getJson("/api/users/{$outroUser->id}")->assertStatus(200);
+        $this->putJson("/api/users/{$outroUser->id}", $payload)->assertStatus(200);
 
         $this->assertDatabaseHas('users', [
             'id' => $outroUser->id,
             'name' => 'Novo Nome',
         ]);
 
-        $response = $this->deleteJson("/api/users/{$outroUser->id}");
-        $response->assertStatus(200);
+        $this->deleteJson("/api/users/{$outroUser->id}")->assertStatus(200);
     }
 
     public function test_usuario_comum_nao_pode_listar_users(): void
@@ -50,8 +44,8 @@ class UserTest extends TestCase
         ]);
 
         $this->actingAs($userCliente, 'sanctum');
-        $response = $this->getJson("/api/users");
-        $response->assertStatus(403);
+
+        $this->getJson("/api/users")->assertStatus(403);
     }
 
     public function test_usuario_pode_ver_e_atualizar_proprio_perfil(): void
@@ -67,10 +61,8 @@ class UserTest extends TestCase
 
         $this->actingAs($userCliente, 'sanctum');
 
-        $response = $this->getJson("/api/users/{$userCliente->id}");
-        $response->assertStatus(200);
-        $response = $this->putJson("/api/users/{$userCliente->id}", $payload);
-        $response->assertStatus(200);
+        $this->getJson("/api/users/{$userCliente->id}")->assertStatus(200);
+        $this->putJson("/api/users/{$userCliente->id}", $payload)->assertStatus(200);
 
         $this->assertDatabaseHas('users', [
             'id' => $userCliente->id,
@@ -93,11 +85,8 @@ class UserTest extends TestCase
 
         $this->actingAs($userCliente, 'sanctum');
 
-        $response = $this->putJson("/api/users/{$outroUser->id}", $payload);
-        $response->assertStatus(403);
-        $response = $this->getJson("/api/users/{$outroUser->id}");
-        $response->assertStatus(403);
-        $response = $this->deleteJson("/api/users/{$outroUser->id}");
-        $response->assertStatus(403);
+        $this->putJson("/api/users/{$outroUser->id}", $payload)->assertStatus(403);
+        $this->getJson("/api/users/{$outroUser->id}")->assertStatus(403);
+        $this->deleteJson("/api/users/{$outroUser->id}")->assertStatus(403);
     }
 }
