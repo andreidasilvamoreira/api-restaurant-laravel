@@ -21,7 +21,7 @@ class ReservaPolicy
     public function view(User $user, Reserva $reserva): bool
     {
         if ($user->role === User::ROLE_OWNER) return true;
-        return $this->hasRole($user, $reserva->restaurante,[Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);
+        return $this->hasRole($user, $reserva->restaurante,[Restaurante::ROLE_DONO, Restaurante::ROLE_FUNCIONARIO, Restaurante::ROLE_ADMIN]);
     }
 
     public function createForRestaurant(User $user, Restaurante $restaurante): bool

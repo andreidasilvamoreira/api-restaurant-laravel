@@ -22,8 +22,7 @@ class CategoriaTest extends TestCase
         $categoria = Categoria::factory()->create();
 
         $this->actingAs($user, 'sanctum');
-        $response = $this->deleteJson("/api/categorias/{$categoria->id}");
-        $response->assertOk();
+        $this->deleteJson("/api/categorias/{$categoria->id}")->assertOk();
     }
 
     public function test_owner_pode_ver_mas_nao_pode_deletar_categoria(): void
@@ -35,10 +34,8 @@ class CategoriaTest extends TestCase
         $categoria = Categoria::factory()->create();
 
         $this->actingAs($user, 'sanctum');
-        $response = $this->getJson("/api/categorias");
-        $response->assertOk();
-        $response = $this->deleteJson("/api/categorias/{$categoria->id}");
-        $response->assertStatus(403);
+        $this->getJson("/api/categorias")->assertOk();
+        $this->deleteJson("/api/categorias/{$categoria->id}")->assertStatus(403);
     }
 
     public function test_dono_pode_tudo(): void
@@ -58,10 +55,9 @@ class CategoriaTest extends TestCase
         ]);
 
         $this->actingAs($user, 'sanctum');
-        $response = $this->getJson("/api/categorias/{$categoria->id}");
-        $response->assertOk();
-        $response = $this->deleteJson("/api/categorias/{$categoria->id}");
-        $response->assertOk();
+
+        $this->getJson("/api/categorias/{$categoria->id}")->assertOk();
+        $this->deleteJson("/api/categorias/{$categoria->id}")->assertOk();
     }
 
     public function test_admin_pode_tudo_menos_delete(): void
