@@ -23,7 +23,7 @@ class ItemMenuPolicy
 
         $restaurante = $itemMenu->categoria?->restaurante;
 
-        return $this->checkRole($user, $restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);
+        return $this->checkRole($user, $restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_FUNCIONARIO, Restaurante::ROLE_ADMIN]);
     }
 
     public function createForRestaurante(User $user, Restaurante $restaurante): bool
