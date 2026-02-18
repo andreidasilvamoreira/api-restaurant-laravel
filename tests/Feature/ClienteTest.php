@@ -49,6 +49,7 @@ class ClienteTest extends TestCase
         ]);
 
         $payload = Cliente::factory()->make()->toArray();
+        $payload['telefone'] = (string) $payload['telefone'];
 
         unset($payload['user_id']);
 

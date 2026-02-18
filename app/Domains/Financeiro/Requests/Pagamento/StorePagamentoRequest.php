@@ -18,7 +18,7 @@ class StorePagamentoRequest extends FormRequest
             'data_hora' => 'required|date',
             'valor' => 'required|numeric|min:0.01',
             'forma_pagamento' => 'required|in:pix,cartao_credito,cartao_debito,dinheiro',
-            'status_pagamento' => 'required|in:pendente,pago,cancelado',
+            'status_pagamento' => 'required|in:pendente,confirmado,cancelado',
             'pedido_id' => 'required|exists:pedidos,id',
         ];
     }

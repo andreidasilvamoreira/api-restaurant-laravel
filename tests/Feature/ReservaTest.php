@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Mesa;
 use App\Models\Reserva;
 use App\Models\Restaurante;
 use App\Models\User;
@@ -18,12 +19,17 @@ class ReservaTest extends TestCase
         $user = User::factory()->create([
             'role' => User::ROLE_SUPER_ADMIN,
         ]);
+        $restaurante = Restaurante::factory()->create();
+
+        $mesa = Mesa::factory()->create([
+            'restaurante_id' => $restaurante->id,
+        ]);
 
         $reserva = Reserva::factory()->create();
 
         $payload = [
-            'mesa_id' => 1,
-            'restaurante_id' => 1,
+            'mesa_id' => $mesa->id,
+            'restaurante_id' => $restaurante->id,
             'cliente_id' => $reserva->cliente_id,
             'data_reserva' => now()->addDay()->toDateTimeString(),
             'numero_pessoas' => 1,

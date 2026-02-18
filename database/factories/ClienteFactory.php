@@ -13,7 +13,7 @@ class ClienteFactory extends Factory
     public function definition(): array
     {
         return [
-            'telefone' => fake()->numerify('##9########'),
+            'telefone' => '62999998888',
             'endereco' => $this->faker->address(),
             'user_id' => User::factory()
         ];

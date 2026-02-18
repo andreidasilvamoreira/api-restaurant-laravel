@@ -15,7 +15,7 @@ class StoreClienteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'telefone' => 'integer',
+            'telefone' => 'string',
             'endereco' => 'string',
         ];
     }
@@ -23,7 +23,7 @@ class StoreClienteRequest extends FormRequest
     public function messages()
     {
         return [
-            'telefone.integer' => 'É necessário que o numero seja inteiro',
+            'telefone.string' => 'É necessário que o numero seja do tipo texto',
             'endereco.string' => 'O endereço tem que ser do tipo texto',
         ];
     }
