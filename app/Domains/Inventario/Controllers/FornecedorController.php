@@ -37,7 +37,11 @@ class FornecedorController extends Controller
     public function store(StoreFornecedorRequest $request, Restaurante $restaurante): FornecedorResource
     {
         $this->authorize('createForRestaurante', [Fornecedor::class, $restaurante]);
-        $fornecedor = $this->fornecedorService->create($request->validated());
+
+        $data = $request->validated();
+        $data['restaurante_id'] = $restaurante->id;
+
+        $fornecedor = $this->fornecedorService->create($data);
         return new FornecedorResource($fornecedor);
     }
 

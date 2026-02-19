@@ -19,7 +19,6 @@ class UpdateFornecedorRequest extends FormRequest
             'telefone' => 'sometimes|required|string|max:20',
             'email' => 'sometimes|required|email|max:150',
             'endereco' => 'sometimes|required|string|max:255',
-            'restaurante_id' => 'sometimes|required|exists:restaurantes,id',
         ];
     }
 
@@ -32,8 +31,6 @@ class UpdateFornecedorRequest extends FormRequest
             'email.email' => 'Informe um e-mail válido.',
             'endereco.required' => 'O endereço é obrigatório.',
             'endereco.string' => 'O campo precisa ser do tipo texto',
-            'restaurante_id.required' => 'O restaurante é obrigatório.',
-            'restaurante_id.exists' => 'Restaurante inválido.',
         ];
     }
 }
