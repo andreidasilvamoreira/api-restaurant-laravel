@@ -19,10 +19,13 @@ class PedidoTest extends TestCase
         $user = User::factory()->create([
             'role' => User::ROLE_SUPER_ADMIN,
         ]);
+
+        $restaurante = Restaurante::factory()->create();
+
         $pedido = Pedido::factory()->create([]);
         $this->actingAs($user, 'sanctum');
 
-        $this->getJson('/api/pedidos')->assertOk();
+        $this->getJson("/api/restaurantes/{$restaurante->id}/pedidos")->assertOk();
         $this->deleteJson("/api/pedidos/{$pedido->id}")->assertOk();
     }
 
@@ -32,10 +35,15 @@ class PedidoTest extends TestCase
             'role' => User::ROLE_OWNER,
         ]);
 
-        $pedido = Pedido::factory()->create([]);
-        $this->actingAs($user, 'sanctum');
+        $restaurante = Restaurante::factory()->create();
+        $restaurante->users()->attach($user->id,[
+            'role' => Restaurante::ROLE_FUNCIONARIO,
+            'ativo' => true,
+        ]);
 
-        $this->getJson("/api/pedidos")->assertOk();
+        $pedido = Pedido::factory()->create();
+        $this->actingAs($user, 'sanctum');
+        $this->getJson("/api/restaurantes/{$restaurante->id}/pedidos")->assertOk();
         $this->deleteJson("/api/pedidos/{$pedido->id}")->assertStatus(403);
     }
 

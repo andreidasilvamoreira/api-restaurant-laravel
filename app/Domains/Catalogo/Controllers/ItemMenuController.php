@@ -21,9 +21,9 @@ class ItemMenuController extends Controller
         $this->itemMenuService = $itemMenuService;
     }
 
-    public function index(): AnonymousResourceCollection
+    public function index(Restaurante $restaurante): AnonymousResourceCollection
     {
-        $this->authorize('viewAny', ItemMenu::class);
+        $this->authorize('viewAny', [ItemMenu::class, $restaurante]);
         return ItemMenuResource::collection($this->itemMenuService->findAll(auth()->user()));
     }
 

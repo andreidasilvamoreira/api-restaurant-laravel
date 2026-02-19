@@ -15,7 +15,7 @@ class CategoriaPolicy
     }
     public function viewAny(User $user): bool
     {
-        return $user->role === User::ROLE_OWNER || $user->role !== User::ROLE_CLIENTE;
+        return $user->role !== User::ROLE_CLIENTE;
     }
 
     public function view(User $user, Categoria $categoria): bool

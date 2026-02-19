@@ -20,9 +20,9 @@ class InventarioController extends Controller
         $this->inventarioService = $inventarioService;
     }
 
-    public function index():AnonymousResourceCollection
+    public function index(Restaurante $restaurante):AnonymousResourceCollection
     {
-        $this->authorize('viewAny', Inventario::class);
+        $this->authorize('viewAny', [Inventario::class, $restaurante]);
         return InventarioResource::collection($this->inventarioService->findAll(auth()->user()));
     }
 

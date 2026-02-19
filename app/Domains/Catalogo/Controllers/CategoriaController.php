@@ -23,7 +23,7 @@ class CategoriaController extends Controller
     }
     public function index(): AnonymousResourceCollection
     {
-        $this->authorize('viewAny', Fornecedor::class);
+        $this->authorize('viewAny', Categoria::class);
         return CategoriaResource::collection($this->categoriaService->findAll(auth()->user()));
     }
 

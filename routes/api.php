@@ -33,18 +33,25 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('me/clientes', [ClienteController::class, 'update']);
     Route::delete('clientes/{cliente}', [ClienteController::class, 'destroy']);
 
-    Route::apiResource('mesas', MesaController::class)->except(['store']);
-    Route::apiResource('pedidos', PedidoController::class)->except(['store']);
-    Route::apiResource('reservas', ReservaController::class)->except(['store']);
-    Route::apiResource('itens_menu', ItemMenuController::class)->except(['store'])->parameters(['itens_menu' => 'itemMenu']);
+    Route::apiResource('mesas', MesaController::class)->except(['store', 'index']);
+    Route::apiResource('pedidos', PedidoController::class)->except(['store', 'index']);
+    Route::apiResource('reservas', ReservaController::class)->except(['store', 'index']);
+    Route::apiResource('itens_menu', ItemMenuController::class)->except(['store', 'index'])->parameters(['itens_menu' => 'itemMenu']);
     Route::apiResource('categorias', CategoriaController::class)->except(['store']);
-    Route::apiResource('pagamentos', PagamentoController::class)->except(['store']);
+    Route::apiResource('pagamentos', PagamentoController::class)->except(['store', 'index']);
     Route::apiResource('restaurantes', RestauranteController::class);
-    Route::apiResource('inventarios', InventarioController::class)->except(['store']);
-    Route::apiResource('fornecedores', FornecedorController::class)->except(['store'])->parameters(['fornecedores' => 'fornecedor']);
+    Route::apiResource('inventarios', InventarioController::class)->except(['store', 'index']);
+    Route::apiResource('fornecedores', FornecedorController::class)->except(['store', 'index'])->parameters(['fornecedores' => 'fornecedor']);
     Route::apiResource('users', UserController::class);
 
     Route::prefix('restaurantes/{restaurante}')->middleware('ativo')->group(function () {
+        Route::get('reservas', [ReservaController::class, 'index']);
+        Route::get('pedidos', [PedidoController::class, 'index']);
+        Route::get('pagamentos', [PagamentoController::class, 'index']);
+        Route::get('mesas', [MesaController::class, 'index']);
+        Route::get('itens_menu', [ItemMenuController::class, 'index']);
+        Route::get('fornecedores', [FornecedorController::class, 'index']);
+        Route::get('inventarios', [InventarioController::class, 'index']);
         Route::post('pedidos', [PedidoController::class, 'store']);
         Route::post('inventarios', [InventarioController::class, 'store']);
         Route::post('fornecedores', [FornecedorController::class, 'store']);

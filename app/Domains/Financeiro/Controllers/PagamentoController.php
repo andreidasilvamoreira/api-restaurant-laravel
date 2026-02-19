@@ -20,9 +20,9 @@ class PagamentoController extends Controller
         $this->pagamentoService = $pagamentoService;
     }
 
-    public function index(): AnonymousResourceCollection
+    public function index(Restaurante $restaurante): AnonymousResourceCollection
     {
-        $this->authorize('viewAny', Pagamento::class);
+        $this->authorize('viewAny', [Pagamento::class, $restaurante]);
         return PagamentoResource::collection($this->pagamentoService->findAll(auth()->user()));
     }
 

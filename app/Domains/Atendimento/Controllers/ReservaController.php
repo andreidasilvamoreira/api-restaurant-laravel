@@ -20,9 +20,9 @@ class ReservaController extends Controller
         $this->reservaService = $reservaService;
     }
 
-    public function index(): AnonymousResourceCollection
+    public function index(Restaurante $restaurante): AnonymousResourceCollection
     {
-        $this->authorize('viewAny', Reserva::class);
+        $this->authorize('viewAny', [Reserva::class, $restaurante]);
         return ReservaResource::collection($this->reservaService->findAll(auth()->user()));
     }
 

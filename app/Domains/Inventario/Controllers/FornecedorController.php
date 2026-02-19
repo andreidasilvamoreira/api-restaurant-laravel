@@ -21,9 +21,9 @@ class FornecedorController extends Controller
         $this->fornecedorService = $fornecedorService;
     }
 
-    public function index(): AnonymousResourceCollection
+    public function index(Restaurante $restaurante): AnonymousResourceCollection
     {
-        $this->authorize('viewAny', Fornecedor::class);
+        $this->authorize('viewAny', [Fornecedor::class, $restaurante]);
         return FornecedorResource::collection($this->fornecedorService->findAll(auth()->user()));
     }
 

@@ -20,10 +20,12 @@ class ItemMenuTest extends TestCase
             'role' => User::ROLE_SUPER_ADMIN,
         ]);
 
+        $restaurante = Restaurante::factory()->create();
+
         $itemMenu = ItemMenu::factory()->create();
 
         $this->actingAs($user, 'sanctum');
-        $this->getJson('/api/itens_menu')->assertOk();
+        $this->getJson("/api/restaurantes/{$restaurante->id}/itens_menu")->assertOk();
         $this->deleteJson("/api/itens_menu/{$itemMenu->id}")->assertOk();
     }
 

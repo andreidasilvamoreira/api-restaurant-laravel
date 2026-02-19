@@ -11,6 +11,7 @@ use Tests\TestCase;
 
 class InventarioTest extends TestCase
 {
+
     use RefreshDatabase;
 
     public function test_super_admin_acesso_universal_inventario(): void

@@ -20,9 +20,9 @@ class MesaController extends Controller
         $this->mesaService = $mesaService;
     }
 
-    public function index(): AnonymousResourceCollection
+    public function index(Restaurante $restaurante): AnonymousResourceCollection
     {
-        $this->authorize('viewAny', Mesa::class);
+        $this->authorize('viewAny', [Mesa::class, $restaurante]);
         return MesaResource::collection($this->mesaService->findAll(auth()->user()));
     }
 

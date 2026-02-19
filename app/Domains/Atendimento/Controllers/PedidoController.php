@@ -20,9 +20,9 @@ class PedidoController extends Controller
         $this->pedidoService = $pedidoService;
     }
 
-    public function index(): AnonymousResourceCollection
+    public function index(Restaurante $restaurante): AnonymousResourceCollection
     {
-        $this->authorize('viewAny', Pedido::class);
+        $this->authorize('viewAny', [Pedido::class, $restaurante]);
         return PedidoResource::collection($this->pedidoService->findAll(auth()->user()));
     }
 

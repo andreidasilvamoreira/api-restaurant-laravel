@@ -13,9 +13,10 @@ class InventarioPolicy
         return $user->role === User::ROLE_SUPER_ADMIN ? true : null;
     }
 
-    public function viewAny(User $user): bool
+    public function viewAny(User $user, Restaurante $restaurante): bool
     {
-        return $user->role === User::ROLE_OWNER || true;
+        if ($user->role === User::ROLE_OWNER) return true;
+        return $this->checkRole($user, $restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);
     }
 
     public function view(User $user, Inventario $inventario): bool
