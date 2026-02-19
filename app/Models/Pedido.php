@@ -20,6 +20,18 @@ class Pedido extends Model
         'atendente_id',
     ];
 
+    public const STATUS_ABERTO = 'aberto';
+    public const STATUS_PREPARANDO= 'preparando';
+    public const STATUS_FINALIZADO = 'finalizado';
+    public const STATUS_PAGO = 'pago';
+
+    public const STATUS_PEDIDO = [
+        self::STATUS_ABERTO,
+        self::STATUS_PREPARANDO,
+        self::STATUS_FINALIZADO,
+        self::STATUS_PAGO,
+    ];
+
     protected $casts = [
         'data_hora' => 'datetime',
     ];

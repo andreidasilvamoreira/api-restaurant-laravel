@@ -2,7 +2,9 @@
 
 namespace App\Domains\Atendimento\Requests\Reserva;
 
+use App\Models\Reserva;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateReservaRequest extends FormRequest
 {
@@ -17,7 +19,7 @@ class UpdateReservaRequest extends FormRequest
         return [
             'data_reserva' => 'sometimes|date|after_or_equal:now',
             'numero_pessoas' => 'sometimes|integer|min:1',
-            'status' => 'sometimes|in:cancelado,confirmada,finalizada,pendente',
+            'status' => ['sometimes', Rule::in(Reserva::STATUS_RESERVA)],
             'mesa_id' => 'sometimes|nullable|exists:mesas,id',
             'restaurante_id' => 'sometimes|exists:restaurantes,id',
             'cliente_id' => 'sometimes|exists:clientes,id',

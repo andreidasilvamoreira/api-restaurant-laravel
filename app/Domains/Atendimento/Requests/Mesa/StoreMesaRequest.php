@@ -2,7 +2,9 @@
 
 namespace App\Domains\Atendimento\Requests\Mesa;
 
+use App\Models\Mesa;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreMesaRequest extends FormRequest
 {
@@ -17,7 +19,7 @@ class StoreMesaRequest extends FormRequest
         return [
             'numero' => 'required|integer|min:1',
             'capacidade' => 'required|integer|min:1',
-            'status' => 'required|in:disponivel,ocupada,reservada',
+            'status' => ['sometimes', Rule::in(Mesa::STATUS)],
         ];
     }
 

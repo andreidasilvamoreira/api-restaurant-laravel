@@ -2,7 +2,9 @@
 
 namespace App\Domains\Atendimento\Requests\Pedido;
 
+use App\Models\Pedido;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdatePedidoRequest extends FormRequest
 {
@@ -15,7 +17,7 @@ class UpdatePedidoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => 'sometimes|in:aberto,preparando,finalizado,pago',
+            'status' => ['sometimes', Rule::in(Pedido::STATUS_PEDIDO)],
             'data_hora' => 'sometimes|date',
             'restaurante_id' => 'sometimes|exists:restaurantes,id',
             'cliente_id' => 'sometimes|exists:clientes,id',

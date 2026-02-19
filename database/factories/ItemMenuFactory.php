@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Categoria;
+use App\Models\ItemMenu;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,7 +17,7 @@ class ItemMenuFactory extends Factory
             'nome' => $this->faker->name(),
             'descricao' => $this->faker->text(),
             'preco' => $this->faker->randomFloat(2,1, 10000),
-            'disponibilidade' => $this->faker->randomElement(['disponivel','indisponivel']),
+            'disponibilidade' => $this->faker->randomElement(ItemMenu::DISPONIBILIDADE),
             'categoria_id' => Categoria::factory()
         ];
     }

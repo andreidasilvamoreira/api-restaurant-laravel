@@ -2,7 +2,9 @@
 
 namespace App\Domains\Financeiro\Requests\Pagamento;
 
+use App\Models\Pagamento;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StorePagamentoRequest extends FormRequest
 {
@@ -17,8 +19,8 @@ class StorePagamentoRequest extends FormRequest
         return [
             'data_hora' => 'required|date',
             'valor' => 'required|numeric|min:0.01',
-            'forma_pagamento' => 'required|in:pix,cartao_credito,cartao_debito,dinheiro',
-            'status_pagamento' => 'required|in:pendente,confirmado,cancelado',
+            'forma_pagamento' => ['required', Rule::in(Pagamento::PAGAMENTO)],
+            'status_pagamento' => ['required', Rule::in(Pagamento::STATUS_PAGAMENTO)],
             'pedido_id' => 'required|exists:pedidos,id',
         ];
     }

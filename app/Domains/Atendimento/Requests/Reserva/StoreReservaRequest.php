@@ -2,7 +2,10 @@
 
 namespace App\Domains\Atendimento\Requests\Reserva;
 
+use App\Models\Pedido;
+use App\Models\Reserva;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreReservaRequest extends FormRequest
 {
@@ -17,7 +20,7 @@ class StoreReservaRequest extends FormRequest
         return [
             'data_reserva' => 'required|date|after_or_equal:now',
             'numero_pessoas' => 'required|integer|min:1',
-            'status' => 'required|in:cancelado,confirmada,finalizada,pendente',
+            'status' => ['required', Rule::in(Reserva::STATUS_RESERVA)],
             'mesa_id' => 'nullable|exists:mesas,id',
             'restaurante_id' => 'required|exists:restaurantes,id',
             'cliente_id' => 'required|exists:clientes,id',

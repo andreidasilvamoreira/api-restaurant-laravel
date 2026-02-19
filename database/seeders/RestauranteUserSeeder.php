@@ -11,10 +11,10 @@ class RestauranteUserSeeder extends Seeder
     {
         DB::table('restaurante_users')->insert([
             ['user_id' => 1, 'restaurante_id' => 1, 'role' => 'CLIENTE', 'ativo' => true],
-            ['user_id' => 2, 'restaurante_id' => 1, 'role' => 'ATENDENTE', 'ativo' => true],
+            ['user_id' => 2, 'restaurante_id' => 1, 'role' => 'FUNCIONARIO', 'ativo' => true],
             ['user_id' => 3, 'restaurante_id' => 1, 'role' => 'ADMIN', 'ativo' => false],
             ['user_id' => 1, 'restaurante_id' => 2, 'role' => 'CLIENTE', 'ativo' => false],
-            ['user_id' => 2, 'restaurante_id' => 2, 'role' => 'ATENDENTE', 'ativo' => false],
+            ['user_id' => 2, 'restaurante_id' => 2, 'role' => 'FUNCIONARIO', 'ativo' => false],
             ['user_id' => 3, 'restaurante_id' => 3, 'role' => 'ADMIN', 'ativo' => true],
         ]);
 

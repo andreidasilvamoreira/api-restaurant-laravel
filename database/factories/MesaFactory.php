@@ -16,7 +16,7 @@ class MesaFactory extends Factory
         return [
             'numero' => $this->faker->unique()->randomNumber(),
             'capacidade' => $this->faker->numberBetween(1,8),
-            'status' => fake()->randomElement(['disponivel', 'ocupada', 'reservada',]),
+            'status' => fake()->randomElement(Mesa::STATUS),
             'restaurante_id' => Restaurante::factory()
         ];
     }

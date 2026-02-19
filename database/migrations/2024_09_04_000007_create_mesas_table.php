@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Mesa;
+use App\Models\Pedido;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,7 +14,7 @@ return new class extends Migration
             $table->id();
             $table->integer('numero');
             $table->integer('capacidade');
-            $table->enum('status',['disponivel', 'ocupada', 'reservada']);
+            $table->string('status')->default(Mesa::STATUS_DISPONIVEL);
             $table->foreignId('restaurante_id')->constrained('restaurantes')->cascadeOnDelete();
             $table->timestamps();
         });

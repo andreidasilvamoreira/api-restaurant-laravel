@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Pedido;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -11,21 +12,21 @@ class PedidoSeeder extends Seeder
     {
         DB::table('pedidos')->insert([
             [
-                'status' => 'aberto',
+                'status' => Pedido::STATUS_ABERTO,
                 'restaurante_id' => 1,
                 'atendente_id' => 2,
                 'cliente_id' => 1,
                 'mesa_id' => 1,
             ],
             [
-                'status' => 'preparando',
+                'status' => Pedido::STATUS_PREPARANDO,
                 'restaurante_id' => 1,
                 'atendente_id' => 2,
                 'cliente_id' => 2,
                 'mesa_id' => 2,
             ],
             [
-                'status' => 'finalizado',
+                'status' => Pedido::STATUS_FINALIZADO,
                 'restaurante_id' => 2,
                 'atendente_id' => 2,
                 'cliente_id' => 3,

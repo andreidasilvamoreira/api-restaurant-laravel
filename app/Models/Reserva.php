@@ -20,6 +20,18 @@ class Reserva extends Model
         'restaurante_id',
     ];
 
+    public const STATUS_RESERVA_CANCELADA = 'cancelado';
+    public const STATUS_RESERVA_CONFIRMADA = 'confirmada';
+    public const STATUS_RESERVA_FINALIZADA = 'finalizada';
+    public const STATUS_RESERVA_PENDENTE = 'pendente';
+
+    public const STATUS_RESERVA = [
+        self::STATUS_RESERVA_CANCELADA,
+        self::STATUS_RESERVA_CONFIRMADA,
+        self::STATUS_RESERVA_FINALIZADA,
+        self::STATUS_RESERVA_PENDENTE,
+    ];
+
     protected $casts = [
         'data_reserva' => 'datetime',
     ];

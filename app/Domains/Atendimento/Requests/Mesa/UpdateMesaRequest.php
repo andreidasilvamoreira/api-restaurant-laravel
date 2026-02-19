@@ -2,7 +2,9 @@
 
 namespace App\Domains\Atendimento\Requests\Mesa;
 
+use App\Models\Mesa;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateMesaRequest extends FormRequest
 {
@@ -17,7 +19,7 @@ class UpdateMesaRequest extends FormRequest
         return [
             'numero' => 'sometimes|integer|min:1',
             'capacidade' => 'sometimes|integer|min:1',
-            'status' => 'sometimes|in:disponivel,ocupada,reservada',
+            'status' => ['sometimes', Rule::in(Mesa::STATUS)],
             'restaurante_id' => 'sometimes|exists:restaurantes,id',
         ];
     }

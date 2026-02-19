@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Pagamento;
 use App\Models\Pedido;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -15,8 +16,8 @@ class PagamentoFactory extends Factory
         return [
             'data_hora' => $this->faker->date(),
             'valor' => $this->faker->numberBetween($min = 1000, $max = 20000),
-            'forma_pagamento' => $this->faker->randomElement(['pix','cartao_credito','cartao_debito','dinheiro']),
-            'status_pagamento' => $this->faker->randomElement(['pendente', 'confirmado','cancelado']),
+            'forma_pagamento' => $this->faker->randomElement(Pagamento::PAGAMENTO),
+            'status_pagamento' => $this->faker->randomElement(Pagamento::STATUS_PAGAMENTO),
             'pedido_id' => Pedido::factory()
         ];
     }

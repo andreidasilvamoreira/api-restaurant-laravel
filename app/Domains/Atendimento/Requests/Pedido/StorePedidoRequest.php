@@ -2,6 +2,7 @@
 
 namespace App\Domains\Atendimento\Requests\Pedido;
 
+use App\Models\Pedido;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -17,7 +18,7 @@ class StorePedidoRequest extends FormRequest
     {
         $restauranteId = $this->route('restaurante');
         return [
-            'status' => 'required', Rule::in(['aberto','preparando','finalizado','pago']),
+            'status' => ['required', Rule::in(Pedido::STATUS_PEDIDO)],
             'data_hora' => 'required|date',
             'cliente_id' => 'required|exists:clientes,id',
             'mesa_id' => 'nullable|exists:mesas,id',

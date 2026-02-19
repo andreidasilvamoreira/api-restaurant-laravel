@@ -19,6 +19,14 @@ class ItemMenu extends Model
         'categoria_id'
     ];
 
+    public const DISPONIBILIDADE_DISPONIVEL = 'disponivel';
+    public const DISPONIBILIDADE_INDISPONIVEL = 'indisponivel';
+
+    public const DISPONIBILIDADE = [
+        self::DISPONIBILIDADE_DISPONIVEL,
+        self::DISPONIBILIDADE_INDISPONIVEL,
+    ];
+
     public function categoria()
     {
         return $this->belongsTo(Categoria::class, 'categoria_id');

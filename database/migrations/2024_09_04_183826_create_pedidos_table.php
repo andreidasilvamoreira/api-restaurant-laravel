@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Pedido;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,7 +12,7 @@ return new class extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
-            $table->enum('status', ['aberto', 'preparando', 'finalizado', 'pago'])->default('aberto');
+            $table->string('status')->default(Pedido::STATUS_ABERTO);
             $table->timestamp('data_hora')->useCurrent();
             $table->foreignId('restaurante_id')->constrained('restaurantes')->cascadeOnDelete();
             $table->foreignId('cliente_id')->constrained('clientes')->cascadeOnDelete();

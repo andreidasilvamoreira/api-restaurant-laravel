@@ -2,7 +2,9 @@
 
 namespace App\Domains\Catalogo\Requests\ItemMenu;
 
+use App\Models\ItemMenu;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateItemMenuRequest extends FormRequest
 {
@@ -18,7 +20,7 @@ class UpdateItemMenuRequest extends FormRequest
             'nome' => 'string|max:100',
             'descricao' => 'nullable|string',
             'preco' => 'numeric|min:0.01',
-            'disponibilidade' => 'in:disponivel,indisponivel',
+            'disponibilidade' => ['sometimes', Rule::in(ItemMenu::DISPONIBILIDADE)],
             'categoria_id' => 'exists:categorias,id',
         ];
     }

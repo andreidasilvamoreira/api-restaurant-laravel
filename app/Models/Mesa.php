@@ -18,6 +18,16 @@ class Mesa extends Model
         'restaurante_id',
     ];
 
+    public const STATUS_DISPONIVEL = 'disponivel';
+    public const STATUS_OCUPADA = 'ocupada';
+    public const STATUS_RESERVADA= 'reservada';
+
+    public const STATUS = [
+        self::STATUS_DISPONIVEL,
+        self::STATUS_OCUPADA,
+        self::STATUS_RESERVADA,
+    ];
+
     public function reservas()
     {
         return $this->hasMany(Reserva::class, 'mesa_id');
