@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create('inventarios', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->string('unidade');
+            $table->string('unidade_medida');
             $table->decimal('quantidade_atual', 10, 2)->default(0);
             $table->decimal('preco_custo', 10, 2);
             $table->foreignId('restaurante_id')->constrained()->cascadeOnDelete();

@@ -17,7 +17,7 @@ class StoreInventarioRequest extends FormRequest
     {
         return [
             'nome' => 'required|string|max:150',
-            'unidade' => 'required|string|max:20',
+            'unidade_medida' => 'required|string|max:20',
             'preco_custo' => 'required|numeric|min:0',
             'quantidade_atual' => 'required|numeric|min:0',
             'fornecedor_id' => 'required|exists:fornecedores,id',
@@ -28,7 +28,7 @@ class StoreInventarioRequest extends FormRequest
     {
         return [
             'nome.required' => 'O nome é obrigatório.',
-            'unidade.required' => 'A unidade é obrigatória.',
+            'unidade_medida.required' => 'A unidade é obrigatória.',
             'preco_custo.required' => 'O preço de custo é obrigatório.',
             'quantidade_atual.required' => 'A quantidade atual é obrigatória.',
             'fornecedor_id.required' => 'O fornecedor é obrigatório.',

@@ -30,7 +30,7 @@ class RestaurantePolicy
 
     public function create(User $user): bool
     {
-        return $user->role === User::ROLE_OWNER;
+        return $user->role === User::ROLE_OWNER && $user->role === User::ROLE_CLIENTE;
     }
 
     public function update(User $user, Restaurante $restaurante): bool

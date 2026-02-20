@@ -16,7 +16,7 @@ class UpdateInventarioRequest extends FormRequest
     {
         return [
             'nome' => 'sometimes|required|string|max:150',
-            'unidade' => 'sometimes|required|string|max:20',
+            'unidade_medida' => 'sometimes|required|string|max:20',
             'preco_custo' => 'sometimes|required|numeric|min:0',
             'quantidade_atual' => 'sometimes|required|numeric|min:0',
             'fornecedor_id' => 'sometimes|required|exists:fornecedores,id',
@@ -29,7 +29,7 @@ class UpdateInventarioRequest extends FormRequest
         return [
             'nome.required' => 'O nome é obrigatório.',
             'nome.string' => 'O campo nome deve ser texto.',
-            'unidade.required' => 'A unidade é obrigatória.',
+            'unidade_medida.required' => 'A unidade é obrigatória.',
             'preco_custo.required' => 'O preço de custo é obrigatório.',
             'preco_custo.numeric' => 'O preço de custo deve ser um número.',
             'preco_custo.min' => 'O preço de custo não pode ser negativo.',

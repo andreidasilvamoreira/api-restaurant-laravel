@@ -64,7 +64,7 @@ class InventarioTest extends TestCase
 
         $payload = [
             'nome' => 'feijao',
-            'unidade' => 'kg',
+            'unidade_medida' => 'kg',
             'preco_custo' => 20,
             'quantidade_atual' => 30,
             'fornecedor_id' => $fornecedor->id,
@@ -99,7 +99,7 @@ class InventarioTest extends TestCase
 
         $payload = [
             'nome' => 'feijao',
-            'unidade' => 'kg',
+            'unidade_medida' => 'kg',
             'preco_custo' => 20,
             'quantidade_atual' => 30,
             'fornecedor_id' => $fornecedor->id,
@@ -134,7 +134,7 @@ class InventarioTest extends TestCase
 
         $payload = [
             'nome' => 'feijao',
-            'unidade' => 'kg',
+            'unidade_medida' => 'kg',
             'preco_custo' => 20,
             'quantidade_atual' => 30,
             'fornecedor_id' => $fornecedor->id,

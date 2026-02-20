@@ -20,7 +20,7 @@ class InventarioFactory extends Factory
     {
         return [
             'nome' => $this->faker->name(),
-            'unidade' => $this->faker->randomElement(['kg', 'lata', 'litro']),
+            'unidade_medida' => $this->faker->randomElement(['kg', 'lata', 'litro']),
             'preco_custo' => $this->faker->numberBetween(1, 1000),
             'quantidade_atual' => $this->faker->numberBetween(1, 10000),
             'fornecedor_id' => Fornecedor::factory(),
