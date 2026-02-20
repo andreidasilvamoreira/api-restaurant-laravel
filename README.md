@@ -2,6 +2,8 @@
 
 RESTful API developed in Laravel for complete management of a restaurant system, covering menu control, orders, tables, reservations, inventory, payments, and system users.
 
+* Current Version - v1.0.0
+
 ## 🛠️ Technologies
 - PHP
 - Laravel
