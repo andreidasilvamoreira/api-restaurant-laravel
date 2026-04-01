@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Domains\Financeiro\Presentation\Controllers;
+
+use App\Domains\Financeiro\Application\Services\PagamentoService;
+use App\Domains\Financeiro\Presentation\Requests\Pagamento\StorePagamentoRequest;
+use App\Domains\Financeiro\Presentation\Requests\Pagamento\UpdatePagamentoRequest;
+use App\Domains\Financeiro\Presentation\Resources\PagamentoResource;
+use App\Http\Controllers\Controller;
+use App\Models\Pagamento;
+use App\Models\Restaurante;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+
+class PagamentoController extends Controller
+{
+    protected PagamentoService $pagamentoService;
+    public function __construct(PagamentoService $pagamentoService)
+    {
+        $this->pagamentoService = $pagamentoService;
+    }
+
+    public function index(Restaurante $restaurante): AnonymousResourceCollection
+    {
+        $this->authorize('viewAny', [Pagamento::class, $restaurante]);
+        return PagamentoResource::collection($this->pagamentoService->findAll(auth()->user()));
+    }
+
+    public function show(Pagamento $pagamento): PagamentoResource
+    {
+        $this->authorize('view', $pagamento);
+        $pagamento = $this->pagamentoService->find($pagamento->id);
+        return new PagamentoResource($pagamento);
+    }
+
+    public function store(StorePagamentoRequest $request, Restaurante $restaurante) : PagamentoResource
+    {
+        $this->authorize('createForRestaurant', [Pagamento::class, $restaurante]);
+        $data = $request->validated();
+        $data['restaurante_id'] = $restaurante->id;
+        $pagamento = $this->pagamentoService->create($data);
+        return new PagamentoResource($pagamento);
+    }
+
+    public function update(UpdatePagamentoRequest $request, Pagamento $pagamento): PagamentoResource
+    {
+        $this->authorize('update', $pagamento);
+        $pagamento = $this->pagamentoService->update($request->validated(), $pagamento->id);
+        return new PagamentoResource($pagamento);
+    }
+
+    public function destroy(Pagamento $pagamento): JsonResponse
+    {
+        $this->authorize('delete', $pagamento);
+        $this->pagamentoService->delete($pagamento->id);
+        return response()->json(['message' => "Pagamento deletado com sucesso!"], 200);
+    }
+}
