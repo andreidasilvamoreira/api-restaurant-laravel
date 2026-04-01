@@ -1,20 +1,20 @@
 <?php
 
-use App\Domains\Atendimento\Controllers\ClienteController;
-use App\Domains\Atendimento\Controllers\MesaController;
-use App\Domains\Atendimento\Controllers\PedidoController;
-use App\Domains\Atendimento\Controllers\ReservaController;
-use App\Domains\Catalogo\Controllers\CategoriaController;
-use App\Domains\Catalogo\Controllers\ItemMenuController;
-use App\Domains\Financeiro\Controllers\PagamentoController;
-use App\Domains\Identity\Controllers\RestauranteUsuarioController;
-use App\Domains\Identity\Controllers\UserController;
-use App\Domains\Inventario\Controllers\FornecedorController;
-use App\Domains\Inventario\Controllers\InventarioController;
-use App\Domains\Restaurante\Controllers\RestauranteController;
+use App\Domains\Atendimento\Presentation\Controllers\ClienteController;
+use App\Domains\Atendimento\Presentation\Controllers\MesaController;
+use App\Domains\Atendimento\Presentation\Controllers\PedidoController;
+use App\Domains\Atendimento\Presentation\Controllers\ReservaController;
+use App\Domains\Catalogo\Presentation\Controllers\CategoriaController;
+use App\Domains\Catalogo\Presentation\Controllers\ItemMenuController;
+use App\Domains\Financeiro\Presentation\Controllers\PagamentoController;
+use App\Domains\Identity\Presentation\Controllers\RestauranteUsuarioController;
+use App\Domains\Identity\Presentation\Controllers\UserController;
+use App\Domains\Inventario\Presentation\Controllers\FornecedorController;
+use App\Domains\Inventario\Presentation\Controllers\InventarioController;
+use App\Domains\Restaurante\Presentation\Controllers\RestauranteController;
 use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
 

@@ -23,7 +23,7 @@ return [
     | Database Connections
     |--------------------------------------------------------------------------
     |
-    | Below are all of the database connections defined for your application.
+    | Below are all of the database connections defined for your Application.
     | An example configuration is provided for each database system which
     | is supported by Laravel. You're free to add / remove connections.
     |
@@ -120,7 +120,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | This table keeps track of all the migrations that have already run for
-    | your application. Using this information, we can determine which of
+    | your Application. Using this information, we can determine which of
     | the migrations on disk haven't actually been run on the database.
     |
     */
