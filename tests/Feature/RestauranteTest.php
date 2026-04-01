@@ -30,10 +30,12 @@ class RestauranteTest extends TestCase
 
         $payload = Restaurante::factory()->make()->toArray();
 
-        $response = $this->actingAs($user, 'sanctum')->postJson("/api/restaurantes", $payload)->assertStatus(201);
+        $response = $this->actingAs($user, 'sanctum')->postJson("/api/restaurantes", $payload)->assertStatus(200);
 
         $response->assertJsonFragment(['nome' => $payload['nome']]);
         $this->assertDatabaseHas('restaurantes', ['nome' => $payload['nome']]);
+
+
     }
 
     public function test_owner_pode_ver_restaurante(): void

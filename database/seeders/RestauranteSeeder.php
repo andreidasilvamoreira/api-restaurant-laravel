@@ -11,17 +11,17 @@ class RestauranteSeeder extends Seeder
     {
         DB::table('restaurantes')->insert([
             [
-                'nome' => 'Restaurante Central',
+                'nome' => 'Restaurant Central',
                 'descricao' => 'Unidade principal',
                 'ativo' => true,
             ],
             [
-                'nome' => 'Restaurante Norte',
+                'nome' => 'Restaurant Norte',
                 'descricao' => 'Unidade zona norte',
                 'ativo' => true,
             ],
             [
-                'nome' => 'Restaurante Sul',
+                'nome' => 'Restaurant Sul',
                 'descricao' => 'Unidade zona sul',
                 'ativo' => true,
             ],

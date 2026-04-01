@@ -2,23 +2,19 @@
 
 namespace App\Providers;
 
+use App\Domains\Restaurant\Domain\Repositories\RestaurantRepositoryInterface;
+use App\Domains\Restaurant\Infrastructure\Persistence\Eloquent\Repositories\EloquentRestaurantRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-
-
-    /**
-     * Register any Application services.
-     */
     public function register(): void
     {
-        //
+        $this->app->bind(
+            RestaurantRepositoryInterface::class,
+            EloquentRestaurantRepository::class,
+        );
     }
-
-    /**
-     * Bootstrap any Application services.
-     */
     public function boot(): void
     {
         //

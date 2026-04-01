@@ -14,7 +14,7 @@ class MesaFactory extends Factory
     public function definition(): array
     {
         return [
-            'numero' => $this->faker->unique()->randomNumber(),
+            'numero' => $this->faker->unique()->numberBetween(1,100),
             'capacidade' => $this->faker->numberBetween(1,8),
             'status' => fake()->randomElement(Mesa::STATUS),
             'restaurante_id' => Restaurante::factory()

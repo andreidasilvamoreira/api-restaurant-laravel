@@ -9,9 +9,9 @@ use App\Domains\Catalogo\Presentation\Controllers\ItemMenuController;
 use App\Domains\Financeiro\Presentation\Controllers\PagamentoController;
 use App\Domains\Identity\Presentation\Controllers\RestauranteUsuarioController;
 use App\Domains\Identity\Presentation\Controllers\UserController;
-use App\Domains\Inventario\Presentation\Controllers\FornecedorController;
-use App\Domains\Inventario\Presentation\Controllers\InventarioController;
-use App\Domains\Restaurante\Presentation\Controllers\RestauranteController;
+use App\Domains\Inventory\Presentation\Controllers\FornecedorController;
+use App\Domains\Inventory\Presentation\Controllers\InventarioController;
+use App\Domains\Restaurant\Presentation\Controllers\RestauranteController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
