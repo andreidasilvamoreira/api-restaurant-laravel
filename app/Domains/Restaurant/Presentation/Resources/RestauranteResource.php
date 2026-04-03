@@ -8,13 +8,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class RestauranteResource extends JsonResource
 {
 
-    public function toArray(Request $request): array
+    public function toArray($request): array
     {
         return [
-            'id' => $this->resource->getId(),
-            'nome' => $this->resource->getName(),
-            'descricao' =>$this->resource->getDescription(),
-            'ativo' => $this->resource->isActive(),
+            'id' => $this->resource->id,
+            'nome' => $this->resource->name,
+            'descricao' =>$this->resource->description,
+            'ativo' => $this->resource->active
         ];
     }
 }

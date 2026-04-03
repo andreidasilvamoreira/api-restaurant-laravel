@@ -5,6 +5,11 @@ namespace App\Domains\Restaurant\Presentation\Controllers;
 use App\Domains\Restaurant\Application\DTOs\Restaurante\CreateRestauranteInput;
 use App\Domains\Restaurant\Application\DTOs\Restaurante\UpdateRestauranteInput;
 use App\Domains\Restaurant\Application\Services\RestauranteService;
+use App\Domains\Restaurant\Application\UseCases\Restaurante\CreateRestauranteUseCase;
+use App\Domains\Restaurant\Application\UseCases\Restaurante\DeleteRestauranteUseCase;
+use App\Domains\Restaurant\Application\UseCases\Restaurante\FindRestauranteUseCase;
+use App\Domains\Restaurant\Application\UseCases\Restaurante\FindUserRestauranteUseCase;
+use App\Domains\Restaurant\Application\UseCases\Restaurante\UpdateRestauranteUseCase;
 use App\Domains\Restaurant\Presentation\Requests\Restaurante\StoreRestauranteRequest;
 use App\Domains\Restaurant\Presentation\Requests\Restaurante\UpdateRestauranteRequest;
 use App\Domains\Restaurant\Presentation\Resources\RestauranteResource;
@@ -15,16 +20,20 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class RestauranteController extends Controller
 {
-    protected RestauranteService $restauranteService;
-    public function __construct(RestauranteService $restauranteService)
-    {
-        $this->restauranteService = $restauranteService;
-    }
+    public function __construct(
+        protected FindUserRestauranteUseCase $findUserRestauranteUseCase,
+        protected FindRestauranteUseCase $findRestauranteUseCase,
+        protected CreateRestauranteUseCase $createRestauranteUseCase,
+        protected UpdateRestauranteUseCase $updateRestauranteUseCase,
+        protected DeleteRestauranteUseCase $deleteRestauranteUseCase,
+    ) {}
 
     public function index(): AnonymousResourceCollection
     {
         $this->authorize('viewAny', Restaurante::class);
-        return RestauranteResource::collection($this->restauranteService->findAll(auth()->user()));
+
+        $output = $this->findUserRestauranteUseCase->execute(auth()->user());
+        return RestauranteResource::collection($output);
     }
 
     public function show(int $id): RestauranteResource
@@ -32,8 +41,8 @@ class RestauranteController extends Controller
         $model = Restaurante::query()->findOrFail($id);
         $this->authorize('view', $model);
 
-        $restaurante = $this->restauranteService->find($id);
-        return new RestauranteResource($restaurante);
+        $output = $this->findRestauranteUseCase->execute($id);
+        return new RestauranteResource($output);
     }
 
     public function store(StoreRestauranteRequest $request): RestauranteResource
@@ -41,30 +50,33 @@ class RestauranteController extends Controller
         $this->authorize('create', Restaurante::class);
         $data = $request->validated();
 
-        $dto = new CreateRestauranteInput(
+        $input = new CreateRestauranteInput(
             name: $data['nome'],
             description: $data['descricao'] ?? null,
-            active: $data['ativo'] ?? false
+            active: $data['ativo'] ?? null
         );
 
-        $restaurante = $this->restauranteService->create($dto);
-        return new RestauranteResource($restaurante);
+        $output = $this->createRestauranteUseCase->execute($input);
+        return new RestauranteResource($output);
     }
 
-    public function update(UpdateRestauranteRequest $request, $id) : RestauranteResource
+    public function update(UpdateRestauranteRequest $request, int $id) : RestauranteResource
     {
         $model = Restaurante::query()->findOrFail($id);
         $this->authorize('update', $model);
 
         $data = $request->validated();
-        $dto = new UpdateRestauranteInput(
+
+        $input = new UpdateRestauranteInput(
+            id: $id,
             name: $data['nome'],
             description: $data['descricao'] ?? null,
-            active: $data['ativo'] ?? false
+            active: $data['ativo'] ?? null
         );
 
-        $restauranteAtualizado = $this->restauranteService->update($id, $dto);
-        return new RestauranteResource($restauranteAtualizado);
+        $output = $this->updateRestauranteUseCase->execute($input);
+
+        return new RestauranteResource($output);
     }
 
     public function destroy(int $id) : JsonResponse
@@ -72,7 +84,9 @@ class RestauranteController extends Controller
         $model = Restaurante::query()->findOrFail($id);
         $this->authorize('delete', $model);
 
-        $this->restauranteService->delete($id);
-        return response()->json(['message' => 'Restaurant excluido com sucesso!']);
+        $this->deleteRestauranteUseCase->execute($id);
+        return response()->json([
+            'message' => 'Restaurant excluido com sucesso!'
+        ]);
     }
 }

@@ -7,6 +7,6 @@ class CreateRestauranteInput
     public function __construct(
         public readonly string $name,
         public readonly ?string $description,
-        public readonly bool $active,
+        public readonly ?bool $active,
     ) {}
 }

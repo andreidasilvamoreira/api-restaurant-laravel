@@ -2,12 +2,12 @@
 
 namespace App\Domains\Restaurant\Application\DTOs\Restaurante;
 
-class UpdateRestauranteOutput
+class RestauranteOutput
 {
     public function __construct(
         public readonly int $id,
         public readonly string $name,
         public readonly ?string $description,
-        public readonly bool $active,
+        public readonly ?bool $active,
     ) {}
 }

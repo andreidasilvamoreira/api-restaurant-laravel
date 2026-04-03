@@ -2,6 +2,7 @@
 
 namespace App\Domains\Restaurant\Infrastructure\Persistence\Eloquent\Repositories;
 
+use App\Domains\Restaurant\Application\Exceptions\Restaurante\RestauranteNotFoundException;
 use App\Domains\Restaurant\Domain\Entities\Restaurant;
 use App\Domains\Restaurant\Domain\Repositories\RestaurantRepositoryInterface;
 use App\Domains\Restaurant\Infrastructure\Persistence\Mappers\RestaurantMapper;
@@ -54,5 +55,15 @@ class EloquentRestaurantRepository implements RestaurantRepositoryInterface
     {
         $model = RestauranteModel::query()->findOrFail($id);
         $model->delete();
+    }
+
+    public function findOrFail(int $id): Restaurant
+    {
+        $restaurante = $this->findById($id);
+        if (!$restaurante) {
+            throw new RestauranteNotFoundException('Restaurante não encontrado.');
+        }
+
+        return $restaurante;
     }
 }
