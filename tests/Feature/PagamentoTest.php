@@ -64,7 +64,7 @@ class PagamentoTest extends TestCase
         $this->actingAs($user, 'sanctum');
 
         $this->getJson("/api/pagamentos/{$pagamento->id}")->assertOk();
-        $this->postJson("/api/restaurantes/{$restaurante->id}/pagamentos", $payload)->assertStatus(201);
+        $this->postJson("/api/pedidos/{$pedido->id}/pagamentos", $payload)->assertStatus(200);
         $this->putJson("/api/pagamentos/{$pagamento->id}", $payload)->assertOk();
         $this->deleteJson("/api/pagamentos/{$pagamento->id}")->assertStatus(403);
     }

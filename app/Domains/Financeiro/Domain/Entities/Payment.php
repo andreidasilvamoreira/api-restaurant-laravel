@@ -34,9 +34,19 @@ class Payment
         return $this->id;
     }
 
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getDataHora(): \DateTimeImmutable
     {
         return $this->dataHora;
+    }
+
+    public function setDataHora(\DateTimeImmutable $dataHora): void
+    {
+        $this->dataHora = $dataHora;
     }
 
     public function getValor(): string
@@ -44,9 +54,19 @@ class Payment
         return $this->valor;
     }
 
+    public function setValor(string $valor): void
+    {
+        $this->valor = $valor;
+    }
+
     public function getFormaPagamento(): PaymentOptions
     {
         return $this->formaPagamento;
+    }
+
+    public function setFormaPagamento(PaymentOptions $formaPagamento): void
+    {
+        $this->formaPagamento = $formaPagamento;
     }
 
     public function getStatusPagamento(): PaymentStatus
@@ -54,10 +74,18 @@ class Payment
         return $this->statusPagamento;
     }
 
+    public function setStatusPagamento(PaymentStatus $statusPagamento): void
+    {
+        $this->statusPagamento = $statusPagamento;
+    }
+
     public function getPedidoId(): int
     {
         return $this->pedidoId;
     }
 
-
+    public function setPedidoId(int $pedidoId): void
+    {
+        $this->pedidoId = $pedidoId;
+    }
 }

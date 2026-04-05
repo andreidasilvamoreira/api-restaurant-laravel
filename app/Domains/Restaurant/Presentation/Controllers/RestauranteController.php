@@ -4,7 +4,6 @@ namespace App\Domains\Restaurant\Presentation\Controllers;
 
 use App\Domains\Restaurant\Application\DTOs\Restaurante\CreateRestauranteInput;
 use App\Domains\Restaurant\Application\DTOs\Restaurante\UpdateRestauranteInput;
-use App\Domains\Restaurant\Application\Services\RestauranteService;
 use App\Domains\Restaurant\Application\UseCases\Restaurante\CreateRestauranteUseCase;
 use App\Domains\Restaurant\Application\UseCases\Restaurante\DeleteRestauranteUseCase;
 use App\Domains\Restaurant\Application\UseCases\Restaurante\FindRestauranteUseCase;
@@ -31,8 +30,8 @@ class RestauranteController extends Controller
     public function index(): AnonymousResourceCollection
     {
         $this->authorize('viewAny', Restaurante::class);
-
         $output = $this->findUserRestauranteUseCase->execute(auth()->user());
+
         return RestauranteResource::collection($output);
     }
 

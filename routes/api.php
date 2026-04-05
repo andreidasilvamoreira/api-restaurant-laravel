@@ -38,16 +38,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('reservas', ReservaController::class)->except(['store', 'index']);
     Route::apiResource('itens_menu', ItemMenuController::class)->except(['store', 'index'])->parameters(['itens_menu' => 'itemMenu']);
     Route::apiResource('categorias', CategoriaController::class)->except(['store']);
-    Route::apiResource('pagamentos', PagamentoController::class)->except(['store', 'index']);
+    Route::apiResource('pagamentos', PagamentoController::class)->except(['store']);
     Route::apiResource('restaurantes', RestauranteController::class);
     Route::apiResource('inventarios', InventarioController::class)->except(['store', 'index']);
     Route::apiResource('fornecedores', FornecedorController::class)->except(['store', 'index'])->parameters(['fornecedores' => 'fornecedor']);
     Route::apiResource('users', UserController::class);
 
+    Route::post('pedidos/{pedido}/pagamentos', [PagamentoController::class, 'store']);
+
     Route::prefix('restaurantes/{restaurante}')->middleware('ativo')->group(function () {
         Route::get('reservas', [ReservaController::class, 'index']);
         Route::get('pedidos', [PedidoController::class, 'index']);
-        Route::get('pagamentos', [PagamentoController::class, 'index']);
         Route::get('mesas', [MesaController::class, 'index']);
         Route::get('itens_menu', [ItemMenuController::class, 'index']);
         Route::get('fornecedores', [FornecedorController::class, 'index']);
@@ -55,7 +56,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('pedidos', [PedidoController::class, 'store']);
         Route::post('inventarios', [InventarioController::class, 'store']);
         Route::post('fornecedores', [FornecedorController::class, 'store']);
-        Route::post('pagamentos', [PagamentoController::class, 'store']);
         Route::post('categorias', [CategoriaController::class, 'store']);
         Route::post('itens_menu', [ItemMenuController::class, 'store']);
         Route::post('reservas', [ReservaController::class, 'store']);

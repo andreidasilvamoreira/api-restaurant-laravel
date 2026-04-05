@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Domains\Financeiro\Domain\Enums\PaymentOptions;
+use App\Domains\Financeiro\Domain\Enums\PaymentStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -42,7 +44,9 @@ class Pagamento extends Model
 
     protected $casts = [
         'data_hora' => 'datetime',
-        'valor' => 'decimal:2'
+        'valor' => 'decimal:2',
+        'forma_pagamento' => PaymentOptions::class,
+        'status_pagamento' => PaymentStatus::class,
     ];
 
     public function pedido()

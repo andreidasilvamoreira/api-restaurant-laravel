@@ -8,7 +8,6 @@ use App\Models\User;
 
 class FindUserRestauranteUseCase
 {
-
     public function __construct(
         protected RestaurantRepositoryInterface $repository
     ) {}
