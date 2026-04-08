@@ -4,6 +4,7 @@ namespace App\Domains\Restaurant\Application\UseCases\Restaurante;
 
 use App\Domains\Restaurant\Application\DTOs\Restaurante\RestauranteOutput;
 use App\Domains\Restaurant\Application\DTOs\Restaurante\UpdateRestauranteInput;
+use App\Domains\Restaurant\Application\Mappers\RestaurantMapper;
 use App\Domains\Restaurant\Domain\Repositories\RestaurantRepositoryInterface;
 
 class UpdateRestauranteUseCase
@@ -12,29 +13,25 @@ class UpdateRestauranteUseCase
     public function __construct(
         protected RestaurantRepositoryInterface $repository
     ) {}
-    public function execute(UpdateRestauranteInput $data): RestauranteOutput
+    public function execute(UpdateRestauranteInput $input): RestauranteOutput
     {
-        $restaurant = $this->repository->findOrFail($data->id);
+        $restaurant = $this->repository->findOrFail($input->id);
 
-        if ($data->name !== null) {
-            $restaurant->setName($data->name);
+        if ($input->name !== null) {
+            $restaurant->setName($input->name);
         }
 
-        if ($data->description !== null) {
-            $restaurant->setDescription($data->description);
+        if ($input->description !== null) {
+            $restaurant->setDescription($input->description);
         }
 
-        if ($data->active !== null) {
-            $restaurant->setActive($data->active);
+        if ($input->active !== null) {
+            $restaurant->setActive($input->active);
         }
 
         $restaurant = $this->repository->update($restaurant);
 
-        return new RestauranteOutput(
-            id: $restaurant->getId(),
-            name: $restaurant->getName(),
-            description: $restaurant->getDescription(),
-            active: $restaurant->isActive()
-        );
+        return RestaurantMapper::toOutput($restaurant);
+
     }
 }

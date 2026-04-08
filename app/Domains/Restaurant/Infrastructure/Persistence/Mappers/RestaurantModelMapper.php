@@ -3,11 +3,12 @@
 namespace App\Domains\Restaurant\Infrastructure\Persistence\Mappers;
 
 use App\Domains\Restaurant\Application\DTOs\Restaurante\CreateRestauranteInput;
+use App\Domains\Restaurant\Application\DTOs\Restaurante\RestauranteOutput;
 use App\Domains\Restaurant\Application\DTOs\Restaurante\UpdateRestauranteInput;
 use App\Domains\Restaurant\Domain\Entities\Restaurant;
 use App\Models\Restaurante as RestaurantModel;
 
-class RestaurantMapper
+class RestaurantModelMapper
 {
     public static function toEntity(RestaurantModel $model): Restaurant
     {
@@ -37,4 +38,6 @@ class RestaurantMapper
             'ativo' => $restaurant->isActive()
         ];
     }
+
+
 }

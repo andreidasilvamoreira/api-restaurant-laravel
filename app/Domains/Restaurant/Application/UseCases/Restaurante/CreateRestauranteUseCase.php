@@ -4,7 +4,7 @@ namespace App\Domains\Restaurant\Application\UseCases\Restaurante;
 
 use App\Domains\Restaurant\Application\DTOs\Restaurante\CreateRestauranteInput;
 use App\Domains\Restaurant\Application\DTOs\Restaurante\RestauranteOutput;
-use App\Domains\Restaurant\Domain\Entities\Restaurant;
+use App\Domains\Restaurant\Application\Mappers\RestaurantMapper;
 use App\Domains\Restaurant\Domain\Repositories\RestaurantRepositoryInterface;
 
 class CreateRestauranteUseCase
@@ -12,22 +12,13 @@ class CreateRestauranteUseCase
     public function __construct(
         protected RestaurantRepositoryInterface $repository
     ) {}
-    public function execute(CreateRestauranteInput $data): RestauranteOutput
+    public function execute(CreateRestauranteInput $input): RestauranteOutput
     {
-        $restaurant = new Restaurant(
-            id: null,
-            name: $data->name,
-            description: $data->description,
-            active: $data->active ?? true
-        );
+        $restaurant = RestaurantMapper::toEntity($input);
 
         $restaurant = $this->repository->create($restaurant);
 
-        return new RestauranteOutput(
-          id: $restaurant->getId(),
-          name: $restaurant->getName(),
-          description: $restaurant->getDescription(),
-          active: $restaurant->isActive()
-        );
+        return RestaurantMapper::toOutput($restaurant);
+
     }
 }

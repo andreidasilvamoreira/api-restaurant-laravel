@@ -7,7 +7,7 @@ use App\Domains\Financeiro\Domain\Enums\PaymentOptions;
 use App\Domains\Financeiro\Domain\Enums\PaymentStatus;
 use App\Models\Pagamento;
 
-class PaymentMapper
+class PaymentModelMapper
 {
     public static function toEntity(Pagamento $model): Payment
     {

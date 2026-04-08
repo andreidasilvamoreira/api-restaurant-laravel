@@ -5,7 +5,7 @@ namespace App\Domains\Restaurant\Infrastructure\Persistence\Eloquent\Repositorie
 use App\Domains\Restaurant\Application\Exceptions\Restaurante\RestauranteNotFoundException;
 use App\Domains\Restaurant\Domain\Entities\Restaurant;
 use App\Domains\Restaurant\Domain\Repositories\RestaurantRepositoryInterface;
-use App\Domains\Restaurant\Infrastructure\Persistence\Mappers\RestaurantMapper;
+use App\Domains\Restaurant\Infrastructure\Persistence\Mappers\RestaurantModelMapper;
 use App\Models\Restaurante as RestauranteModel;
 use App\Models\User;
 
@@ -22,7 +22,7 @@ class EloquentRestaurantRepository implements RestaurantRepositoryInterface
             });
         }
 
-        return $query->get()->map(fn (RestauranteModel $model) => RestaurantMapper::toEntity($model))->all();
+        return $query->get()->map(fn (RestauranteModel $model) => RestaurantModelMapper::toEntity($model))->all();
     }
 
     public function findById(int $id): ?Restaurant
@@ -33,22 +33,22 @@ class EloquentRestaurantRepository implements RestaurantRepositoryInterface
             return null;
         }
 
-        return RestaurantMapper::toEntity($model);
+        return RestaurantModelMapper::toEntity($model);
     }
 
     public function create(Restaurant $restaurant): Restaurant
     {
-        $model = RestauranteModel::query()->create(RestaurantMapper::entityToArray($restaurant));
-        return RestaurantMapper::toEntity($model);
+        $model = RestauranteModel::query()->create(RestaurantModelMapper::entityToArray($restaurant));
+        return RestaurantModelMapper::toEntity($model);
     }
 
     public function update(Restaurant $restaurant): Restaurant
     {
         $model = RestauranteModel::query()->findOrFail($restaurant->getId());
         $model->update(
-            RestaurantMapper::entityToArray($restaurant)
+            RestaurantModelMapper::entityToArray($restaurant)
         );
-        return RestaurantMapper::toEntity($model->fresh());
+        return RestaurantModelMapper::toEntity($model->fresh());
     }
 
     public function delete(int $id) : void

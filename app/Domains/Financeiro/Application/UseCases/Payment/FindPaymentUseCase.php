@@ -3,6 +3,7 @@
 namespace App\Domains\Financeiro\Application\UseCases\Payment;
 
 use App\Domains\Financeiro\Application\DTOs\Payment\PaymentOutput;
+use App\Domains\Financeiro\Application\Mappers\PaymentMapper;
 use App\Domains\Financeiro\Domain\Repositories\PaymentRepositoryInterface;
 
 class FindPaymentUseCase
@@ -14,13 +15,6 @@ class FindPaymentUseCase
     {
         $payment = $this->repository->findOrFail($id);
 
-        return new PaymentOutput(
-            id: $payment->getId(),
-            dataHora: $payment->getDataHora()->format('d/m/Y H:i:s'),
-            valor: $payment->getValor(),
-            formaPagamento: $payment->getFormaPagamento()->value,
-            statusPagamento: $payment->getStatusPagamento()->value,
-            pedidoId: $payment->getPedidoId(),
-        );
+        return PaymentMapper::toOutput($payment);
     }
 }

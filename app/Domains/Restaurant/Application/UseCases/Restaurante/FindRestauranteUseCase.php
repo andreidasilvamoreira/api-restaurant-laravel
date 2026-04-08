@@ -3,7 +3,9 @@
 namespace App\Domains\Restaurant\Application\UseCases\Restaurante;
 
 use App\Domains\Restaurant\Application\DTOs\Restaurante\RestauranteOutput;
+use App\Domains\Restaurant\Application\Mappers\RestaurantMapper;
 use App\Domains\Restaurant\Domain\Repositories\RestaurantRepositoryInterface;
+use App\Domains\Restaurant\Infrastructure\Persistence\Mappers\RestaurantModelMapper;
 
 class FindRestauranteUseCase
 {
@@ -14,11 +16,6 @@ class FindRestauranteUseCase
     {
         $restaurant = $this->repository->findOrFail($id);
 
-        return new RestauranteOutput(
-            id: $restaurant->getId(),
-            name: $restaurant->getName(),
-            description: $restaurant->getDescription(),
-            active: $restaurant->isActive()
-        );
+        return RestaurantMapper::toOutput($restaurant);
     }
 }
