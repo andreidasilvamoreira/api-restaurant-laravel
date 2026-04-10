@@ -64,7 +64,7 @@ class Inventory
         $this->currentQuantity = $currentQuantity;
     }
 
-    public function getRestauranteId(): int
+    public function getRestaurantId(): int
     {
         return $this->restaurantId;
     }
@@ -74,12 +74,12 @@ class Inventory
         $this->restaurantId = $restaurantId;
     }
 
-    public function getFornecedorId(): int
+    public function getSupplierId(): int
     {
         return $this->supplierId;
     }
 
-    public function setFornecedorId(int $supplierId): void
+    public function setSupplierId(int $supplierId): void
     {
         $this->supplierId = $supplierId;
     }
