@@ -9,7 +9,7 @@ use App\Models\Pagamento;
 
 class PaymentModelMapper
 {
-    public static function toEntity(Pagamento $model): Payment
+    public static function modelToEntity(Pagamento $model): Payment
     {
         return new Payment(
             id: $model->id,
@@ -19,18 +19,6 @@ class PaymentModelMapper
             statusPagamento: $model->status_pagamento,
             pedidoId: $model->pedido_id,
         );
-    }
-
-    public static function toArray(Pagamento $model): array
-    {
-        return [
-            'id' => $model->id,
-            'data_hora' => $model->data_hora,
-            'valor' => $model->valor,
-            'forma_pagamento' => $model->forma_pagamento,
-            'status_pagamento' => $model->status_pagamento,
-            'pedido_id' => $model->pedido_id,
-        ];
     }
 
     public static function entityToArray(Payment $payment): array

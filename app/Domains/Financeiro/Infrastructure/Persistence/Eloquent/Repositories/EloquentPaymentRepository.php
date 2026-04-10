@@ -21,7 +21,7 @@ class EloquentPaymentRepository implements PaymentRepositoryInterface
                     ->whereIn('restaurante_users.role', ['ADMIN', 'DONO']);
             });
         }
-        return $query->with(['pedido.restaurante'])->get()->map(fn (PaymentModel $model) => PaymentModelMapper::toEntity($model))->all();
+        return $query->with(['pedido.restaurante'])->get()->map(fn (PaymentModel $model) => PaymentModelMapper::modelToEntity($model))->all();
     }
 
     public function findById(int $id) : ?Payment
@@ -32,13 +32,13 @@ class EloquentPaymentRepository implements PaymentRepositoryInterface
             return null;
         }
 
-        return PaymentModelMapper::toEntity($model);
+        return PaymentModelMapper::modelToEntity($model);
     }
 
     public function create(Payment $payment) : Payment
     {
         $model = PaymentModel::query()->create(PaymentModelMapper::entityToArray($payment));
-        return PaymentModelMapper::toEntity($model);
+        return PaymentModelMapper::ModelToEntity($model);
     }
 
     public function update(Payment $payment) : Payment
@@ -47,7 +47,7 @@ class EloquentPaymentRepository implements PaymentRepositoryInterface
         $model->update(
             PaymentModelMapper::entityToArray($payment)
         );
-        return PaymentModelMapper::toEntity($model);
+        return PaymentModelMapper::modelToEntity($model);
     }
 
     public function delete(int $id) : void

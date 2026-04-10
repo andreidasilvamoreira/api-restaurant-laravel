@@ -2,15 +2,18 @@
 
 namespace App\Domains\Inventory\Infrastructure\Persistence\Eloquent\Repositories;
 
-use App\Models\Fornecedor;
+use App\Domains\Inventory\Domain\Entities\Supplier;
+use App\Domains\Inventory\Domain\Repositories\SupplierRepositoryInterface;
+use App\Domains\Inventory\Infrastructure\Persistence\Mappers\SupplierModelMapper;
+use App\Models\Fornecedor as FornecedorModel;
 use App\Models\User;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class FornecedorRepository
+class FornecedorRepository implements SupplierRepositoryInterface
 {
-    public function findAll(User $user): Collection
+    public function findVisibleByUser(User $user): array
     {
-        $query = Fornecedor::query()->with('restaurante');
+        $query = FornecedorModel::query()->with('restaurante');
 
         if ($user->role !== 'SUPER_ADMIN' && $user->role !== 'OWNER') {
             $query->whereHas('restaurante', function ($q) use ($user) {
@@ -19,27 +22,45 @@ class FornecedorRepository
                 });
             });
         }
-        return $query->get();
+        return $query->get()->map(fn (FornecedorModel $model) => SupplierModelMapper::modelToEntity($model))->all();
     }
 
-    public function find(int $id): ?Fornecedor
+    public function findById(int $id): ?Supplier
     {
-        return Fornecedor::find($id);
+        $model = FornecedorModel::find($id);
+        if (!$model) {
+            return null;
+        }
+
+        return SupplierModelMapper::modelToEntity($model);
     }
 
-    public function create(array $data): Fornecedor
+    public function create(Supplier $supplier): Supplier
     {
-        return Fornecedor::create($data);
+        $model = FornecedorModel::query()->create(SupplierModelMapper::entityToarray($supplier));
+        return SupplierModelMapper::modelToEntity($model);
     }
 
-    public function update(array $data, Fornecedor $fornecedor): Fornecedor
+    public function update(Supplier $supplier): Supplier
     {
-        $fornecedor->update($data);
-        return $fornecedor;
+        $model = FornecedorModel::query()->findOrFail($supplier->getId());
+        $model->update(SupplierModelMapper::entityToArray($supplier));
+        return SupplierModelMapper::modelToEntity($model);
     }
 
-    public function delete(Fornecedor $fornecedor): void
+    public function delete(int $id): void
     {
-        $fornecedor->delete();
+        $model = FornecedorModel::query()->findOrFail($id);
+        $model->delete();
+    }
+
+    public function findOrFail(int $id): Supplier
+    {
+        $supplier = $this->findById($id);
+        if (!$supplier) {
+            throw new ModelNotFoundException('Fornecedor não encontrado');
+        }
+
+        return $supplier;
     }
 }

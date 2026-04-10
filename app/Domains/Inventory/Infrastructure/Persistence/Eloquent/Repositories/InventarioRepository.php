@@ -2,15 +2,18 @@
 
 namespace App\Domains\Inventory\Infrastructure\Persistence\Eloquent\Repositories;
 
-use App\Models\Inventario;
+use App\Domains\Inventory\Domain\Entities\Inventory;
+use App\Domains\Inventory\Domain\Repositories\InventoryRepositoryInterface;
+use App\Domains\Inventory\Infrastructure\Persistence\Mappers\InventoryModelMapper;
+use App\Models\Inventario as InventarioModel;
 use App\Models\User;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class InventarioRepository
+class InventarioRepository implements InventoryRepositoryInterface
 {
-    public function findAll(User $user): Collection
+    public function findVisibleByUser(User $user): array
     {
-        $query = Inventario::query()->with('restaurante');
+        $query = InventarioModel::query()->with('restaurante');
 
         if ($user->role !== 'SUPER_ADMIN' && $user->role !== 'OWNER') {
             $query->whereHas('restaurante', function ($q) use ($user) {
@@ -20,27 +23,42 @@ class InventarioRepository
             });
         }
 
-        return $query->get();
+        return $query->get()->map(fn (InventarioModel $model) => InventoryModelMapper::modelToEntity($model))->all();
     }
 
-    public function find(int $id): ?Inventario
+    public function findById(int $id): ?Inventory
     {
-        return Inventario::find($id);
+        $model = InventarioModel::query()->findOrFail($id);
+        return InventoryModelMapper::modelToEntity($model);
     }
 
-    public function create(array $data): Inventario
+    public function create(Inventory $inventory): Inventory
     {
-        return Inventario::create($data);
+        $model = InventarioModel::query()->create(InventoryModelMapper::entityToArray($inventory));
+        return InventoryModelMapper::modelToEntity($model);
     }
 
-    public function update(array $data, Inventario $inventario): Inventario
+    public function update(Inventory $inventory): Inventory
     {
-        $inventario->update($data);
-        return $inventario;
+        $model = InventarioModel::query()->findOrFail($inventory->getId());
+        $model->update(InventoryModelMapper::entityToArray($inventory));
+        return InventoryModelMapper::modelToEntity($model);
     }
 
-    public function delete(Inventario $inventario): void
+    public function delete(int $id): void
     {
-        $inventario->delete();
+        $model = InventarioModel::query()->findOrFail($id);
+        $model->delete();
+    }
+
+    public function findOrFail(int $id): Inventory
+    {
+        $inventory = $this->findById($id);
+
+        if (!$inventory) {
+            throw new ModelNotFoundException('Inventario não encontrado');
+        }
+
+        return $inventory;
     }
 }
