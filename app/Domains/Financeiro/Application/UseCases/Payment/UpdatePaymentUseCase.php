@@ -40,6 +40,8 @@ class UpdatePaymentUseCase
             $payment->setPedidoId($data->pedidoId);
         }
 
+        $payment = $this->repository->update($payment);
+
         return PaymentMapper::toOutput($payment);
     }
 }
