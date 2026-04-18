@@ -37,7 +37,7 @@ class FornecedorRepository implements SupplierRepositoryInterface
 
     public function create(Supplier $supplier): Supplier
     {
-        $model = FornecedorModel::query()->create(SupplierModelMapper::entityToarray($supplier));
+        $model = FornecedorModel::query()->create(SupplierModelMapper::entityToArray($supplier));
         return SupplierModelMapper::modelToEntity($model);
     }
 
@@ -45,7 +45,7 @@ class FornecedorRepository implements SupplierRepositoryInterface
     {
         $model = FornecedorModel::query()->findOrFail($supplier->getId());
         $model->update(SupplierModelMapper::entityToArray($supplier));
-        return SupplierModelMapper::modelToEntity($model);
+        return SupplierModelMapper::modelToEntity($model->fresh());
     }
 
     public function delete(int $id): void

@@ -23,13 +23,12 @@ class InventoryModelMapper
     public static function entityToArray(Inventory $inventory): array
     {
         return [
-            'id' => $inventory->getId(),
             'nome' => $inventory->getName(),
             'unidade_medida' => $inventory->getUnit(),
             'quantidade_atual' => $inventory->getCurrentQuantity(),
             'preco_custo' => $inventory->getCostPrice(),
-            'restaurante_id' => $inventory->getRestauranteId(),
-            'fornecedor_id' => $inventory->getFornecedorId(),
+            'restaurante_id' => $inventory->getRestaurantId(),
+            'fornecedor_id' => $inventory->getSupplierId(),
         ];
     }
 }

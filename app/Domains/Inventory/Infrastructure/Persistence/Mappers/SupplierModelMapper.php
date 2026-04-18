@@ -22,7 +22,6 @@ class SupplierModelMapper
     public static function entityToArray(Supplier $supplier): array
     {
         return [
-            'id' => $supplier->getId(),
             'nome' => $supplier->getName(),
             'telefone' => $supplier->getPhone(),
             'email' => $supplier->getEmail(),

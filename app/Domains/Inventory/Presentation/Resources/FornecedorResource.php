@@ -7,16 +7,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class FornecedorResource extends JsonResource
 {
-
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'nome' => $this->nome,
-            'telefone' => $this->telefone,
-            'email' => $this->email,
-            'endereco' => $this->endereco,
-            'restaurante_id' => $this->restaurante_id
+            'id' => $this->resource->id,
+            'nome' => $this->resource->name,
+            'telefone' => $this->resource->phone,
+            'email' => $this->resource->email,
+            'endereco' => $this->resource->address,
+            'restaurante_id' => $this->resource->restaurantId,
         ];
     }
 }

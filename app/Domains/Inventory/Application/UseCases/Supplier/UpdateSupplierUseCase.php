@@ -3,14 +3,14 @@
 namespace App\Domains\Inventory\Application\UseCases\Supplier;
 
 use App\Domains\Inventory\Application\DTOs\Fornecedor\SupplierOutput;
-use App\Domains\Inventory\Application\DTOs\Fornecedor\UpdateSuppplierInput;
+use App\Domains\Inventory\Application\DTOs\Fornecedor\UpdateSupplierInput;
 use App\Domains\Inventory\Application\Mappers\SupplierMapper;
 use App\Domains\Inventory\Domain\Repositories\SupplierRepositoryInterface;
 
 class UpdateSupplierUseCase
 {
     public function __construct(protected SupplierRepositoryInterface $repository) {}
-    public function execute(UpdateSuppplierInput $data): SupplierOutput
+    public function execute(UpdateSupplierInput $data): SupplierOutput
     {
         $supplier = $this->repository->findOrFail($data->id);
 

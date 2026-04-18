@@ -28,7 +28,12 @@ class InventarioRepository implements InventoryRepositoryInterface
 
     public function findById(int $id): ?Inventory
     {
-        $model = InventarioModel::query()->findOrFail($id);
+        $model = InventarioModel::query()->find($id);
+
+        if (!$model) {
+            return null;
+        }
+
         return InventoryModelMapper::modelToEntity($model);
     }
 
@@ -42,7 +47,7 @@ class InventarioRepository implements InventoryRepositoryInterface
     {
         $model = InventarioModel::query()->findOrFail($inventory->getId());
         $model->update(InventoryModelMapper::entityToArray($inventory));
-        return InventoryModelMapper::modelToEntity($model);
+        return InventoryModelMapper::modelToEntity($model->fresh());
     }
 
     public function delete(int $id): void

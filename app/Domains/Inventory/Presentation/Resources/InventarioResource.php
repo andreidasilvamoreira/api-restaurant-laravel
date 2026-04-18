@@ -7,17 +7,16 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class InventarioResource extends JsonResource
 {
-
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'nome' => $this->nome,
-            'unidade' => $this->unidade,
-            'preco_custo' => $this->preco_custo,
-            'quantidade_atual' => $this->quantidade_atual,
-            'fornecedor_id' => $this->fornecedor_id,
-            'restaurante_id' => $this->restaurante_id
+            'id' => $this->resource->id,
+            'nome' => $this->resource->name,
+            'unidade_medida' => $this->resource->unit,
+            'preco_custo' => $this->resource->costPrice,
+            'quantidade_atual' => $this->resource->currentQuantity,
+            'fornecedor_id' => $this->resource->supplierId,
+            'restaurante_id' => $this->resource->restaurantId,
         ];
     }
 }

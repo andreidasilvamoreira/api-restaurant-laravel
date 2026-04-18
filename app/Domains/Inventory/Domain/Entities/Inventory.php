@@ -9,7 +9,7 @@ class Inventory
         private string $name,
         private string $unit,
         private float $currentQuantity,
-        private int $costPrice,
+        private float $costPrice,
         private int $restaurantId,
         private int $supplierId,
     ) {}

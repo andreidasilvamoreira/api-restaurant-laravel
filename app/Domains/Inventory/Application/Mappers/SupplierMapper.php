@@ -23,7 +23,7 @@ class SupplierMapper
     public static function entityToOutput(Supplier $supplier): SupplierOutput
     {
         return new SupplierOutput(
-            id: null,
+            id: $supplier->getId(),
             name: $supplier->getName(),
             phone: $supplier->getPhone(),
             email: $supplier->getEmail(),

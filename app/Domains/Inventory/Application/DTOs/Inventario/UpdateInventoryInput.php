@@ -6,11 +6,11 @@ class UpdateInventoryInput
 {
     public function __construct(
         public readonly int $id,
-        public readonly string $name,
-        public readonly string $unit,
-        public readonly float $currentQuantity,
-        public readonly int $costPrice,
-        public readonly int $restaurantId,
-        public readonly int $supplierId
+        public readonly ?string $name,
+        public readonly ?string $unit,
+        public readonly ?float $currentQuantity,
+        public readonly ?float $costPrice,
+        public readonly ?int $restaurantId,
+        public readonly ?int $supplierId
     ) {}
 }

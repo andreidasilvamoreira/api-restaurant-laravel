@@ -9,6 +9,7 @@ interface InventoryRepositoryInterface
 {
     public function findVisibleByUser(User $user): array;
     public function findById(int $id): ?Inventory;
+    public function findOrFail(int $id): Inventory;
     public function create(Inventory $inventory): Inventory;
     public function update(Inventory $inventory): Inventory;
     public function delete(int $id): void;
