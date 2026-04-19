@@ -7,13 +7,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class RestauranteUsuarioResource extends JsonResource
 {
-
     public function toArray(Request $request): array
     {
         return [
-            'usuario' => $this->name,
-            'role' => $this->pivot->role,
-            'ativo' => $this->pivot->ativo
+            'user_id' => $this->resource->userId,
+            'usuario' => $this->resource->name,
+            'role' => $this->resource->role,
+            'ativo' => $this->resource->active,
         ];
     }
 }

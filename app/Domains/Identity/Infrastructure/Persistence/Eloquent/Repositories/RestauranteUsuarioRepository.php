@@ -2,34 +2,53 @@
 
 namespace App\Domains\Identity\Infrastructure\Persistence\Eloquent\Repositories;
 
+use App\Domains\Identity\Domain\Entities\RestauranteUsuario;
+use App\Domains\Identity\Domain\Repositories\RestauranteUsuarioRepositoryInterface;
+use App\Domains\Identity\Infrastructure\Persistence\Mappers\RestauranteUsuarioModelMapper;
 use App\Models\Restaurante;
+use App\Models\RestauranteUser as RestauranteUsuarioModel;
 
-class RestauranteUsuarioRepository
+class RestauranteUsuarioRepository implements RestauranteUsuarioRepositoryInterface
 {
-    /* essa função cria um relacionamento entre duas tabelas existentes (só pra lembrar) */
-
-    public function attach(Restaurante $restaurante, int $id, string $role): void
+    public function attach(RestauranteUsuario $restauranteUsuario): void
     {
-        $restaurante->users()->syncWithoutDetaching([$id => ['role' => $role]]);
-    }
-    /* essa função apaga APENAS o relacionamento */
-    public function detach(Restaurante $restaurante, int $id): void
-    {
-        $restaurante->users()->detach($id);
+        RestauranteUsuarioModel::query()->create(
+            RestauranteUsuarioModelMapper::entityToArray($restauranteUsuario)
+        );
     }
 
-    public function updateRole(Restaurante $restaurante, int $userId, string $role): void
+    public function detach(int $restauranteId, int $userId): void
     {
-        $restaurante->users()->updateExistingPivot($userId, ['role' => $role]);
+        RestauranteUsuarioModel::query()
+            ->where('restaurante_id', $restauranteId)
+            ->where('user_id', $userId)
+            ->delete();
     }
 
-    public function exists(Restaurante $restaurante, int $id): bool
+    public function update(RestauranteUsuario $restauranteUsuario): void
     {
-        return $restaurante->users()->wherePivot('user_id', $id)->exists();
+        RestauranteUsuarioModel::query()
+            ->where('restaurante_id', $restauranteUsuario->getRestauranteId())
+            ->where('user_id', $restauranteUsuario->getUserId())
+            ->update(RestauranteUsuarioModelMapper::updateArray($restauranteUsuario));
     }
 
-    public function listPorRestaurante(Restaurante $restaurante)
+    public function exists(int $restauranteId, int $userId): bool
     {
-        return $restaurante->users()->withPivot('role')->get();
+        return RestauranteUsuarioModel::query()
+            ->where('restaurante_id', $restauranteId)
+            ->where('user_id', $userId)
+            ->exists();
+    }
+
+    public function listByRestaurant(int $restauranteId): array
+    {
+        $restaurante = Restaurante::query()->findOrFail($restauranteId);
+
+        return $restaurante->users()
+            ->withPivot(['id', 'role', 'ativo'])
+            ->get()
+            ->map(fn ($model) => RestauranteUsuarioModelMapper::fromUserModel($model, $restauranteId))
+            ->all();
     }
 }

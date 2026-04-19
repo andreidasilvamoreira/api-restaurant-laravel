@@ -2,34 +2,62 @@
 
 namespace App\Domains\Identity\Infrastructure\Persistence\Eloquent\Repositories;
 
-use App\Models\User;
-use Illuminate\Support\Collection;
+use App\Domains\Identity\Application\Exceptions\User\UserNotFoundException;
+use App\Domains\Identity\Domain\Entities\User;
+use App\Domains\Identity\Domain\Repositories\UserRepositoryInterface;
+use App\Domains\Identity\Infrastructure\Persistence\Mappers\UserModelMapper;
+use App\Models\User as UserModel;
 
-class UserRepository
+class UserRepository implements UserRepositoryInterface
 {
-    public function findAll(): Collection
+    public function findAll(): array
     {
-        return User::All();
+        return UserModel::query()
+            ->get()
+            ->map(fn (UserModel $model) => UserModelMapper::toEntity($model))
+            ->all();
     }
 
-    public function find(int $id): User
+    public function findById(int $id): ?User
     {
-        return User::find($id);
+        $model = UserModel::query()->find($id);
+
+        if (!$model) {
+            return null;
+        }
+
+        return UserModelMapper::toEntity($model);
     }
 
-    public function create(array $data): User
+    public function create(User $user): User
     {
-        return User::create($data);
+        $model = UserModel::query()->create(UserModelMapper::entityToArray($user));
+
+        return UserModelMapper::toEntity($model);
     }
 
-    public function update(User $user, array $data): User
+    public function update(User $user): User
     {
-        $user->update($data);
+        $model = UserModel::query()->findOrFail($user->getId());
+        $model->update(UserModelMapper::entityToArray($user));
+
+        return UserModelMapper::toEntity($model->fresh());
+    }
+
+    public function delete(int $id): void
+    {
+        $model = UserModel::query()->findOrFail($id);
+        $model->delete();
+    }
+
+    public function findOrFail(int $id): User
+    {
+        $user = $this->findById($id);
+
+        if (!$user) {
+            throw new UserNotFoundException();
+        }
+
         return $user;
-    }
-
-    public function delete(User $user): void
-    {
-        $user->delete();
     }
 }
