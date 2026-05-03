@@ -3,22 +3,22 @@
 namespace App\Domains\Atendimento\Application\Services;
 
 use App\Domains\Atendimento\Application\Exceptions\Reserva\ReservaNotFoundException;
-use App\Domains\Atendimento\Infrastructure\Persistence\Eloquent\Repositories\ReservaRepository;
+use App\Domains\Atendimento\Domain\Repositories\ReservaRepositoryInterface;
 use App\Models\Reserva;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
 class ReservaService
 {
-    protected ReservaRepository $reservaRepository;
-    public function __construct(ReservaRepository $reservaRepository)
+    protected ReservaRepositoryInterface $reservaRepository;
+    public function __construct(ReservaRepositoryInterface $reservaRepository)
     {
         $this->reservaRepository = $reservaRepository;
     }
 
-    public function findAll(User $user): Collection
+    public function findAll(User $user, ?int $restauranteId = null): Collection
     {
-        return $this->reservaRepository->findAll($user);
+        return $this->reservaRepository->findAll($user, $restauranteId);
     }
 
     public function find(int $id): Reserva

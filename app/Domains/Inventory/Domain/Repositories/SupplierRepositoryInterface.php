@@ -7,7 +7,7 @@ use App\Models\User;
 
 interface SupplierRepositoryInterface
 {
-    public function findVisibleByUser(User $user): array;
+    public function findVisibleByUser(User $user, ?int $restaurantId = null): array;
     public function findById(int $id): ?Supplier;
     public function findOrFail(int $id): Supplier;
     public function create(Supplier $supplier): Supplier;

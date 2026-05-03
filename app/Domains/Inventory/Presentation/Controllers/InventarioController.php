@@ -32,7 +32,7 @@ class InventarioController extends Controller
     {
         $this->authorize('viewAny', [Inventario::class, $restaurante]);
 
-        $output = $this->findUserInventoryUseCase->execute(auth()->user());
+        $output = $this->findUserInventoryUseCase->execute(auth()->user(), $restaurante->id);
 
         return InventarioResource::collection($output);
     }
@@ -78,7 +78,6 @@ class InventarioController extends Controller
             unit: $data['unidade_medida'] ?? null,
             currentQuantity: isset($data['quantidade_atual']) ? (float) $data['quantidade_atual'] : null,
             costPrice: isset($data['preco_custo']) ? (float) $data['preco_custo'] : null,
-            restaurantId: $data['restaurante_id'] ?? null,
             supplierId: $data['fornecedor_id'] ?? null,
         );
 

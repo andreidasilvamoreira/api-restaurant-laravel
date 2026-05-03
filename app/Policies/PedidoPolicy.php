@@ -27,9 +27,8 @@ class PedidoPolicy
 
     public function createForRestaurant(User $user, Restaurante $restaurante): bool
     {
-        if ($user->role === User::ROLE_OWNER) return false;
-
-        return $this->hasRole($user, $restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);
+        return $this->hasRole($user, $restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN])
+            || $user->cliente()->exists();
     }
 
     public function update(User $user, Pedido $pedido): bool

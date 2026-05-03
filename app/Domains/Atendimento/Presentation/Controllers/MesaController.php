@@ -2,7 +2,13 @@
 
 namespace App\Domains\Atendimento\Presentation\Controllers;
 
-use App\Domains\Atendimento\Application\Services\MesaService;
+use App\Domains\Atendimento\Application\DTOs\Mesa\CreateMesaInput;
+use App\Domains\Atendimento\Application\DTOs\Mesa\UpdateMesaInput;
+use App\Domains\Atendimento\Application\UseCases\Mesa\CreateMesaUseCase;
+use App\Domains\Atendimento\Application\UseCases\Mesa\DeleteMesaUseCase;
+use App\Domains\Atendimento\Application\UseCases\Mesa\FindMesaUseCase;
+use App\Domains\Atendimento\Application\UseCases\Mesa\FindUserMesaUseCase;
+use App\Domains\Atendimento\Application\UseCases\Mesa\UpdateMesaUseCase;
 use App\Domains\Atendimento\Presentation\Requests\Mesa\StoreMesaRequest;
 use App\Domains\Atendimento\Presentation\Requests\Mesa\UpdateMesaRequest;
 use App\Domains\Atendimento\Presentation\Resources\MesaResource;
@@ -14,46 +20,62 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class MesaController extends Controller
 {
-    protected MesaService $mesaService;
-    public function __construct(MesaService $mesaService)
-    {
-        $this->mesaService = $mesaService;
-    }
+    public function __construct(
+        protected FindUserMesaUseCase $findUserMesaUseCase,
+        protected FindMesaUseCase $findMesaUseCase,
+        protected CreateMesaUseCase $createMesaUseCase,
+        protected UpdateMesaUseCase $updateMesaUseCase,
+        protected DeleteMesaUseCase $deleteMesaUseCase,
+    ) {}
 
     public function index(Restaurante $restaurante): AnonymousResourceCollection
     {
         $this->authorize('viewAny', [Mesa::class, $restaurante]);
-        return MesaResource::collection($this->mesaService->findAll(auth()->user()));
+        $output = $this->findUserMesaUseCase->execute(auth()->user(), $restaurante->id);
+        return MesaResource::collection($output);
     }
 
     public function show(Mesa $mesa): MesaResource
     {
         $this->authorize('view', $mesa);
-        $mesa = $this->mesaService->find($mesa->id);
-        return new MesaResource($mesa);
+        $output = $this->findMesaUseCase->execute($mesa->id);
+        return new MesaResource($output);
     }
 
     public function store(StoreMesaRequest $request, Restaurante $restaurante): MesaResource
     {
         $this->authorize('createForRestaurant', [Mesa::class, $restaurante]);
         $data = $request->validated();
-        $data['restaurante_id'] = $restaurante->id;
 
-        $mesa = $this->mesaService->create($data);
-        return new MesaResource($mesa);
+        $input = new CreateMesaInput(
+            numero: $data['numero'],
+            capacidade: $data['capacidade'],
+            status: $data['status'] ?? null,
+            restauranteId: $restaurante->id,
+        );
+
+        $output = $this->createMesaUseCase->execute($input);
+
+        return new MesaResource($output);
     }
 
     public function update(UpdateMesaRequest $request, Mesa $mesa): MesaResource
     {
         $this->authorize('update', $mesa);
-        $mesa = $this->mesaService->update($request->validated(), $mesa->id);
-        return new MesaResource($mesa);
+        $input = new UpdateMesaInput(
+            id: $mesa->id,
+            changes: $request->validated(),
+        );
+
+        $output = $this->updateMesaUseCase->execute($input);
+
+        return new MesaResource($output);
     }
 
     public function destroy(Mesa $mesa): JsonResponse
     {
         $this->authorize('delete', $mesa);
-        $this->mesaService->delete($mesa->id);
+        $this->deleteMesaUseCase->execute($mesa->id);
         return response()->json(["message" => "Mesa deletada com sucesso!"]);
     }
 }

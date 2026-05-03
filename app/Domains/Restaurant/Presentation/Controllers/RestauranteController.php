@@ -44,7 +44,7 @@ class RestauranteController extends Controller
         return new RestauranteResource($output);
     }
 
-    public function store(StoreRestauranteRequest $request): RestauranteResource
+    public function store(StoreRestauranteRequest $request): JsonResponse
     {
         $this->authorize('create', Restaurante::class);
         $data = $request->validated();
@@ -56,7 +56,9 @@ class RestauranteController extends Controller
         );
 
         $output = $this->createRestauranteUseCase->execute($input);
-        return new RestauranteResource($output);
+        return (new RestauranteResource($output))
+            ->response()
+            ->setStatusCode(201);
     }
 
     public function update(UpdateRestauranteRequest $request, int $id) : RestauranteResource
@@ -68,7 +70,7 @@ class RestauranteController extends Controller
 
         $input = new UpdateRestauranteInput(
             id: $id,
-            name: $data['nome'],
+            name: $data['nome'] ?? null,
             description: $data['descricao'] ?? null,
             active: $data['ativo'] ?? null
         );

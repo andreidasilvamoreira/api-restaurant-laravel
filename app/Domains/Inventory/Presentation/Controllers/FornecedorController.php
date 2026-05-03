@@ -32,7 +32,7 @@ class FornecedorController extends Controller
     {
         $this->authorize('viewAny', [Fornecedor::class, $restaurante]);
 
-        $output = $this->findUserSupplierUseCase->execute(auth()->user());
+        $output = $this->findUserSupplierUseCase->execute(auth()->user(), $restaurante->id);
 
         return FornecedorResource::collection($output);
     }
@@ -77,7 +77,6 @@ class FornecedorController extends Controller
             phone: $data['telefone'] ?? null,
             email: $data['email'] ?? null,
             address: $data['endereco'] ?? null,
-            restaurantId: $data['restaurante_id'] ?? null,
         );
 
         $output = $this->updateSupplierUseCase->execute($input);

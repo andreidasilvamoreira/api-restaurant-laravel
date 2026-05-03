@@ -116,4 +116,34 @@ class CategoriaTest extends TestCase
         $response->assertOk();
 
     }
+
+    public function test_update_de_categoria_nao_aceita_troca_de_restaurante(): void
+    {
+        $user = User::factory()->create([
+            'role' => User::ROLE_CLIENTE,
+        ]);
+
+        $restauranteA = Restaurante::factory()->create();
+        $restauranteB = Restaurante::factory()->create();
+
+        $restauranteA->users()->attach($user->id, [
+            'role' => Restaurante::ROLE_ADMIN,
+            'ativo' => true,
+        ]);
+
+        $categoria = Categoria::factory()->create([
+            'restaurante_id' => $restauranteA->id,
+        ]);
+
+        $this->actingAs($user, 'sanctum');
+
+        $this->putJson("/api/categorias/{$categoria->id}", [
+            'restaurante_id' => $restauranteB->id,
+        ])->assertOk();
+
+        $this->assertDatabaseHas('categorias', [
+            'id' => $categoria->id,
+            'restaurante_id' => $restauranteA->id,
+        ]);
+    }
 }

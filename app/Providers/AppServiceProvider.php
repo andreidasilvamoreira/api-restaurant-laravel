@@ -2,6 +2,18 @@
 
 namespace App\Providers;
 
+use App\Domains\Atendimento\Domain\Repositories\ClienteRepositoryInterface;
+use App\Domains\Atendimento\Domain\Repositories\MesaRepositoryInterface;
+use App\Domains\Atendimento\Domain\Repositories\PedidoRepositoryInterface;
+use App\Domains\Atendimento\Domain\Repositories\ReservaRepositoryInterface;
+use App\Domains\Atendimento\Infrastructure\Persistence\Eloquent\Repositories\ClienteRepository;
+use App\Domains\Atendimento\Infrastructure\Persistence\Eloquent\Repositories\MesaRepository;
+use App\Domains\Atendimento\Infrastructure\Persistence\Eloquent\Repositories\PedidoRepository;
+use App\Domains\Atendimento\Infrastructure\Persistence\Eloquent\Repositories\ReservaRepository;
+use App\Domains\Catalogo\Domain\Repositories\CategoriaRepositoryInterface;
+use App\Domains\Catalogo\Domain\Repositories\ItemMenuRepositoryInterface;
+use App\Domains\Catalogo\Infrastructure\Persistence\Eloquent\Repositories\CategoriaRepository;
+use App\Domains\Catalogo\Infrastructure\Persistence\Eloquent\Repositories\ItemMenuRepository;
 use App\Domains\Financeiro\Domain\Repositories\PaymentRepositoryInterface;
 use App\Domains\Financeiro\Infrastructure\Persistence\Eloquent\Repositories\EloquentPaymentRepository;
 use App\Domains\Identity\Domain\Repositories\RestauranteUsuarioRepositoryInterface;
@@ -48,6 +60,36 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             RestauranteUsuarioRepositoryInterface::class,
             RestauranteUsuarioRepository::class
+        );
+
+        $this->app->bind(
+            CategoriaRepositoryInterface::class,
+            CategoriaRepository::class
+        );
+
+        $this->app->bind(
+            ItemMenuRepositoryInterface::class,
+            ItemMenuRepository::class
+        );
+
+        $this->app->bind(
+            ClienteRepositoryInterface::class,
+            ClienteRepository::class
+        );
+
+        $this->app->bind(
+            MesaRepositoryInterface::class,
+            MesaRepository::class
+        );
+
+        $this->app->bind(
+            PedidoRepositoryInterface::class,
+            PedidoRepository::class
+        );
+
+        $this->app->bind(
+            ReservaRepositoryInterface::class,
+            ReservaRepository::class
         );
     }
     public function boot(): void

@@ -29,6 +29,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('clientes', [ClienteController::class, 'index']);
     Route::get('me/clientes', [ClienteController::class, 'me']);
+    Route::get('me/pedidos', [PedidoController::class, 'me']);
     Route::post('clientes', [ClienteController::class, 'store']);
     Route::put('me/clientes', [ClienteController::class, 'update']);
     Route::delete('clientes/{cliente}', [ClienteController::class, 'destroy']);
@@ -45,15 +46,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('users', UserController::class);
 
     Route::post('pedidos/{pedido}/pagamentos', [PagamentoController::class, 'store']);
+    Route::get('restaurantes/{restaurante}/categorias', [CategoriaController::class, 'index']);
+    Route::get('restaurantes/{restaurante}/itens_menu', [ItemMenuController::class, 'index']);
+    Route::post('restaurantes/{restaurante}/pedidos', [PedidoController::class, 'store']);
 
     Route::prefix('restaurantes/{restaurante}')->middleware('ativo')->group(function () {
         Route::get('reservas', [ReservaController::class, 'index']);
         Route::get('pedidos', [PedidoController::class, 'index']);
         Route::get('mesas', [MesaController::class, 'index']);
-        Route::get('itens_menu', [ItemMenuController::class, 'index']);
         Route::get('fornecedores', [FornecedorController::class, 'index']);
         Route::get('inventarios', [InventarioController::class, 'index']);
-        Route::post('pedidos', [PedidoController::class, 'store']);
         Route::post('inventarios', [InventarioController::class, 'store']);
         Route::post('fornecedores', [FornecedorController::class, 'store']);
         Route::post('categorias', [CategoriaController::class, 'store']);

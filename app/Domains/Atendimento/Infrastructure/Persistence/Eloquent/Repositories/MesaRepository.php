@@ -2,15 +2,20 @@
 
 namespace App\Domains\Atendimento\Infrastructure\Persistence\Eloquent\Repositories;
 
+use App\Domains\Atendimento\Domain\Repositories\MesaRepositoryInterface;
 use App\Models\Mesa;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
-class MesaRepository
+class MesaRepository implements MesaRepositoryInterface
 {
-    public function findAll(User $user): Collection
+    public function findAll(User $user, ?int $restauranteId = null): Collection
     {
         $query = Mesa::query();
+
+        if ($restauranteId !== null) {
+            $query->where('restaurante_id', $restauranteId);
+        }
 
         if ($user->role !== 'SUPER_ADMIN' && $user->role !== 'OWNER') {
             $query->whereHas('restaurante', function ($q) use ($user) {

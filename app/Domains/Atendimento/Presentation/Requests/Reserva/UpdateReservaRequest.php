@@ -21,7 +21,6 @@ class UpdateReservaRequest extends FormRequest
             'numero_pessoas' => 'sometimes|integer|min:1',
             'status' => ['sometimes', Rule::in(Reserva::STATUS_RESERVA)],
             'mesa_id' => 'sometimes|nullable|exists:mesas,id',
-            'restaurante_id' => 'sometimes|exists:restaurantes,id',
             'cliente_id' => 'sometimes|exists:clientes,id',
         ];
     }
@@ -35,7 +34,6 @@ class UpdateReservaRequest extends FormRequest
             'numero_pessoas.min' => 'O número de pessoas deve ser no mínimo 1.',
             'status.in' => 'O status deve ser: cancelado, confirmada, finalizada ou pendente.',
             'mesa_id.exists' => 'A mesa informada não existe.',
-            'restaurante_id.exists' => 'O restaurante informado não existe.',
             'cliente_id.exists' => 'O cliente informado não existe.',
         ];
     }

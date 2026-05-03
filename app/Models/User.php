@@ -21,7 +21,8 @@ class User extends Authenticatable
 
     public const ROLE_SUPER_ADMIN = 'SUPER_ADMIN';
     public const ROLE_OWNER = 'OWNER';
-    public const ROLE_CLIENTE = 'CLIENTE';
+    public const ROLE_USER = 'USER';
+    public const ROLE_CLIENTE = self::ROLE_USER;
 
     protected $hidden = [
         'password',

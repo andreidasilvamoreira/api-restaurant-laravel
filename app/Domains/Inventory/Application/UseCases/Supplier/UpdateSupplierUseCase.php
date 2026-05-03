@@ -30,10 +30,6 @@ class UpdateSupplierUseCase
             $supplier->setAddress($data->address);
         }
 
-        if ($data->restaurantId !== null) {
-            $supplier->setRestaurantId($data->restaurantId);
-        }
-
         $supplier = $this->repository->update($supplier);
 
         return SupplierMapper::entityToOutput($supplier);

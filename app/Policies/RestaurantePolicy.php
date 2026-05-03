@@ -24,26 +24,21 @@ class RestaurantePolicy
 
     public function view(User $user, Restaurante $restaurante): bool
     {
-        if ($user->role === User::ROLE_OWNER) return true;
-        return $this->checkMethod($user, $restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);
+        return true;
     }
 
     public function create(User $user): bool
     {
-        return in_array($user->role, [User::ROLE_OWNER, User::ROLE_CLIENTE]);
+        return true;
     }
 
     public function update(User $user, Restaurante $restaurante): bool
     {
-        if ($user->role === User::ROLE_OWNER) return false;
-
         return $this->checkMethod($user, $restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);
     }
 
     public function delete(User $user, Restaurante $restaurante): bool
     {
-        if ($user->role === User::ROLE_OWNER) return false;
-
         return $this->checkMethod($user, $restaurante, [Restaurante::ROLE_DONO]);
     }
 

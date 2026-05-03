@@ -20,7 +20,6 @@ class UpdateMesaRequest extends FormRequest
             'numero' => 'sometimes|integer|min:1',
             'capacidade' => 'sometimes|integer|min:1',
             'status' => ['sometimes', Rule::in(Mesa::STATUS)],
-            'restaurante_id' => 'sometimes|exists:restaurantes,id',
         ];
     }
 
@@ -32,8 +31,6 @@ class UpdateMesaRequest extends FormRequest
             'capacidade.integer' => 'A capacidade deve ser um valor inteiro.',
             'capacidade.min' => 'A capacidade deve ser maior que zero.',
             'status.in' => 'O status deve ser: disponivel, ocupada ou reservada.',
-            'restaurante_id.exists' => 'O restaurante informado não existe.',
-
         ];
     }
 }

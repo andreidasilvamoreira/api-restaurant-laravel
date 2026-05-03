@@ -3,25 +3,25 @@
 namespace App\Domains\Atendimento\Application\Services;
 
 use App\Domains\Atendimento\Application\Exceptions\Mesa\MesaNotFoundException;
-use App\Domains\Atendimento\Infrastructure\Persistence\Eloquent\Repositories\MesaRepository;
+use App\Domains\Atendimento\Domain\Repositories\MesaRepositoryInterface;
 use App\Models\Mesa;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
 class MesaService
 {
-    protected MesaRepository $mesaRepository;
-    public function __construct(MesaRepository $mesaRepository)
+    protected MesaRepositoryInterface $mesaRepository;
+    public function __construct(MesaRepositoryInterface $mesaRepository)
     {
         $this->mesaRepository = $mesaRepository;
     }
 
-    public function findAll(User $user): Collection
+    public function findAll(User $user, ?int $restauranteId = null): Collection
     {
-        return $this->mesaRepository->findAll($user);
+        return $this->mesaRepository->findAll($user, $restauranteId);
     }
 
-    public function find(int $id): ?Mesa
+    public function find(int $id): Mesa
     {
         return $this->findOrFail($id);
     }

@@ -9,7 +9,7 @@ class ItemPedido extends Model
 {
     use HasFactory;
 
-    protected $table = 'items_pedidos';
+    protected $table = 'itens_pedido';
 
     protected $fillable = [
         'quantidade',
@@ -18,8 +18,6 @@ class ItemPedido extends Model
         'pedido_id',
         'item_menu_id',
     ];
-
-    public $timestamps = false;
 
     public function pedido()
     {

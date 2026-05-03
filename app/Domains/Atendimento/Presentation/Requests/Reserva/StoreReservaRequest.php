@@ -21,7 +21,6 @@ class StoreReservaRequest extends FormRequest
             'numero_pessoas' => 'required|integer|min:1',
             'status' => ['required', Rule::in(Reserva::STATUS_RESERVA)],
             'mesa_id' => 'nullable|exists:mesas,id',
-            'restaurante_id' => 'required|exists:restaurantes,id',
             'cliente_id' => 'required|exists:clientes,id',
         ];
     }
@@ -38,8 +37,6 @@ class StoreReservaRequest extends FormRequest
             'status.required' => 'O status da reserva é obrigatório.',
             'status.in' => 'O status deve ser: cancelado, confirmada, finalizada ou pendente.',
             'mesa_id.exists' => 'A mesa informada não existe.',
-            'restaurante_id.required' => 'O restaurante é obrigatório.',
-            'restaurante_id.exists' => 'O restaurante informado não existe.',
             'cliente_id.required' => 'O cliente é obrigatório.',
             'cliente_id.exists' => 'O cliente informado não existe.',
         ];

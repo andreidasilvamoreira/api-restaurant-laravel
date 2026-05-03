@@ -15,26 +15,25 @@ class ClientePolicy
     }
     public function viewAny(User $user): bool
     {
-        return $user->role === User::ROLE_OWNER;
+        return false;
     }
 
     public function view(User $user, Cliente $cliente): bool
     {
-        if ($user->role === User::ROLE_OWNER) return true;
         return $this->ownsCliente($user, $cliente);
     }
 
     public function create(User $user): bool
     {
-        if ($user->role === User::ROLE_OWNER) return false;
+        if ($user->role === User::ROLE_OWNER) {
+            return false;
+        }
 
         return !$user->cliente()->exists();
     }
 
     public function update(User $user, Cliente $cliente): bool
     {
-        if ($user->role === User::ROLE_OWNER) return false;
-
         return $this->ownsCliente($user, $cliente);
     }
 

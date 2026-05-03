@@ -13,16 +13,10 @@ class EloquentRestaurantRepository implements RestaurantRepositoryInterface
 {
     public function findVisibleByUser(User $user): array
     {
-        $query = RestauranteModel::query();
-
-        if ($user->role !== 'SUPER_ADMIN' && $user->role !== 'OWNER') {
-            $query->whereHas('users', function ($q) use ($user) {
-                $q->whereKey($user->id)
-                    ->whereIn('restaurante_users.role', ['DONO', 'FUNCIONARIO', 'ADMIN']);
-            });
-        }
-
-        return $query->get()->map(fn (RestauranteModel $model) => RestaurantModelMapper::toEntity($model))->all();
+        return RestauranteModel::query()
+            ->get()
+            ->map(fn (RestauranteModel $model) => RestaurantModelMapper::toEntity($model))
+            ->all();
     }
 
     public function findById(int $id): ?Restaurant

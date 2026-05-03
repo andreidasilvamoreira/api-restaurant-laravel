@@ -30,7 +30,7 @@ class RestauranteTest extends TestCase
 
         $payload = Restaurante::factory()->make()->toArray();
 
-        $response = $this->actingAs($user, 'sanctum')->postJson("/api/restaurantes", $payload)->assertStatus(200);
+        $response = $this->actingAs($user, 'sanctum')->postJson("/api/restaurantes", $payload)->assertStatus(201);
 
         $response->assertJsonFragment(['nome' => $payload['nome']]);
         $this->assertDatabaseHas('restaurantes', ['nome' => $payload['nome']]);
@@ -124,7 +124,7 @@ class RestauranteTest extends TestCase
         ]);
     }
 
-    public function test_usuario_sem_permissao_nao_pode_ver_restaurante(): void
+    public function test_usuario_pode_ver_restaurante_em_contexto_marketplace(): void
     {
         $user = User::factory()->create([
            'role' => User::ROLE_CLIENTE
@@ -136,6 +136,6 @@ class RestauranteTest extends TestCase
             'ativo' => true
         ]);
 
-        $this->actingAs($user, 'sanctum')->getJson("/api/restaurantes/{$restaurante->id}")->assertStatus(403);
+        $this->actingAs($user, 'sanctum')->getJson("/api/restaurantes/{$restaurante->id}")->assertStatus(200);
     }
 }

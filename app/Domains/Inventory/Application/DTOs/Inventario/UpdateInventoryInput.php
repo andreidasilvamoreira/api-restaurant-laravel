@@ -10,7 +10,6 @@ class UpdateInventoryInput
         public readonly ?string $unit,
         public readonly ?float $currentQuantity,
         public readonly ?float $costPrice,
-        public readonly ?int $restaurantId,
         public readonly ?int $supplierId
     ) {}
 }

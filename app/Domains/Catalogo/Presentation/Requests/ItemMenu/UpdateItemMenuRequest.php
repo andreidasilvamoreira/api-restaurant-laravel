@@ -16,12 +16,18 @@ class UpdateItemMenuRequest extends FormRequest
 
     public function rules(): array
     {
+        $itemMenu = $this->route('itemMenu');
+        $restauranteId = $itemMenu?->categoria?->restaurante_id;
+
         return [
-            'nome' => 'string|max:100',
-            'descricao' => 'nullable|string',
-            'preco' => 'numeric|min:0.01',
+            'nome' => 'sometimes|string|max:100',
+            'descricao' => 'sometimes|nullable|string',
+            'preco' => 'sometimes|numeric|min:0.01',
             'disponibilidade' => ['sometimes', Rule::in(ItemMenu::DISPONIBILIDADE)],
-            'categoria_id' => 'exists:categorias,id',
+            'categoria_id' => [
+                'sometimes',
+                Rule::exists('categorias', 'id')->where('restaurante_id', $restauranteId),
+            ],
         ];
     }
     public function messages(): array

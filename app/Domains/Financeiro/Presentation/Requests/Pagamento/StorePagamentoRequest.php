@@ -21,7 +21,6 @@ class StorePagamentoRequest extends FormRequest
             'valor' => 'required|numeric|min:0.01',
             'forma_pagamento' => ['required', Rule::in(Pagamento::PAGAMENTO)],
             'status_pagamento' => ['required', Rule::in(Pagamento::STATUS_PAGAMENTO)],
-            'pedido_id' => 'required|exists:pedidos,id',
         ];
     }
 
@@ -37,8 +36,6 @@ class StorePagamentoRequest extends FormRequest
             'forma_pagamento.required' => "O pagamento precisa ser selecionado",
             'status_pagamento.required' => "O status do pagamento precisa existir",
             'status_pagamento.in' => "O status do pagamento precisa ser selecionado",
-            'pedido_id.required' => "É necessário que exista um pedido",
-            'pedido_id.exists' => "O pedido precisa existir"
         ];
     }
 }

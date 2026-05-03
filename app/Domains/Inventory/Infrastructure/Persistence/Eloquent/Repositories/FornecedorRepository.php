@@ -11,9 +11,13 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class FornecedorRepository implements SupplierRepositoryInterface
 {
-    public function findVisibleByUser(User $user): array
+    public function findVisibleByUser(User $user, ?int $restaurantId = null): array
     {
         $query = FornecedorModel::query()->with('restaurante');
+
+        if ($restaurantId !== null) {
+            $query->where('restaurante_id', $restaurantId);
+        }
 
         if ($user->role !== 'SUPER_ADMIN' && $user->role !== 'OWNER') {
             $query->whereHas('restaurante', function ($q) use ($user) {

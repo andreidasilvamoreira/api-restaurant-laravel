@@ -75,10 +75,10 @@ class PagamentoController extends Controller
 
         $input = new UpdatePaymentInput(
             id: $pagamento->id,
-            dataHora: $data['data_hora'],
-            valor: $data['valor'],
-            formaPagamento: $data['forma_pagamento'],
-            statusPagamento: $data['status_pagamento'],
+            dataHora: $data['data_hora'] ?? null,
+            valor: $data['valor'] ?? null,
+            formaPagamento: $data['forma_pagamento'] ?? null,
+            statusPagamento: $data['status_pagamento'] ?? null,
             pedidoId: $pedido->id,
         );
 

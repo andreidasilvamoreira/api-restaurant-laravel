@@ -16,12 +16,17 @@ class StoreItemMenuRequest extends FormRequest
 
     public function rules(): array
     {
+        $restauranteId = $this->route('restaurante')?->id;
+
         return [
             'nome' => 'required|string|max:100',
             'descricao' => 'nullable|string',
             'preco' => 'required|numeric|min:0.01',
             'disponibilidade' => ['required', Rule::in(ItemMenu::DISPONIBILIDADE)],
-            'categoria_id' => 'required|exists:categorias,id',
+            'categoria_id' => [
+                'required',
+                Rule::exists('categorias', 'id')->where('restaurante_id', $restauranteId),
+            ],
         ];
     }
 

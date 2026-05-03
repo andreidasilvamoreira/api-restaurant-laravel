@@ -9,7 +9,6 @@ class UpdateSupplierInput
         public readonly ?string $name,
         public readonly ?string $phone,
         public readonly ?string $email,
-        public readonly ?string $address,
-        public readonly ?int $restaurantId
+        public readonly ?string $address
     ) {}
 }

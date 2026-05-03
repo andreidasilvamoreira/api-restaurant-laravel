@@ -3,25 +3,25 @@
 namespace App\Domains\Catalogo\Application\Services;
 
 use App\Domains\Catalogo\Application\Exceptions\Categoria\CategoriaNotFoundException;
-use App\Domains\Catalogo\Infrastructure\Persistence\Eloquent\Repositories\CategoriaRepository;
+use App\Domains\Catalogo\Domain\Repositories\CategoriaRepositoryInterface;
 use App\Models\Categoria;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
 class CategoriaService
 {
-    protected CategoriaRepository $categoriaRepository;
-    public function __construct(CategoriaRepository $categoriaRepository)
+    protected CategoriaRepositoryInterface $categoriaRepository;
+    public function __construct(CategoriaRepositoryInterface $categoriaRepository)
     {
         $this->categoriaRepository = $categoriaRepository;
     }
 
-    public function findAll(User $user): Collection
+    public function findAll(User $user, ?int $restauranteId = null): Collection
     {
-        return $this->categoriaRepository->findAll($user);
+        return $this->categoriaRepository->findAll($user, $restauranteId);
     }
 
-    public function find(int $id): ?Categoria
+    public function find(int $id): Categoria
     {
         return $this->findOrFail($id);
     }

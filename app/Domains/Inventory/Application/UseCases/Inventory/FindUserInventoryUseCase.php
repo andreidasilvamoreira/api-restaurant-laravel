@@ -11,9 +11,9 @@ class FindUserInventoryUseCase
 {
     public function __construct( protected InventoryRepositoryInterface $repository ) {}
 
-    public function execute(User $user): array
+    public function execute(User $user, ?int $restaurantId = null): array
     {
-        $inventory = $this->repository->findVisibleByUser($user);
+        $inventory = $this->repository->findVisibleByUser($user, $restaurantId);
 
         return array_map(
             fn ($inventory) => InventoryMapper::entityToOutput($inventory),

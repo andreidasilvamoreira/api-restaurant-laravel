@@ -6,10 +6,10 @@ class UpdatePaymentInput
 {
     public function __construct(
         public readonly ?int $id,
-        public readonly string $dataHora,
-        public readonly string $valor,
-        public readonly string $formaPagamento,
-        public readonly string $statusPagamento,
-        public readonly int $pedidoId,
+        public readonly ?string $dataHora,
+        public readonly ?string $valor,
+        public readonly ?string $formaPagamento,
+        public readonly ?string $statusPagamento,
+        public readonly ?int $pedidoId,
     ) {}
 }

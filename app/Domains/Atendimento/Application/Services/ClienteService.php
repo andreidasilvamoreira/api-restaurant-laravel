@@ -3,14 +3,14 @@
 namespace App\Domains\Atendimento\Application\Services;
 
 use App\Domains\Atendimento\Application\Exceptions\Cliente\ClienteNotFoundException;
-use App\Domains\Atendimento\Infrastructure\Persistence\Eloquent\Repositories\ClienteRepository;
+use App\Domains\Atendimento\Domain\Repositories\ClienteRepositoryInterface;
 use App\Models\Cliente;
 use Illuminate\Support\Collection;
 
 class ClienteService
 {
-    protected ClienteRepository $clienteRepository;
-    public function __construct(ClienteRepository $clienteRepository)
+    protected ClienteRepositoryInterface $clienteRepository;
+    public function __construct(ClienteRepositoryInterface $clienteRepository)
     {
         $this->clienteRepository = $clienteRepository;
     }
@@ -19,7 +19,7 @@ class ClienteService
         return $this->clienteRepository->findAll();
     }
 
-    public function find($id): ?Cliente
+    public function find(int $id): Cliente
     {
         return $this->findOrFail($id);
     }

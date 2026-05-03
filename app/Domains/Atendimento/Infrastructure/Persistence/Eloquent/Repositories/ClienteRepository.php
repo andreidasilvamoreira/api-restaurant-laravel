@@ -2,17 +2,18 @@
 
 namespace App\Domains\Atendimento\Infrastructure\Persistence\Eloquent\Repositories;
 
+use App\Domains\Atendimento\Domain\Repositories\ClienteRepositoryInterface;
 use App\Models\Cliente;
 use Illuminate\Support\Collection;
 
-class ClienteRepository
+class ClienteRepository implements ClienteRepositoryInterface
 {
     public function findAll(): Collection
     {
         return Cliente::all();
     }
 
-    public function find($id): Cliente
+    public function find(int $id): ?Cliente
     {
         return Cliente::find($id);
     }

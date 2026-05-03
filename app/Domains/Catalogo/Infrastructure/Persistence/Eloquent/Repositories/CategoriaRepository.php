@@ -2,23 +2,21 @@
 
 namespace App\Domains\Catalogo\Infrastructure\Persistence\Eloquent\Repositories;
 
+use App\Domains\Catalogo\Domain\Repositories\CategoriaRepositoryInterface;
 use App\Models\Categoria;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
-class CategoriaRepository
+class CategoriaRepository implements CategoriaRepositoryInterface
 {
-    public function findAll(User $user): Collection
+    public function findAll(User $user, ?int $restauranteId = null): Collection
     {
         $query = Categoria::query();
 
-        if ($user->role !== 'SUPER_ADMIN' && $user->role !== 'OWNER') {
-            $query->whereHas('restaurante', function ($q) use ($user) {
-                $q->whereHas('users', function ($q2) use ($user) {
-                    $q2->whereKey($user->id)->whereIn('restaurante_users.role', ['DONO', 'ADMIN', 'FUNCIONARIO']);
-                });
-            });
+        if ($restauranteId !== null) {
+            $query->where('restaurante_id', $restauranteId);
         }
+
         return $query->get();
     }
 

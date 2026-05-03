@@ -20,7 +20,6 @@ class UpdateInventarioRequest extends FormRequest
             'preco_custo' => 'sometimes|required|numeric|min:0',
             'quantidade_atual' => 'sometimes|required|numeric|min:0',
             'fornecedor_id' => 'sometimes|required|exists:fornecedores,id',
-            'restaurante_id' => 'sometimes|required|exists:restaurantes,id',
         ];
     }
 
@@ -38,8 +37,6 @@ class UpdateInventarioRequest extends FormRequest
             'quantidade_atual.min' => 'A quantidade atual não pode ser negativa.',
             'fornecedor_id.required' => 'O fornecedor é obrigatório.',
             'fornecedor_id.exists' => 'Fornecedor inválido.',
-            'restaurante_id.required' => 'O restaurante é obrigatório.',
-            'restaurante_id.exists' => 'Restaurant inválido.',
         ];
     }
 }

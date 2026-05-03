@@ -7,7 +7,7 @@ use App\Models\User;
 
 interface InventoryRepositoryInterface
 {
-    public function findVisibleByUser(User $user): array;
+    public function findVisibleByUser(User $user, ?int $restaurantId = null): array;
     public function findById(int $id): ?Inventory;
     public function findOrFail(int $id): Inventory;
     public function create(Inventory $inventory): Inventory;

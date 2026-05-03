@@ -10,9 +10,9 @@ use Illuminate\Support\Collection;
 class FindUserSupplierUseCase
 {
     public function __construct(protected SupplierRepositoryInterface $repository) {}
-    public function execute(User $user): array
+    public function execute(User $user, ?int $restaurantId = null): array
     {
-        $supplier = $this->repository->findVisibleByUser($user);
+        $supplier = $this->repository->findVisibleByUser($user, $restaurantId);
 
         return array_map(
             fn ($supplier) => SupplierMapper::entityToOutput($supplier),

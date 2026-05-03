@@ -31,10 +31,6 @@ class UpdateInventoryUseCase
             $inventory->setCostPrice($data->costPrice);
         }
 
-        if ($data->restaurantId !== null) {
-            $inventory->setRestauranteId($data->restaurantId);
-        }
-
         if ($data->supplierId !== null) {
             $inventory->setSupplierId($data->supplierId);
         }

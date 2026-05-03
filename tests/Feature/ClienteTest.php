@@ -25,7 +25,7 @@ class ClienteTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_owner_pode_ver_mas_nao_pode_deletar_criar_e_atualizar(): void
+    public function test_owner_nao_pode_listar_criar_ou_deletar_clientes(): void
     {
         $user = User::factory()->create([
             'role' => User::ROLE_OWNER
@@ -35,7 +35,7 @@ class ClienteTest extends TestCase
         $payload = Cliente::factory()->make()->toArray();
         $this->actingAs($user, 'sanctum');
 
-        $this->getJson("/api/clientes")->assertStatus(200);
+        $this->getJson("/api/clientes")->assertStatus(403);
         $this->postJson("/api/clientes", $payload)->assertStatus(403);
         $this->deleteJson("/api/clientes/{$cliente->id}")->assertStatus(403);
     }

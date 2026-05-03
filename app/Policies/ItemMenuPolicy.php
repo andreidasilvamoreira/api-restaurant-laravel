@@ -14,39 +14,27 @@ class ItemMenuPolicy
     }
     public function viewAny(User $user, Restaurante $restaurante): bool
     {
-        if ($user->role === User::ROLE_OWNER) return true;
-
-        return $this->checkRole($user, $restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_FUNCIONARIO, Restaurante::ROLE_ADMIN]);
+        return true;
     }
 
     public function view(User $user, ItemMenu $itemMenu): bool
     {
-        if ($user->role === User::ROLE_OWNER) return true;
-
-        $restaurante = $itemMenu->categoria?->restaurante;
-
-        return $this->checkRole($user, $restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_FUNCIONARIO, Restaurante::ROLE_ADMIN]);
+        return true;
     }
 
     public function createForRestaurante(User $user, Restaurante $restaurante): bool
     {
-        if ($user->role === User::ROLE_OWNER) return false;
-
         return $this->checkRole($user, $restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);
     }
 
     public function update(User $user, ItemMenu $itemMenu): bool
     {
-        if ($user->role === User::ROLE_OWNER) return false;
-
         $restaurante = $itemMenu->categoria?->restaurante;
         return $this->checkRole($user, $restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);
     }
 
     public function delete(User $user, ItemMenu $itemMenu): bool
     {
-        if ($user->role === User::ROLE_OWNER) return false;
-
         $restaurante = $itemMenu->categoria?->restaurante;
 
         return $this->checkRole($user, $restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);

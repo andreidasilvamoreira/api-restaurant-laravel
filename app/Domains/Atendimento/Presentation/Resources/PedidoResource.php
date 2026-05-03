@@ -14,10 +14,11 @@ class PedidoResource extends JsonResource
             'id' => $this->id,
             'data_hora' => $this->data_hora,
             'status' => $this->status,
-            'cliente_id' => $this->cliente,
+            'cliente_id' => $this->cliente_id,
             'mesa_id' => $this->mesa_id,
             'restaurante_id' => $this->restaurante_id,
             'atendente_id' => $this->atendente_id,
+            'itens' => $this->itens,
         ];
     }
 }

@@ -2,16 +2,20 @@
 
 namespace App\Domains\Atendimento\Infrastructure\Persistence\Eloquent\Repositories;
 
-use App\Models\Mesa;
+use App\Domains\Atendimento\Domain\Repositories\ReservaRepositoryInterface;
 use App\Models\Reserva;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
-class ReservaRepository
+class ReservaRepository implements ReservaRepositoryInterface
 {
-    public function findAll(User $user): Collection
+    public function findAll(User $user, ?int $restauranteId = null): Collection
     {
         $query = Reserva::query();
+
+        if ($restauranteId !== null) {
+            $query->where('restaurante_id', $restauranteId);
+        }
 
         if ($user->role !== 'SUPER_ADMIN' && $user->role !== 'OWNER'){
             $query->whereHas('restaurante.users', function ($q) use ($user) {

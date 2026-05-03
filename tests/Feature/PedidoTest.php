@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Cliente;
+use App\Models\Categoria;
+use App\Models\ItemMenu;
 use App\Models\Pedido;
 use App\Models\Restaurante;
 use App\Models\User;
@@ -83,9 +85,23 @@ class PedidoTest extends TestCase
             'restaurante_id' => $restaurante->id,
         ]);
 
-        $payload = Pedido::factory()->make([
+        $cliente = Cliente::factory()->create();
+        $categoria = Categoria::factory()->create([
             'restaurante_id' => $restaurante->id,
-        ])->toArray();
+        ]);
+        $itemMenu = ItemMenu::factory()->create([
+            'categoria_id' => $categoria->id,
+        ]);
+
+        $payload = [
+            'cliente_id' => $cliente->id,
+            'itens' => [
+                [
+                    'item_menu_id' => $itemMenu->id,
+                    'quantidade' => 2,
+                ],
+            ],
+        ];
 
         $this->actingAs($user, 'sanctum');
 

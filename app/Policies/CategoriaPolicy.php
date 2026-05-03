@@ -15,33 +15,26 @@ class CategoriaPolicy
     }
     public function viewAny(User $user): bool
     {
-        return $user->role !== User::ROLE_CLIENTE;
+        return true;
     }
 
     public function view(User $user, Categoria $categoria): bool
     {
-        if ($user->role === User::ROLE_OWNER || $user->role === User::ROLE_CLIENTE) return true;
-        return $this->checkRole($user, $categoria->restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);
+        return true;
     }
 
     public function createForRestaurante(User $user, Restaurante $restaurante): bool
     {
-        if ($user->role === User::ROLE_OWNER) return false;
-
         return $this->checkRole($user, $restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);
     }
 
     public function update(User $user, Categoria $categoria): bool
     {
-        if ($user->role === User::ROLE_OWNER) return false;
-
         return $this->checkRole($user, $categoria->restaurante, [Restaurante::ROLE_DONO, Restaurante::ROLE_ADMIN]);
     }
 
     public function delete(User $user, Categoria $categoria): bool
     {
-        if ($user->role === User::ROLE_OWNER) return false;
-
         return $this->checkRole($user, $categoria->restaurante, [Restaurante::ROLE_DONO]);
     }
 

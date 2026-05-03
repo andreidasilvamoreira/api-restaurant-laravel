@@ -3,22 +3,22 @@
 namespace App\Domains\Atendimento\Application\Services;
 
 use App\Domains\Atendimento\Application\Exceptions\Pedido\PedidoNotFoundException;
-use App\Domains\Atendimento\Infrastructure\Persistence\Eloquent\Repositories\PedidoRepository;
+use App\Domains\Atendimento\Domain\Repositories\PedidoRepositoryInterface;
 use App\Models\Pedido;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
 class PedidoService
 {
-    protected PedidoRepository $pedidoRepository;
-    public function __construct(PedidoRepository $pedidoRepository)
+    protected PedidoRepositoryInterface $pedidoRepository;
+    public function __construct(PedidoRepositoryInterface $pedidoRepository)
     {
         $this->pedidoRepository = $pedidoRepository;
     }
 
-    public function findAll(User $user): Collection
+    public function findAll(User $user, ?int $restauranteId = null): Collection
     {
-        return $this->pedidoRepository->findAll($user);
+        return $this->pedidoRepository->findAll($user, $restauranteId);
     }
 
     public function find(int $id): Pedido

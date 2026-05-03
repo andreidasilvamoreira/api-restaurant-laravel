@@ -16,7 +16,7 @@ class UserMapper
             name: $input->name,
             email: $input->email,
             password: $input->password,
-            role: $input->role ?? UserModel::ROLE_CLIENTE,
+            role: $input->role ?? UserModel::ROLE_USER,
         );
     }
 

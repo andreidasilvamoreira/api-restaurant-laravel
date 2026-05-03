@@ -2,26 +2,27 @@
 
 namespace App\Domains\Catalogo\Infrastructure\Persistence\Eloquent\Repositories;
 
+use App\Domains\Catalogo\Domain\Repositories\ItemMenuRepositoryInterface;
 use App\Models\ItemMenu;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
-class ItemMenuRepository
+class ItemMenuRepository implements ItemMenuRepositoryInterface
 {
-    public function findAll(User $user): Collection
+    public function findAll(User $user, ?int $restauranteId = null): Collection
     {
         $query = ItemMenu::query();
 
-        if ($user->role !== 'SUPER_ADMIN' && $user->role !== 'OWNER') {
-            $query->whereHas('categoria.restaurante.users', function ($q) use ($user) {
-                $q->whereKey($user->id)
-                    ->whereIn('restaurante_users.role', ['ADMIN', 'DONO', 'FUNCIONARIO']);
+        if ($restauranteId !== null) {
+            $query->whereHas('categoria', function ($q) use ($restauranteId) {
+                $q->where('restaurante_id', $restauranteId);
             });
         }
+
         return $query->get();
     }
 
-    public function find($id): ItemMenu
+    public function find(int $id): ?ItemMenu
     {
         return ItemMenu::find($id);
     }
